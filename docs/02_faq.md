@@ -48,7 +48,7 @@ CoinEx Chain charges transaction fees and only CET is accepted. Transaction fees
 
 #### What kind of asset can be created?
 
-Currently CoinEx Chain supports ERC20-like fungible tokens. Tokens' precision are fixed at 8 decimal digits and their total quantity must be no larger than 90 billion.  Some options can be turned on when issuing a token, which can not be changed thereafter. They are:  1) mintable; 2) burnable; 3) addresses can be blacklisted; 4) token can be globally forbidden with exceptions in a white list. With these options, stable coins and security tokens can be implemented.
+Currently CoinEx Chain supports ERC20-like fungible tokens. Tokens' precision are fixed at 8 decimal digits and their total quantity must be no larger than 90 billion.  Some attributes can be added when issuing a token, which can not be changed thereafter. They are:  1) mintable; 2) burnable; 3) addresses can be blacklisted; 4) token can be globally forbidden with exceptions in a white list. With these attributes, stable coins and security tokens can be implemented.
 
 
 
@@ -78,7 +78,7 @@ Currently only limit orders are supported. Market orders have potential security
 
 #### Are there limits on notional value of an order?
 
-The notional value must be large enough that the feature fee is above a lower bound when the order is fully filled. Currently the fee rate is 0.1% for both makers and takers.
+The notional value must be large enough such that the feature fee is above a lower bound when the order is fully filled. Currently the fee rate is 0.1% for both makers and takers.
 
 
 
