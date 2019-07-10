@@ -21,12 +21,26 @@
 4. [Developer Guide](./docs/04_dev_guide.md)
 5. [Chain Explorer](./docs/05_explorer.md)
 6. [Wallets](./docs/06_wallet.md)
+	1. [GUI-Based Wallets](./docs/06_wallet.md#GUI-Based-Wallets)
+	2. [CLI-Based Wallet](./docs/06_wallet.md#CLI-Based-Wallet)
+	3. [Getting Help](./docs/06_wallet.md#Getting-Help)
+	4. [The "cetcli keys" subcommand](./docs/06_wallet.md#The-"cetcli-keys"-subcommand)
+	5. [The "cetcli status" subcommand](./docs/06_wallet.md#The-"cetcli-status"-subcommand)
+	6. [The "cetcli query" subcommand](./docs/06_wallet.md#The-"cetcli-query"-subcommand)
 7. [Run as a Validator](./docs/07_validator.md)
 8. [Build a DEX Application](./docs/08_dex_app.md)
 9. [Testnet](./docs/09_testnet.md)
+
+
+
+
+
+
+
 
 ## Appendix
 
 1. [Command Line Interface Reference](./docs/A_cli_ref.md)
 2. [RESTful API Reference](./docs/B_rest_ref.md)
+3. [Parameter Reference](./docs/C_param_ref.md)
 
