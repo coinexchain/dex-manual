@@ -7,6 +7,5 @@
 
 
 ### REST API
-
-
+https://dex-api.coinex.org/swagger/
 
