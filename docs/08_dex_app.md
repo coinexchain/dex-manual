@@ -62,7 +62,7 @@ type CreateOrderInfo struct {
 	Side        byte   `json:"side"`  // 1 for buy and 2 for sell
 	TimeInForce int    `json:"time_in_force"` // 3 for GTE and 4 for IOC
 	Height      int64  `json:"height"`
-    FeatureFee  int64  `json:"feature_fee"` //the feature fee paid to lengthen GTE order' life time.
+        FeatureFee  int64  `json:"feature_fee"` //the feature fee paid to lengthen GTE order' life time.
 	FrozenFee   int64  `json:"frozen_fee"` //the frozen feature fee according to the quantity of stock
 	Freeze      int64  `json:"freeze"` //the frozen stock or money tokens
 }
