@@ -6,7 +6,11 @@ A full node of CoinEx Chain is lean and only contains the essential functions, s
 
 ### JSON Messages
 
-A CoinEx Chain's full node can be configured to dump json messages to Kafka. These json strings are generated using Golang's built-in `json` package from Golang's structs. These structs are described as below.
+A CoinEx Chain's full node can be configured to dump json messages to Kafka. These json messages can be divided into two kinds. 
+
+The first kind of messages are constructed from Tendermint's "events". After a transaction's execution, it will generate some events and return them to Tendermint. These events carry important information, so we convert them into json format and dump them to Kafka. 
+
+The second kind of messages are only sent to Kafka and Tendermint can not get them. These json strings are generated using Golang's built-in `json` package from Golang's structs. These structs are described as below.
 
 Whenever a new block is committed, the following message is produced.
 ```go
@@ -98,23 +102,35 @@ type CancelOrderInfo struct {
 }
 ```
 
-Whenever some coins are sent from an address to another address, the following message is produced.
+Whenever a user sends a comment transaction successfully, the following `TokenComment` message is produced.
 ```go
-type MsgSend struct {
-	FromAddress sdk.AccAddress `json:"from_address"`
-	ToAddress   sdk.AccAddress `json:"to_address"`
-	Amount      sdk.Coins      `json:"amount"`
-	UnlockTime  int64          `json:"unlock_time"` // it's a non-zero value for a locked transfer
+type TokenComment struct {
+	ID          uint64         `json:"id"`
+	Sender      sdk.AccAddress `json:"sender"`
+	Token       string         `json:"token"`
+	Donation    int64          `json:"donation"`
+	Title       string         `json:"title"`
+	Content     string         `json:"content"`
+	ContentType int8           `json:"content_type"`
+	References  []CommentRef   `json:"references"`
+}
+
+type CommentRef struct {
+	ID           uint64         `json:"id"`
+	RewardTarget sdk.AccAddress `json:"reward_target"`
+	RewardToken  string         `json:"reward_token"`
+	RewardAmount int64          `json:"reward_amount"`
+	Attitudes    []int32        `json:"attitudes"`
 }
 ```
 
-Whenever an account change's its "Memo-Required" option, the following message is produced.
-```go
-type MsgSetMemoRequired struct {
-	Address  sdk.AccAddress `json:"address"`
-	Required bool           `json:"required"`
-}
-```
+A comment has its Title and Content, both of which are plain texts.  ContentType is an integer to indiciate the type of the content, and its possible values include: **0** for IPFS hash id, **1** for magnet link, **2** for http link, **3** for plain utf8 text, **6** for base64-encoded byte string.
 
+ID is a unique number assigned to each comment. Sender is the an account who sent this comment, whose presentation is a bech32 address. Token is the symbol of the token which is commented about. Donation is the amount of CET which will be donated to community pool. The sender can promote her comment's weight by donating more coins to community pool.  
 
+A comment can reference other comments and the entry in a reference include: `ID`, the referenced comment's ID number; `RewardTarget`, the comment's sender which can be rewarded; `RewardToken` and `RewardAmount`, the coins that are rewarded to the comment's sender; `Attitudes`, a list of integer values showing the attitudes to this referenced comment. Valid attitudes are: **50** for "Like", **51** for "Dislike", **52** for "Laugh", **53** for "Cry", **54** for "Angry", **55** for "Surprise", **56** for "Heart", **57** for "Sweat", **58** for "Speechless", **59** for "Favorite", **60** for "Condolences".
+
+When there is no reference, the comment opens a new thread. When there is only one reference, the comment should be displayed as a follow-up comment in an existing thread. 
+
+When there are two or more references, this comment's title and content are ignored, and its only usage is to reward the comments' sender that it references.
 
