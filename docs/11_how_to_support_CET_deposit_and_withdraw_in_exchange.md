@@ -1,4 +1,3 @@
-
 ### 1. Create deposit address
 
 <details>
@@ -511,8 +510,8 @@ cetcli tx sign --chain-id=coinexdex-test2004 --from from_addr /cetd/unsigned_tx_
 
 #### 6.2.2 sign with golang / python SDK
 
-please refer link for golang/python SDK details
-[Golang SDK](https://github.com/coinexchain/polarbear/blob/master/doc/api.md)
-[Compile Golang SDK into .so for python user](https://github.com/coinexchain/polarbear)
-[Python demo](https://github.com/coinexchain/polarbear/blob/master/sdkforpython/demo.py)
+please refer link for golang/python SDK details:
+- [Golang SDK](https://github.com/coinexchain/polarbear/blob/master/doc/api.md)
+- [Compile Golang SDK into .so for python user](https://github.com/coinexchain/polarbear)
+- [Python demo](https://github.com/coinexchain/polarbear/blob/master/sdkforpython/demo.py)
 
