@@ -30,7 +30,8 @@
 7. [Run as a Validator](./docs/07_validator.md)
 8. [Build a DEX Application](./docs/08_dex_app.md)
 9. [Testnet](./docs/09_testnet.md)
-
+10. [Push Chain Events to Kafka](./docs/10_push_msg_kafka.md)
+11. [How to support CET deposit and withdraw in exchange](./docs/11_how_to_support_CET_deposit_and_withdraw_in_exchange.md)
 
 
 
