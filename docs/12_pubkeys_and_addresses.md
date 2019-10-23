@@ -169,7 +169,7 @@
 ### Get validator consensus pubkey in priv_validator_key.json
 You can find your validator's hex address in priv_validator_key.json file.
 
-`priv_validator_key.json is your validator's consensus private key file, do not expose the file contents to others`
+`>>> WARNING: priv_validator_key.json is your validator's consensus private key file, do not expose the file contents to others`
 
 > grep address ~/.cetd/config/priv_validator_key.json
 ```
