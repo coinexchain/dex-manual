@@ -32,7 +32,7 @@
 9. [Testnet](./docs/09_testnet.md)
 10. [Push Chain Events to Kafka](./docs/10_push_msg_kafka.md)
 11. [How to support CET deposit and withdraw in exchange](./docs/11_how_to_support_CET_deposit_and_withdraw_in_exchange.md)
-
+12. [About pubkeys and addresses](./docs/12_pubkeys_and_addresses.md)
 
 
 
