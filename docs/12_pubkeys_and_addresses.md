@@ -167,8 +167,9 @@
 
 
 ### Get validator consensus pubkey in priv_validator_key.json
-如果节点未使用tmkms的private_validator方案, 使用本地priv_validator_key.json进行签名时,
-地址会在priv_validator_key.json中存在.
+You can find your validator's hex address in priv_validator_key.json file.
+
+`priv_validator_key.json is your validator's consensus private key file, do not expose the file contents to others`
 
 > grep address ~/.cetd/config/priv_validator_key.json
 ```
