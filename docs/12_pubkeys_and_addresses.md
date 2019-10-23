@@ -5,7 +5,7 @@
     - Is my node still online and participates in the consensus?
 
 - /blocks API example response:
-<details> <summary> http://18.190.80.148:1317/blocks/67344?format=json&kind=block </summary>
+<details> <summary> http://<REST_API_IP>:1317/blocks/67344?format=json&kind=block </summary>
 <p>
 
     
