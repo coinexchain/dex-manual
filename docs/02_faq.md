@@ -34,12 +34,6 @@ CoinEx will honor its previous promise not to issue additional CET and will not 
 
 
 
-#### Will CET still be repurchased and burnt by CoinEx.com?
-
-The promised repurchase plan of CET will still be executed on time. 
-
-
-
 #### What is the Fee Structure?
 
 CoinEx Chain charges transaction fees and only CET is accepted. Transaction fees include two parts: the usual gas fee (like Ethereum) and feature fee. Gas is calculated according to the size of transaction, the signature count, the read/write count to persistent storage and the length of read/write data. Feature fee is an extra fee charged for some particular operations, for example, issuing a new asset, listing a new trading pair, activating an account and transferring tokens with a lock time. The matched orders are charged according to the dealt amount with a configurable rate (currently both 0.1% for maker and taker), which also falls in the category of feature fees. 
