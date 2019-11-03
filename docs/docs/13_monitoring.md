@@ -4,7 +4,11 @@
     > /home/ubuntu/cetcli status --home=/home/ubuntu/.cetcli_watchdog_query
     
     ```
-    {"node_info":{"protocol_version":{"p2p":"7","block":"10","app":"0"},"id":"b71a1fbfd2aeaad55eec6d2e61c4d2b431a20e09","listen_addr":"tcp://3.132.21.89:26656","network":"coinexdex-test2004","version":"0.32.2","channels":"4020212223303800","moniker":"Lauren-sentry2","other":{"tx_index":"on","rpc_address":"tcp://0.0.0.0:26657"}},"sync_info":{"latest_block_hash":"4802068193D3DD728CF75E6682BB024051E72A43139695633F0AD789913C0971","latest_app_hash":"F4FAC23AC50B23CFAA44EB3BF9EBDCEEDEC73CCDDF42D520820B55490AE80797","latest_block_height":"67344","latest_block_time":"2019-10-23T02:44:24.003982451Z","catching_up":false},"validator_info":{"address":"9339BCBBC0D7D1AB53CA88F472E5411DF17A08A3","pub_key":{"type":"tendermint/PubKeyEd25519","value":"7wKfJ9kgbZ/Za8TImKvsHHkOwiqkfeGOCoudg2QWDXg="},"voting_power":"0"}}
+    
+    {"node_info":{"protocol_version":{"p2p":"7","block":"10","app":"0"},"id":"b71a1fbfd2aeaad55eec6d2e61c4d2b431a20e09","listen_addr":"tcp://3.132.21.89:26656",
+    "network":"coinexdex-test2004","version":"0.32.2","channels":"4020212223303800","moniker":"Lauren-sentry2","other":{"tx_index":"on","rpc_address":"tcp://0.0.0.0:26657"}},"sync_info":{"latest_block_hash":"4802068193D3DD728CF75E6682BB024051E72A43139695633F0AD789913C0971","latest_app_hash":"F4FAC23AC50B23CFAA44EB3BF9EBDCEEDEC73CCDDF42D520820B55490AE80797",
+    "latest_block_height":"67344","latest_block_time":"2019-10-23T02:44:24.003982451Z","catching_up":false},"validator_info":{"address":"9339BCBBC0D7D1AB53CA88F472E5411DF17A08A3","pub_key":{"type":"tendermint/PubKeyEd25519","value":"7wKfJ9kgbZ/Za8TImKvsHHkOwiqkfeGOCoudg2QWDXg="},"voting_power":"0"}}
+    
     ```
 
 - Monitor consensus activities
