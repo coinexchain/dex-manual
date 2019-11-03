@@ -3,8 +3,8 @@
 ## Contents
 
 1. [Introduction](./docs/01_intro.md)
-   1. [Overview](./docs/01_intro.md#Overview)
-   2. [Features](./docs/01_intro.md#Features)
+	1. [Overview](./docs/01_intro.md#Overview)
+	2. [Features](./docs/01_intro.md#Features)
 2. [Frequently Asked Question](./docs/02_faq.md)
 3. [User Guide](./docs/03_user_guide.md)
     1. [Account Management](./docs/03_user_guide.md#Account-Management)
@@ -36,12 +36,8 @@
 13. [Monitoring](./docs/13_monitoring.md)
 
 
-
-
-
 ## Appendix
 
 1. [Command Line Interface Reference](./docs/A_cli_ref.md)
 2. [RESTful API Reference](./docs/B_rest_ref.md)
 3. [Parameter Reference](./docs/C_param_ref.md)
-
