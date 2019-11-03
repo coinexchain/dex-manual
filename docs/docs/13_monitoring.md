@@ -8,7 +8,7 @@
     ```
 
 - Monitor consensus activities
-[Is my validator still online and participating consensus process](https://github.com/coinexchain/dex-manual/blob/master/docs/12_pubkeys_and_addresses.md)
+[Is my validator still online and participating consensus process](../12_pubkeys_and_addresses.md)
 
 
 # prometheus
