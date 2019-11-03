@@ -1,4 +1,4 @@
-# dex-docs
+# source code for dex-docs
 [Docs for CoinEx Chain Dex](https://coinexchain.github.io/dex-docs/index.html)
 
 ### inistall mkdocs
