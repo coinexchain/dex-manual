@@ -518,7 +518,7 @@ please refer link for golang/python SDK details:
 
 
 
-### deposit status can be double checked in REST API
+### 7. deposit status can be double checked in REST API
 
 
 <details> <summary> success deposit case:  </summary>
