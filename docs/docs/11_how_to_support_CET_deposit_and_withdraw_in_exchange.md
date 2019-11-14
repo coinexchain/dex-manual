@@ -515,3 +515,271 @@ please refer link for golang/python SDK details:
 - [Compile Golang SDK into .so for python user](https://github.com/coinexchain/polarbear)
 - [Python demo](https://github.com/coinexchain/polarbear/blob/master/sdkforpython/demo.py)
 - [Specify private keystore location](https://github.com/coinexchain/polarbear/blob/master/doc/manual.md)
+
+
+
+### deposit status can be double checked in REST API
+
+
+<details> <summary> success deposit case:  </summary>
+<p>
+
+```
+https://dex-api.coinex.org/txs/157CCB6BC47341F2A30DD2C16FB6EC6A0F555945CA8C7F4007FCFEE6C5FC23CB
+{
+    "events": [
+        {
+            "attributes": [
+                {
+                    "key": "sender",
+                    "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                },
+                {
+                    "key": "module",
+                    "value": "bankx"
+                },
+                {
+                    "key": "sender",
+                    "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                },
+                {
+                    "key": "action",
+                    "value": "send"
+                }
+            ],
+            "type": "message"
+        },
+        {
+            "attributes": [
+                {
+                    "key": "recipient",
+                    "value": "coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl"
+                },
+                {
+                    "key": "amount",
+                    "value": "100000000cet"
+                },
+                {
+                    "key": "recipient",
+                    "value": "coinex1q5prhf2wrwammvdl8xezyr4zkfdlwxxa9v0szc"
+                },
+                {
+                    "key": "amount",
+                    "value": "32999900000000cet"
+                },
+                {
+                    "key": "sender",
+                    "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                }
+            ],
+            "type": "transfer"
+        }
+    ],
+    "gas_used": "24160",
+    "gas_wanted": "29040",
+    "height": "83637",
+    "logs": [
+        {
+            "events": [
+                {
+                    "attributes": [
+                        {
+                            "key": "sender",
+                            "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                        },
+                        {
+                            "key": "module",
+                            "value": "bankx"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                        },
+                        {
+                            "key": "action",
+                            "value": "send"
+                        }
+                    ],
+                    "type": "message"
+                },
+                {
+                    "attributes": [
+                        {
+                            "key": "recipient",
+                            "value": "coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "100000000cet"
+                        },
+                        {
+                            "key": "recipient",
+                            "value": "coinex1q5prhf2wrwammvdl8xezyr4zkfdlwxxa9v0szc"
+                        },
+                        {
+                            "key": "amount",
+                            "value": "32999900000000cet"
+                        },
+                        {
+                            "key": "sender",
+                            "value": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q"
+                        }
+                    ],
+                    "type": "transfer"
+                }
+            ],
+            "log": "",
+            "msg_index": 0,
+            "success": true
+        }
+    ],
+    "raw_log": "[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"sender\",\"value\":\"coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q\"},{\"key\":\"module\",\"value\":\"bankx\"},{\"key\":\"sender\",\"value\":\"coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q\"},{\"key\":\"action\",\"value\":\"send\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl\"},{\"key\":\"amount\",\"value\":\"100000000cet\"},{\"key\":\"recipient\",\"value\":\"coinex1q5prhf2wrwammvdl8xezyr4zkfdlwxxa9v0szc\"},{\"key\":\"amount\",\"value\":\"32999900000000cet\"},{\"key\":\"sender\",\"value\":\"coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q\"}]}]}]",
+    "timestamp": "2019-11-13T14:15:01Z",
+    "tx": {
+        "type": "cosmos-sdk/StdTx",
+        "value": {
+            "fee": {
+                "amount": [
+                    {
+                        "amount": "580800",
+                        "denom": "cet"
+                    }
+                ],
+                "gas": "29040"
+            },
+            "memo": "",
+            "msg": [
+                {
+                    "type": "bankx/MsgSend",
+                    "value": {
+                        "amount": [
+                            {
+                                "amount": "33000000000000",
+                                "denom": "cet"
+                            }
+                        ],
+                        "from_address": "coinex1kggcdxug9z4t83rfmck7zm4pg0hmqp3hzuku5q",
+                        "to_address": "coinex1q5prhf2wrwammvdl8xezyr4zkfdlwxxa9v0szc",
+                        "unlock_time": "0"
+                    }
+                }
+            ],
+            "signatures": [
+                {
+                    "pub_key": {
+                        "type": "tendermint/PubKeySecp256k1",
+                        "value": "AhAu40Tb4Jugm6srorATWJmGzCtzdZAYrcpLhqf1tzlT"
+                    },
+                    "signature": "oKjQYvokN18iQuA9WD1d5c279iA9oFE1/UeHgPywS8Uaz6zvL6hoAyzhmKYKRqmH1BKTA8fm8QsZbr742Kif6A=="
+                }
+            ]
+        }
+    },
+    "txhash": "157CCB6BC47341F2A30DD2C16FB6EC6A0F555945CA8C7F4007FCFEE6C5FC23CB"
+}
+
+```
+</p>
+</details>
+
+
+
+
+
+
+
+
+<details> <summary> success deposit case:  </summary>
+<p>
+
+```
+
+https://dex-api.coinex.org/txs/0B19A39DD934FFFD0F9DC93A69679790ABDF3FA49E4E88AEDEE456918287D9E9
+
+{
+    "code": 608,
+    "events": [
+        {
+            "attributes": [
+                {
+                    "key": "action",
+                    "value": "create_order"
+                }
+            ],
+            "type": "message"
+        }
+    ],
+    "gas_used": "24060",
+    "gas_wanted": "200000",
+    "height": "81796",
+    "logs": [
+        {
+            "events": [
+                {
+                    "attributes": [
+                        {
+                            "key": "action",
+                            "value": "create_order"
+                        }
+                    ],
+                    "type": "message"
+                }
+            ],
+            "log": "{\"codespace\":\"market\",\"code\":608,\"message\":\"Insufficient coin\"}",
+            "msg_index": 0,
+            "success": false
+        }
+    ],
+    "raw_log": "[{\"msg_index\":0,\"success\":false,\"log\":\"{\\\"codespace\\\":\\\"market\\\",\\\"code\\\":608,\\\"message\\\":\\\"Insufficient coin\\\"}\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"create_order\"}]}]}]",
+    "timestamp": "2019-11-13T12:54:28Z",
+    "tx": {
+        "type": "cosmos-sdk/StdTx",
+        "value": {
+            "fee": {
+                "amount": [
+                    {
+                        "amount": "4000000",
+                        "denom": "cet"
+                    }
+                ],
+                "gas": "200000"
+            },
+            "memo": "ifwallet",
+            "msg": [
+                {
+                    "type": "market/MsgCreateOrder",
+                    "value": {
+                        "exist_blocks": "10000",
+                        "identify": 0,
+                        "order_type": 2,
+                        "price": "12",
+                        "price_precision": 3,
+                        "quantity": "1310900000000",
+                        "sender": "coinex1wkgdutvxaln0a3k4fsthqvqpqdjs85jcwngngk",
+                        "side": 1,
+                        "time_in_force": "3",
+                        "trading_pair": "ift/cet"
+                    }
+                }
+            ],
+            "signatures": [
+                {
+                    "pub_key": {
+                        "type": "tendermint/PubKeySecp256k1",
+                        "value": "Aml8GUpFlG4AIY92j2bnnA/8If5MLnFDFEQ3bpLYkU1k"
+                    },
+                    "signature": "px4EtpaDCK93cjT5Hvp0vXwoKedTplWVuJNXmM8U685ZlI6d+MmKORh7Yn2eeThpYa0ims1BoUVrNFl7OhTcQw=="
+                }
+            ]
+        }
+    },
+    "txhash": "0B19A39DD934FFFD0F9DC93A69679790ABDF3FA49E4E88AEDEE456918287D9E9"
+}
+
+
+```
+</p>
+</details>
+
+
+
