@@ -38,6 +38,7 @@
 
 ## Appendix
 
-1. [Command Line Interface Reference](./docs/A_cli_ref.md)
+1. [Command Line Interface Reference](./docs/A_cetcli_ref.md)
 2. [RESTful API Reference](./docs/B_rest_ref.md)
 3. [Parameter Reference](./docs/C_param_ref.md)
+
