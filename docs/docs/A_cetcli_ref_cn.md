@@ -11,10 +11,10 @@ CETCLI是与CoinEx链交互的命令行工具。
   * 通用选项
 
 * 子命令参考
-  * 管理配置文件
-  * 管理地址和密钥
-  * 发送交易
-  * 查询信息
+  * [管理配置文件](../cetcli/config.md)
+  * [管理地址和密钥](../cetcli/keys.md)
+  * [发送交易](../cetcli/tx.md)
+  * [查询信息](../cetcli/query.md)
   * 查询节点状态
 
   
