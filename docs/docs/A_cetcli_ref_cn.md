@@ -124,7 +124,40 @@ Global Flags:
 
 ### 通用选项
 
+有些选项是大部分CETCLI子命令都支持的，这里对这些选项进行统一说明。
 
 
 
+#### home选项 
+
+有些CETCLI子命令需要访问本地文件，比如说`keys`子命令可以用本地文件来存放密钥信息，`tx`等命令也可能需要访问这些密钥来对交易进行签名。CETCLI使用统一的目录来存放这些文件，这个目录就是CETCLI的home目录。默认情况下，home目录的位置是`$HOME/.cetcli/`。如果希望指定不同的目录，可以使用`--home`选项来覆盖默认值。例如：
+
+```
+$ ./cetcli keys add bob --home path/to/my/home
+$ ls -lF path/to/my/home
+config/
+keys/
+```
+
+
+
+#### node选项
+
+CETCLI通过RPC接口和CoinEx链全节点进行交互，因此必须知道全节点的RPC地址和端口。全节点的RPC地址和端口通过`--node`选项指定，如果不指定，则取默认值`tcp://localhost:26657`。例如：
+
+```
+./cetcli status --node=47.252.23.106:26657
+```
+
+
+
+#### chain-id选项
+
+TODO
+
+
+
+#### output选项
+
+TODO
 
