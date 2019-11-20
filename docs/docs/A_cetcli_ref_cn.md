@@ -100,7 +100,7 @@ CETCLI各个子命令都提供了非常详细的帮助信息，可以通过下�
 以`version`命令搭配`-h`选项为例：
 
 ```
-h$ ./cetcli version -h
+$ ./cetcli version -h
 Print the app version
 
 Usage:
@@ -139,6 +139,8 @@ config/
 keys/
 ```
 
+为了方便起见，在后面我们使用`$CETCLI_HOME`来表示CETCLI的home目录。
+
 
 
 #### node选项
@@ -146,7 +148,7 @@ keys/
 CETCLI通过RPC接口和CoinEx链全节点进行交互，因此必须知道全节点的RPC地址和端口。全节点的RPC地址和端口通过`--node`选项指定，如果不指定，则取默认值`tcp://localhost:26657`。例如：
 
 ```
-./cetcli status --node=47.252.23.106:26657
+$ ./cetcli status --node=47.252.23.106:26657
 ```
 
 
