@@ -75,20 +75,28 @@ Global Flags: 省略
 
 主要选项：
 
-| 选项名            | 类型   | 是否必填 | 默认值 | 说明 |
-| ----------------- | ------ | -------- | ------ | ---- |
-| --money           | string | ✔        |        |      |
-| --stock           | string | ✔        |        |      |
-| --price-precision | int    | ✔        |        |      |
-| --order-precision | int    |          | 0      |      |
+| 选项名            | 类型（取值范围） | 是否必填 | 默认值 | 说明                                                         |
+| ----------------- | ---------------- | -------- | ------ | ------------------------------------------------------------ |
+| --stock           | string           | ✔        |        | 基础Token（必须是已发行Token，比如[cat](https://explorer.coinex.org/tokens/cat)，且交易发起者必须是该Token的发行者） |
+| --money           | string           | ✔        |        | 计价Token（必须是已发行Token，比如[cet](https://explorer.coinex.org/tokens/cet)） |
+| --price-precision | int (0 ~ 18)     | ✔        |        | 价格精度，控制下单时的价格精度                               |
+| --order-precision | int (0 ~ 8)      |          | 0      | 数量精度，控制下单时的数量粒度                               |
 
-示例：
+例1，创建`abc/cet`交易对，下单时价格精度不能大于8，下单时数量必须是100（10^2）的倍数：
+
+```
+$ ./cetcli tx market create-trading-pair \
+	--stock=abc --money=cet --price-precision=8 --order-precision=2 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
 
 
 ### 修改交易对价格精度
 
-用法：
+创建交易对后，修改其价格精度。用法：
 
 ```
 $ ./cetcli tx market modify-price-precision -h
@@ -128,18 +136,26 @@ Global Flags: 省略
 
 主要选项：
 
-| 选项名            | 类型   | 是否必填 | 默认值 | 说明 |
-| ----------------- | ------ | -------- | ------ | ---- |
-| --trading-pair    | string | ✔        |        |      |
-| --price-precision | int    | ✔        |        |      |
+| 选项名            | 类型         | 是否必填 | 默认值 | 说明                  |
+| ----------------- | ------------ | -------- | ------ | --------------------- |
+| --trading-pair    | string       | ✔        |        | 交易对，例如`abc/cet` |
+| --price-precision | int (0 ~ 18) | ✔        |        | 新的价格精度          |
 
-示例：
+例1，修改`abc/cet`的价格精度：
+
+```
+$ ./cetcli tx market modify-price-precision \
+	--trading-pair=abc/cet --price-precision=10 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
 
 
 ### 取消交易对
 
-用法：
+下线交易对，用法：
 
 ```
 $ ./cetcli tx market cancel-trading-pair -h
@@ -179,20 +195,27 @@ Global Flags: 省略
 
 主要选项：
 
-| 选项名         | 类型   | 是否必填 | 默认值 | 说明 |
-| -------------- | ------ | -------- | ------ | ---- |
-| --trading-pair | string | ✔        |        |      |
-| --time         | int    | ✔        |        |      |
+| 选项名         | 类型   | 是否必填 | 默认值 | 说明                                              |
+| -------------- | ------ | -------- | ------ | ------------------------------------------------- |
+| --trading-pair | string | ✔        |        | 交易对，例如`abc/cet`                             |
+| --time         | int    | ✔        |        | 下线时间（Unix时间戳，单位是纳秒，且至少在7天后） |
 
-示例：
+例1，十天后将`abc/cet`下线：
+
+```
+$ time=`python -c "import time; print(int((time.time() + 10*24*3600)*1000000000))"`
+$ ./cetcli tx market cancel-trading-pair \
+	--trading-pair=abc/cet --time=$time \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
 
 
+### 创建订单
 
-
-### 创建GTE订单
-
-用法：
+目前可以创建两种类型的订单：**GTE**（Good Till Expire）、**IOC**（Immediate Or Cancel）。GTE订单通过`create-gte-order`命令创建，IOC订单通过`create-ioc-order`命令创建。除了创建的订单类型不一样之外，这两个命令的用法是完全一样的，以`create-gte-order`为例：
 
 ```
 $ ./cetcli tx market create-gte-order -h
@@ -239,23 +262,40 @@ Global Flags: 省略
 
 主要选项：
 
-| 选项名            | 类型   | 是否必填 | 默认值 | 说明 |
-| ----------------- | ------ | -------- | ------ | ---- |
-| --trading-pair    | string | ✔        |        |      |
-| --order-type      | int    | ✔        |        |      |
-| --price           |        | ✔        |        |      |
-| --price-precision |        | ✔        |        |      |
-| --quantity        |        | ✔        |        |      |
-| --side            |        | ✔        |        |      |
-| --identify        |        | ✔        |        |      |
+| 选项名            | 类型（取值范围） | 是否必填 | 默认值 | 说明                                                   |
+| ----------------- | ---------------- | -------- | ------ | ------------------------------------------------------ |
+| --trading-pair    | string           | ✔        |        | 交易对，例如`abc/cet`                                  |
+| --order-type      | int (2)          | ✔        |        | 目前仅支持限价单，必须填2                              |
+| --side            | int (1\|2)       | ✔        |        | 买单填1，卖单填2                                       |
+| --price           | int              | ✔        |        | 价格                                                   |
+| --price-precision | int (0 ~ 18)     | ✔        |        | 价格精度（不能超过创建交易对时指定的精度）             |
+| --quantity        | int              | ✔        |        | 数量（粒度在创建交易对时指定）                         |
+| --identify        | int              | ✔        |        | 如果在一个交易内创建多比订单，则需要该字段唯一标识订单 |
+| --blocks          | int              |          | 10000  |                                                        |
 
-示例：
+例1，创建GTE订单（100000个块内有效），买入500个abc，单价为0.02cet（2000 / 10^6）：
 
+```
+$ ./cetcli tx market create-gte-order \
+	--trading-pair=abc/cet --order-type=2 --side=1 --quantity=500 \
+	--price=20000 --price-precision=6  \
+	--blocks=100000 --identify=1 \
+  --node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
+例2，创建IOC订单，卖出500个abc，单价为0.5cet（5000 / 10^6）：
 
-### 创建IOC订单
-
-同gte
+```
+$ ./cetcli tx market create-ioc-order \
+	--trading-pair=abc/cet --order-type=2 --side=2 --quantity=500 \
+	--price=50000 --price-precision=6  \
+	--identify=1 \
+  --node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
 
 
@@ -299,13 +339,18 @@ Global Flags: 省略
 
 主要选项：
 
-| 选项名     | 类型   | 是否必填 | 默认值 | 说明 |
-| ---------- | ------ | -------- | ------ | ---- |
-| --order-id | string | ✔        |        |      |
+| 选项名     | 类型   | 是否必填 | 默认值 | 说明   |
+| ---------- | ------ | -------- | ------ | ------ |
+| --order-id | string | ✔        |        | 订单ID |
 
-示例：
+例1，取消订单：
 
-
+```
+$ ./cetcli tx market cancel-order --order-id=[id] \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+	--gas=30000 --fees=800000cet \
+	--from=abc_owner
+```
 
 
 
@@ -348,6 +393,25 @@ Flags:  省略
 Global Flags: 省略
 ```
 
+例1，查询CoinEx链主网market相关参数：
+
+```
+$ ./cetcli query market params --node=47.252.23.106:26657 --chain-id=coinexdex
+{
+  "create_market_fee": "1000000000000",
+  "fixed_trade_fee": "1000000",
+  "market_min_expired_time": "604800000000000",
+  "gte_order_lifetime": "100000",
+  "gte_order_feature_fee_by_blocks": "10",
+  "max_executed_price_change_ratio": "25",
+  "market_fee_rate": "10",
+  "market_fee_min": "1000000",
+  "fee_for_zero_deal": "1000000"
+}
+```
+
+参数详细解释见[参数说明文档](../docs/C_param_ref_cn.md)。
+
 
 
 ### 查询链上全部交易对
@@ -369,7 +433,22 @@ Flags:  省略
 Global Flags: 省略
 ```
 
+例1，查询CoinEx主网交易对列表：
 
+```
+./cetcli query market trading-pairs --node=47.252.23.106:26657 --chain-id=coinexdex
+[
+  {
+    "creator": "coinex13apesrc22aa2enl56fnz563v9fgzxwpm03prlm",
+    "stock": "dac",
+    "money": "cet",
+    "price_precision": "8",
+    "last_executed_price": "2.000000200000000000",
+    "order_precision": "0"
+  },
+  ...
+]
+```
 
 
 
@@ -394,17 +473,30 @@ Global Flags: 省略
 
 主要参数：
 
-| 参数  | 类型   | 是否必填 | 默认值 | 说明 |
-| ----- | ------ | -------- | ------ | ---- |
-| 参数1 | string | ✔        |        |      |
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 交易对 |
 
-示例：
+例1，查询CoinEx主网：
+
+```
+./cetcli query market trading-pair dac/cet \
+	--node=47.252.23.106:26657 --chain-id=coinexdex
+{
+  "creator": "coinex13apesrc22aa2enl56fnz563v9fgzxwpm03prlm",
+  "stock": "dac",
+  "money": "cet",
+  "price_precision": "8",
+  "last_executed_price": "2.000000200000000000",
+  "order_precision": "0"
+}
+```
 
 
 
 ### 查询订单列表
 
-用法：
+查询某地址的全部（有效）订单，用法：
 
 ```
 $ ./cetcli query market order-list -h
@@ -425,15 +517,20 @@ Global Flags: 省略
 
 | 参数  | 类型   | 是否必填 | 默认值 | 说明 |
 | ----- | ------ | -------- | ------ | ---- |
-| 参数1 | string | ✔        |        |      |
+| 参数1 | string | ✔        |        | 地址 |
 
-示例：
+例1，在CoinEx主网查询某地址下的全部订单：
+
+```
+$ ./cetcli query market order-list coinex1ghuesxfc9g587arf3zcefxntjm9ctsl3703man \
+	--node=47.252.23.106:26657 --chain-id=coinexdex
+```
 
 
 
 ### 查询指定订单
 
-用法：
+根据订单ID查询订单，用法：
 
 ```
 $ ./cetcli query market order-info -h
@@ -452,9 +549,15 @@ Global Flags: 省略
 
 主要参数：
 
-| 参数  | 类型   | 是否必填 | 默认值 | 说明 |
-| ----- | ------ | -------- | ------ | ---- |
-| 参数1 | string | ✔        |        |      |
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 订单ID |
 
-示例：
+例：
+
+```
+$ ./cetcli query market order-info <id> \
+	--node=47.252.23.106:26657 --chain-id=coinexdex
+```
+
 
