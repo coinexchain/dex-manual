@@ -1,11 +1,4 @@
-# 公共
-
-coin结构
-
-| 参数   | 类型   | 是否必须 | 描述 |
-| ------ | ------ | -------- | ---- |
-| amount | string | required | 数额 |
-| denom  | string | required | 币种 |
+# 消息结构说明
 
 目前支持的消息类型
 
@@ -62,6 +55,13 @@ coin结构
 "comment/MsgCommentToken" 对token发表评论
 ```
 
+
+coin结构
+
+| 参数   | 类型   | 是否必须 | 描述 |
+| ------ | ------ | -------- | ---- |
+| amount | string | required | 数额 |
+| denom  | string | required | 币种 |
 
 
 # 转账
