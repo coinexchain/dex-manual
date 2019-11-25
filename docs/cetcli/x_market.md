@@ -359,7 +359,7 @@ $ ./cetcli tx market cancel-order --order-id=[id] \
 `cetcli query market`提供了不同的子命令，分别用于查询：相关参数、指定交易对、全部交易对、指定订单信息、订单列表。
 
 ```
-h$ ./cetcli query market -h
+$ ./cetcli query market -h
 Querying commands for the market module
 
 Usage:
@@ -419,7 +419,7 @@ $ ./cetcli query market params --node=47.252.23.106:26657 --chain-id=coinexdex
 用法：
 
 ```
-h$ ./cetcli query market trading-pairs -h
+$ ./cetcli query market trading-pairs -h
 query all trading-pair infos in blockchain.
 
 Example :
