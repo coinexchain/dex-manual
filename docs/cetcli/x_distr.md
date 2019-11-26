@@ -76,6 +76,16 @@ cetcli q distribution community-pool --chain-id=coinexdex
 
 该子命令用来查询community-pool中币的总量。
 
+### params
+
+```bash
+cetcli q distribution params --chain-id=coinexdex --output json
+
+{"community_tax":"0.020000000000000000","base_proposer_reward":"0.010000000000000000","bonus_proposer_reward":"0.040000000000000000","withdraw_addr_enabled":true}
+```
+
+该命令用来查询distribution模块的相应参数。community_tax表示当前的社区税比例。base_proposer_reward表示proposer在打包区块时，能够获得的基本propose奖励。validator能够获得的额外的propose奖励则等于bonus_proposer_reward乘以包含的validator投票power占总投票power的比例。withdraw_addr_enabled表示当前是否允许通过发交易来设置自己的withdraw_addr。
+
 ## Tx
 
 ### Withdraw-rewards
