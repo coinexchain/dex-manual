@@ -2,6 +2,10 @@
 
 bank模块用于账户间的资产转移
 
+
+
+## tx命令
+
 #### 转移指定资产
 
 该命令用于从`from`账户转移指定数量的某种token到`to`账户，可以指定这笔钱到账后在未来什么时刻之后生效，改设置可选。
@@ -113,4 +117,47 @@ Usage:
 设置地址bob需要设置memo，后续转移token到这个地址的交易都需要添加memo，否则交易无效
 
 > cetcli tx require-memo true --from=bob --fees=2000000000cet --gas=6000000 --memo="Sent with example memo" --chain-id=coinexdex-test1
+
+
+
+## query命令
+
+```
+cetcli query bank -h
+
+Querying commands for the bank module
+Usage:
+  cetcli query bank [command]
+
+Available Commands:
+  params      Query bank params
+  balances    Query account balance
+```
+
+#### 查询模块参数
+
+```
+cetcli query bank params --trust-node
+{
+  "activation_fee": "100000000",
+  "lock_coins_free_time": "604800000000000",
+  "lock_coins_fee_per_day": "1000000"
+}
+```
+
+**参数解释**
+
+- `activation_fee:`新账户激活费
+- `lock_coins_free_time:` 免费锁定时间
+- `lock_coins_fee_per_day:` 超出免费锁定时间后的费率
+
+**查询账户余额**
+
+```
+cetcli query bank balances -h
+
+Query account balance
+Usage:
+  cetcli query bank balances [address] [flags]
+```
 
