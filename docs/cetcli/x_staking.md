@@ -1,10 +1,12 @@
 # staking命令
 
+与staking系统相关的交易命令挂在`cetcli tx staking`命令下，查询命令挂在`cetcli query staking`命令下。
+
 
 
 ## 交易
 
-可以通过`create-validator`命令初始化验证者节点，之后可以通过`edit-validator`命令编辑验证者信息，通过`delegate`、`redelegate`、`unbond`命令进行委托操作。
+可以通过`create-validator`命令初始化验证者节点，之后可以通过`edit-validator`命令编辑验证者信息，通过`delegate`、`redelegate`、`unbond`命令进行质押操作。
 
 ```
 $ ./cetcli tx staking -h
@@ -76,18 +78,18 @@ Global Flags: 省略
 
 主要选项：
 
-| 参数/选项                    | 类型（取值范围） | 是否必填 | 默认值 | 说明                                     |
-| ---------------------------- | ---------------- | -------- | ------ | ---------------------------------------- |
-| --pubkey                     | string           | ✔        |        | 共识公钥（Bech32格式编码）               |
-| --amount                     | string           | ✔        |        | 初始自质押金额                           |
-| --moniker                    | string           | ✔        |        | 名称                                     |
-| --identity                   | string           |          |        | 标识（浏览器或钱包可以根据标识显示图标） |
-| --website                    | string           |          |        | 网站                                     |
-| --details                    | string           |          |        | 详细信息                                 |
-| --commission-max-change-rate | string (decimal) |          |        | 佣金变化率上限                           |
-| --commission-max-rate        | string (decimal) |          |        | 佣金比率上限                             |
-| --commission-rate            | string (decimal) |          |        | 佣金比率                                 |
-| --min-self-delegation        | string (int)     |          |        | 自质押下限                               |
+| 选项                         | 类型（取值范围） | 是否必填 | 默认值 | 说明                                                  |
+| ---------------------------- | ---------------- | -------- | ------ | ----------------------------------------------------- |
+| --pubkey                     | string           | ✔        |        | 共识公钥（Bech32格式编码，以`coinexvalconspub1`开头） |
+| --amount                     | string           | ✔        |        | 初始自质押金额                                        |
+| --moniker                    | string           | ✔        |        | 名称                                                  |
+| --identity                   | string           |          |        | 标识（浏览器或钱包可以根据标识显示图标）              |
+| --website                    | string           |          |        | 网站                                                  |
+| --details                    | string           |          |        | 详细信息                                              |
+| --commission-max-change-rate | string (decimal) |          |        | 佣金变化率上限                                        |
+| --commission-max-rate        | string (decimal) |          |        | 佣金比率上限                                          |
+| --commission-rate            | string (decimal) |          |        | 佣金比率                                              |
+| --min-self-delegation        | string (int)     |          |        | 自质押下限                                            |
 
 例如：
 
@@ -143,14 +145,16 @@ Global Flags: 省略
 
 主要选项：
 
-| 参数/选项             | 类型（取值范围） | 是否必填 | 默认值          | 说明                                               |
-| --------------------- | ---------------- | -------- | --------------- | -------------------------------------------------- |
-| --moniker             | string           |          | [do-not-modify] | 名称                                               |
-| --identity            | string           |          | [do-not-modify] | 标识（浏览器或钱包可以根据标识显示图标）           |
-| --website             | string           |          | [do-not-modify] | 网站                                               |
-| --details             | string           |          | [do-not-modify] | 详细信息                                           |
-| --commission-rate     | string (decimal) |          |                 | 佣金比率（不能超过创建验证者时指定的佣金比率上限） |
-| --min-self-delegation | string (int)     |          |                 | 自质押下限                                         |
+| 选项                  | 类型（取值范围） | 是否必填 | 默认值          | 说明       |
+| --------------------- | ---------------- | -------- | --------------- | ---------- |
+| --moniker             | string           |          | [do-not-modify] | 名称       |
+| --identity            | string           |          | [do-not-modify] | 标识       |
+| --website             | string           |          | [do-not-modify] | 网站       |
+| --details             | string           |          | [do-not-modify] | 详细信息   |
+| --commission-rate     | string (decimal) |          |                 | 佣金比率   |
+| --min-self-delegation | string (int)     |          |                 | 自质押下限 |
+
+> 提示💡：新的佣金比率不能超过创建验证者时指定的佣金比率上限，且变化率不能超过创建验证者时指定的变化率上限。
 
 例如：
 
@@ -164,7 +168,7 @@ $ ./cetcli tx staking edit-validator \
 
 ### delegate
 
-委托，用法：
+质押一定数量的CET给某个验证者，用法：
 
 ```
 $ ./cetcli tx staking delegate -h
@@ -198,13 +202,29 @@ Flags:
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数             | 类型（取值范围） | 是否必填 | 默认值          | 说明       |
+| --------------------- | ---------------- | -------- | --------------- | ---------- |
+| 参数1             | string           | ✔        |        | 验证人运营者Bech32地址（以`coinexvaloper1`开头） |
+| 参数2           | string           | ✔        |        | 质押金额，比如10000cet |
+
+例1，在CoinEx主网，质押10CET到[CETDAC](https://explorer.coinex.org/validator/coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30)：
+
+```
+$ ./cetcli tx staking delegate \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	1000000000cet \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+  --gas=30000 --fees=800000cet \
+  --from=myaddr
+```
 
 
 
 ### redelegate
 
-重新委托，用法：
+将质押到验证者1的CET转移给验证者2，用法：
 
 ```
 $ ./cetcli tx staking redelegate -h
@@ -238,13 +258,31 @@ Flags:
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                                              |
+| ----- | ---------------- | -------- | ------ | ------------------------------------------------- |
+| 参数1 | string           | ✔        |        | 验证人1运营者Bech32地址（以`coinexvaloper1`开头） |
+| 参数2 | string           | ✔        |        | 验证人2运营者Bech32地址（以`coinexvaloper1`开头） |
+| 参数3 | string           | ✔        |        | 质押金额，比如10000cet                            |
+
+例1，在CoinEx主网，将质押给[CETDAC](https://explorer.coinex.org/validator/coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30)的5CET转移给[IFWallet](https://explorer.coinex.org/validator/coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0)：
+
+```
+$ ./cetcli tx staking redelegate \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0 \
+	500000000cet \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+  --gas=30000 --fees=800000cet \
+  --from=myaddr
+```
 
 
 
 ### unbond
 
-解绑，用法：
+将质押到某验证者的CET撤销，用法：
 
 ```
 $ ./cetcli tx staking unbond -h
@@ -278,9 +316,23 @@ Flags:
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                                             |
+| ----- | ---------------- | -------- | ------ | ------------------------------------------------ |
+| 参数1 | string           | ✔        |        | 验证人运营者Bech32地址（以`coinexvaloper1`开头） |
+| 参数2 | string           | ✔        |        | 要撤销的质押金额，比如10000cet                   |
 
+例1，在CoinEx主网，从质押给[CETDAC](https://explorer.coinex.org/validator/coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30)的CET中撤销2CET：
 
+```
+$ ./cetcli tx staking unbond \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	200000000cet \
+	--node=47.252.23.106:26657 --chain-id=coinexdex \
+  --gas=30000 --fees=800000cet \
+  --from=myaddr
+```
 
 
 
@@ -470,6 +522,12 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                                             |
+| ----- | ---------------- | -------- | ------ | ------------------------------------------------ |
+| 参数1 | string           | ✔        |        | 验证人运营者Bech32地址（以`coinexvaloper1`开头） |
+
 例1，在CoinEx主网查询CETDAC验证者信息：
 
 ```
@@ -506,7 +564,7 @@ $ ./cetcli query staking validator coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwp
 
 ### delegations
 
-查询某地址的所有委托信息，用法：
+查询某地址的所有质押信息，用法：
 
 ```
 $ ./cetcli query staking delegations -h
@@ -522,23 +580,35 @@ Flags: 省略
 Global Flags: 省略
 ```
 
-例1，在CoinEx链主网上查询某地址的所有委托信息：
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明             |
+| ----- | ---------------- | -------- | ------ | ---------------- |
+| 参数1 | string           | ✔        |        | 质押者Bech32地址 |
+
+例1，在CoinEx链主网上查询某地址的所有质押信息：
 
 ```
-$ ./cetcli query staking delegations coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgpww \
+$ ./cetcli query staking delegations coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
 	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
 [
   {
-    "delegator_address": "coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgpww",
-    "validator_address": "coinexvaloper1qaxl3h4v36jn0velu6e75dhpslvr3cyxp2cws2",
-    "shares": "1061483448266.000000000000000000",
-    "balance": "1061483448266"
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_address": "coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0",
+    "shares": "500000000.000000000000000000",
+    "balance": "500000000"
   },
   {
-    "delegator_address": "coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgpww",
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
     "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
-    "shares": "204129480582547.000000000000000000",
-    "balance": "204129480582547"
+    "shares": "300000000.000000000000000000",
+    "balance": "300000000"
+  },
+  {
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_address": "coinexvaloper1ccdv4k2fndd0pe5amq3dfgwexhcxmzx2l7xqvh",
+    "shares": "2000000000.000000000000000000",
+    "balance": "2000000000"
   }
 ]
 ```
@@ -547,7 +617,7 @@ $ ./cetcli query staking delegations coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgp
 
 ### delegation
 
-给定委托者和验证者地址，查询委托信息，用法：
+给定质押者和验证者地址，查询质押信息，用法：
 
 ```
 $ ./cetcli query staking delegation -h
@@ -563,24 +633,33 @@ Flags: 省略
 Global Flags: 省略
 ```
 
-例1，在CoinEx链主网上根据委托者和验证者地址查询委托信息：
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | string           | ✔        |        | 质押者Bech32地址       |
+| 参数2 | string           | ✔        |        | 验证人运营者Bech32地址 |
+
+例1，在CoinEx链主网上根据质押者和验证者地址查询质押信息：
 
 ```
 $ ./cetcli query staking delegation \
-	coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgpww \
-	coinexvaloper1qaxl3h4v36jn0velu6e75dhpslvr3cyxp2cws2 \
+	coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
+	coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0 \
 	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
 {
-  "delegator_address": "coinex19tn666um8a6quq96ehhfyhn3mm00qf4pqqgpww",
-  "validator_address": "coinexvaloper1qaxl3h4v36jn0velu6e75dhpslvr3cyxp2cws2",
-  "shares": "1061483448266.000000000000000000",
-  "balance": "1061483448266"
+  "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+  "validator_address": "coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0",
+  "shares": "500000000.000000000000000000",
+  "balance": "500000000"
 }
 ```
 
 
 
 ### redelegations
+
+根据质押者地址，查询全部质押转移信息。用法：
 
 ```
 $ ./cetcli query staking redelegations -h
@@ -596,9 +675,40 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明             |
+| ----- | ---------------- | -------- | ------ | ---------------- |
+| 参数1 | string           | ✔        |        | 质押者Bech32地址 |
+
+例1，在CoinEx主网上，查询某质押者的全部质押转移信息：
+
+```
+$ ./cetcli query staking redelegations coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_src_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "validator_dst_address": "coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0",
+    "entries": [
+      {
+        "creation_height": 496328,
+        "completion_time": "2019-12-17T02:46:56.440020619Z",
+        "initial_balance": "500000000",
+        "shares_dst": "500000000.000000000000000000",
+        "balance": "500000000"
+      }
+    ]
+  }
+]
+```
+
 
 
 ### redelegation
+
+根据质押者和验证人运营者地址，查询全部质押转移信息。用法：
 
 ```
 $ ./cetcli query staking redelegation -h
@@ -614,13 +724,45 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数/选项 | 类型（取值范围） | 是否必填 | 默认值 | 说明                            |
+| --------- | ---------------- | -------- | ------ | ------------------------------- |
+| 参数1     | string           | ✔        |        | 质押者Bech32地址                |
+| 参数2     | string           | ✔        |        | 验证人1（from）运营者Bech32地址 |
+| 参数3     | string           | ✔        |        | 验证人2（to）运营者Bech32地址   |
 
+例1，在CoinEx主网查询质押转移信息：
 
+```
+$ ./cetcli query staking redelegation \
+	coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_src_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "validator_dst_address": "coinexvaloper1y6xsfgt9e7l2thrzu8j8mv0ahys34jaap83ql0",
+    "entries": [
+      {
+        "creation_height": 496328,
+        "completion_time": "2019-12-17T02:46:56.440020619Z",
+        "initial_balance": "500000000",
+        "shares_dst": "500000000.000000000000000000",
+        "balance": "500000000"
+      }
+    ]
+  }
+]
+```
 
 
 
 ### unbonding-delegations
+
+根据质押者地址，查询全部质押撤销信息。用法：
 
 ```
 $ ./cetcli query staking unbonding-delegations -h
@@ -636,11 +778,38 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明             |
+| ----- | ---------------- | -------- | ------ | ---------------- |
+| 参数1 | string           | ✔        |        | 质押者Bech32地址 |
+
+例1，在CoinEx主网上，查询某质押者的全部质押撤销信息：
+
+```
+$ ./cetcli query staking unbonding-delegations coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "entries": [
+      {
+        "creation_height": "496471",
+        "completion_time": "2019-12-17T02:53:15.932282995Z",
+        "initial_balance": "200000000",
+        "balance": "200000000"
+      }
+    ]
+  }
+]
+```
+
 
 
 ### unbonding-delegation
 
-
+给定质押者和验证者地址，查询质押撤销信息，用法：
 
 ```
 $ ./cetcli query staking unbonding-delegation -h
@@ -656,9 +825,39 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | string           | ✔        |        | 质押者Bech32地址       |
+| 参数2 | string           | ✔        |        | 验证人运营者Bech32地址 |
+
+例1，在CoinEx链主网上根据质押者和验证者地址查询质押撤销信息：
+
+```
+$ ./cetcli query staking unbonding-delegation \
+	coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+  {
+    "delegator_address": "coinex1e7rqqtwdtmyu3l46u9fgl24tgj7268zt9kun2h",
+    "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "entries": [
+      {
+        "creation_height": "496471",
+        "completion_time": "2019-12-17T02:53:15.932282995Z",
+        "initial_balance": "200000000",
+        "balance": "200000000"
+      }
+    ]
+  }
+```
+
 
 
 ### delegations-to
+
+查询某个验证者的所有质押者，用法：
 
 ```
 $ ./cetcli query staking delegations-to -h
@@ -674,9 +873,39 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | string           | ✔        |        | 验证人运营者Bech32地址 |
+
+例1，在CoinEx主网查询CETDAC的所有质押者：
+
+```
+$ ./cetcli query staking delegations-to coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1qzqqhz64c69pnzrlrqfkzvnyyau99fynw5q9d9",
+    "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "shares": "34427245795803.000000000000000000",
+    "balance": "34427245795803"
+  },
+  {
+    "delegator_address": "coinex1qycvmghvzp57nlsz68ux9x8kyz2753jxn9xl7n",
+    "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "shares": "100318809598587.000000000000000000",
+    "balance": "100318809598587"
+  },
+  ...
+]
+```
+
 
 
 ### redelegations-from
+
+查询某验证者的所有质押转出信息，用法：
 
 ```
 $ ./cetcli query staking redelegations-from -h
@@ -692,11 +921,42 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | string           | ✔        |        | 验证人运营者Bech32地址 |
+
+例1，在CoinEx主网查询CETDAC的所有质押转出信息：
+
+```
+$ ./cetcli query staking redelegations-from \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1pzh2r2tlny70mpee3rfvqa3zey4xgvjef9l0vv",
+    "validator_src_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "validator_dst_address": "coinexvaloper1qqpz9t2zep6cmrvk2astfsetjuqt0t3zpsw9qt",
+    "entries": [
+      {
+        "creation_height": 12411,
+        "completion_time": "2019-12-02T09:35:10.372978513Z",
+        "initial_balance": "301019400000000",
+        "shares_dst": "301019400000000.000000000000000000",
+        "balance": "301019400000000"
+      }
+    ]
+  },
+  ...
+]
+```
 
 
 
 ### unbonding-delegations-from
+
+查询某验证者的所有质押撤销信息，用法：
 
 ```
 $ ./cetcli query staking unbonding-delegations-from -h
@@ -710,5 +970,34 @@ Usage:
 
 Flags: 省略
 Global Flags: 省略
+```
+
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | string           | ✔        |        | 验证人运营者Bech32地址 |
+
+例1，在CoinEx主网查询CETDAC的所有质押撤销信息：
+
+```
+$ ./cetcli query staking unbonding-delegations-from \
+	coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30 \
+	--node=47.252.23.106:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "delegator_address": "coinex1pcvngpk584acrpvtxp7u6sp0sksfmvxznqtq2r",
+    "validator_address": "coinexvaloper13apesrc22aa2enl56fnz563v9fgzxwpm57zt30",
+    "entries": [
+      {
+        "creation_height": "418349",
+        "completion_time": "2019-12-14T17:32:53.477641841Z",
+        "initial_balance": "717600000000",
+        "balance": "717600000000"
+      }
+    ]
+  },
+  ...
+]
 ```
 
