@@ -16,8 +16,23 @@ CETCLI是与CoinEx链交互的命令行工具。
   * [发送交易](../cetcli/tx.md)
   * [查询信息](../cetcli/query.md)
   * 查询节点状态
+  * 模块子命令
+      * [alias模块](../cetcli/x_alias.md)
+      * [asset模块](../cetcli/x_asset.md)
+      * [auth模块](../cetcli/x_auth.md)
+      * [bancorlite模块](../cetcli/x_bancor_lite.md)
+      * [bank模块](../cetcli/x_bank.md)
+      * [comment模块](../cetcli/x_comment.md)
+      * [crisis模块](../cetcli/x_crisis.md)
+      * [distribution模块](../cetcli/x_distr.md)
+      * [gov模块](../cetcli/x_gov.md)
+      * [incentive模块](../cetcli/x_incentive.md)
+      * [market模块](../cetcli/x_market.md)
+      * [slashing模块](../cetcli/x_slashing.md)
+      * [staking模块](../cetcli/x_staking.md)
+      * [supply模块](../cetcli/x_supply.md)
 
-  
+
 
 ## 下载CETCLI
 
