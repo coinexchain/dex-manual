@@ -438,6 +438,72 @@ $ ./cetcli query gov params --node=47.252.23.106:26657 --chain-id=coinexdex -o j
 
 
 
+### param
+
+查询gov系统子系统参数，用法：
+
+```
+$ ./cetcli query gov param -h
+Query the all the parameters for the governance process.
+
+Example:
+$ cetcli query gov param voting
+$ cetcli query gov param tallying
+$ cetcli query gov param deposit
+
+Usage:
+  cetcli query gov param [param-type] [flags]
+
+Flags: 省略
+Global Flags: 省略
+```
+
+参数：
+
+| 参数  | 类型（取值范围）                   | 是否必填 | 默认值 | 说明     |
+| ----- | ---------------------------------- | -------- | ------ | -------- |
+| 参数1 | string (voting\|tallying\|deposit) | ✔        |        | 参数类型 |
+
+例1，查询CoinEx链主网gov系统deposit参数：
+
+```
+$ ./cetcli query gov param deposit \
+	--node=3.13.170.79:26657 --chain-id=coinexdex -o json --indent
+{
+  "min_deposit": [
+    {
+      "denom": "cet",
+      "amount": "1000000000000"
+    }
+  ],
+  "max_deposit_period": "1209600000000000"
+}
+```
+
+例2，查询CoinEx链主网gov系统voting参数：
+
+```
+$ ./cetcli query gov param voting \
+	--node=3.13.170.79:26657 --chain-id=coinexdex -o json --indent
+{
+  "voting_period": "1209600000000000"
+}
+```
+
+例2，查询CoinEx链主网gov系统voting参数：
+
+```
+$ ./cetcli query gov param tallying \
+	--node=3.13.170.79:26657 --chain-id=coinexdex -o json --indent
+{
+  "quorum": "0.400000000000000000",
+  "threshold": "0.500000000000000000",
+  "veto": "0.334000000000000000"
+}
+```
+
+
+
 ### proposals
 
 查看全部提案，用法：
@@ -480,7 +546,7 @@ Global Flags: 省略
 例1，查看CoinEx链测试网3000全部提案：
 
 ```
-$ ./cetcli query gov proposals --node=3.13.170.79:26657 --chain-id=coinexdex -o json --indent
+$ ./cetcli query gov proposals --node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
 [
   {
     "content": {
@@ -517,7 +583,7 @@ $ ./cetcli query gov proposals --node=3.13.170.79:26657 --chain-id=coinexdex -o 
 
 ### proposal
 
-
+根据提案ID查看提案信息，用法：
 
 ```
 $ ./cetcli query gov proposal -h
@@ -534,11 +600,58 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明   |
+| ----- | ---------------- | -------- | ------ | ------ |
+| 参数1 | int              | ✔        |        | 提案ID |
+
+例1，在CoinEx链测试网3000查看提案3信息：
+
+```
+$ ./cetcli query gov proposal 3 \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+{
+  "content": {
+    "type": "cosmos-sdk/ParameterChangeProposal",
+    "value": {
+      "title": "Staking Param Change",
+      "description": "Update max validators",
+      "changes": [
+        {
+          "subspace": "staking",
+          "key": "MaxValidators",
+          "value": "50"
+        }
+      ]
+    }
+  },
+  "id": "3",
+  "proposal_status": "DepositPeriod",
+  "final_tally_result": {
+    "yes": "0",
+    "abstain": "0",
+    "no": "0",
+    "no_with_veto": "0"
+  },
+  "submit_time": "2019-11-27T03:13:57.499830513Z",
+  "deposit_end_time": "2019-12-11T03:13:57.499830513Z",
+  "total_deposit": [
+    {
+      "denom": "cet",
+      "amount": "10000"
+    }
+  ],
+  "voting_start_time": "0001-01-01T00:00:00Z",
+  "voting_end_time": "0001-01-01T00:00:00Z"
+}
+```
 
 
 
 ### deposits
+
+ 查看某提案的全部充值信息，用法：
 
 ```
 $ ./cetcli query gov deposits -h
@@ -555,11 +668,46 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明   |
+| ----- | ---------------- | -------- | ------ | ------ |
+| 参数1 | int              | ✔        |        | 提案ID |
+
+例1，在CoinEx链测试网3000查看提案3的充值信息：
+
+```
+$ ./cetcli query gov deposits 3 \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+[
+  {
+    "proposal_id": "3",
+    "depositor": "cettest1ylvuksyr0kwg05v9h9pwgj76e0gv2why6hrany",
+    "amount": [
+      {
+        "denom": "cet",
+        "amount": "50000000000"
+      }
+    ]
+  },
+  {
+    "proposal_id": "3",
+    "depositor": "cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm",
+    "amount": [
+      {
+        "denom": "cet",
+        "amount": "10000"
+      }
+    ]
+  }
+]
+```
+
 
 
 ### deposit
 
-
+查看某提案来自某地址的充值信息，用法：
 
 ```
 $ ./cetcli query gov deposit -h
@@ -575,13 +723,35 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明       |
+| ----- | ---------------- | -------- | ------ | ---------- |
+| 参数1 | int              | ✔        |        | 提案ID     |
+| 参数2 | string           | ✔        |        | Bech32地址 |
+
+例1，在CoinEx链测试网3000查看提案3来自给定地址的充值信息：
+
+```
+$ ./cetcli query gov deposit 3 cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+{
+  "proposal_id": "3",
+  "depositor": "cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm",
+  "amount": [
+    {
+      "denom": "cet",
+      "amount": "10000"
+    }
+  ]
+}
+```
 
 
 
 ### votes
 
-
+查看提案的全部投票信息，用法：
 
 ```
 $ ./cetcli query gov votes -h
@@ -597,13 +767,36 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明   |
+| ----- | ---------------- | -------- | ------ | ------ |
+| 参数1 | int              | ✔        |        | 提案ID |
+
+例1，在CoinEx链测试网3000查看提案1的投票信息：
+
+```
+$ ./cetcli query gov votes 1 \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+[
+  {
+    "proposal_id": "1",
+    "voter": "cettest1ylvuksyr0kwg05v9h9pwgj76e0gv2why6hrany",
+    "option": "No"
+  },
+  {
+    "proposal_id": "1",
+    "voter": "cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm",
+    "option": "Yes"
+  }
+]
+```
 
 
 
 ### vote
 
-
+查看某地址对于某提案的投票信息，用法：
 
 ```
 $ ./cetcli query gov vote -h
@@ -619,13 +812,30 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明       |
+| ----- | ---------------- | -------- | ------ | ---------- |
+| 参数1 | int              | ✔        |        | 提案ID     |
+| 参数2 | string           | ✔        |        | Bech32地址 |
 
+例1，在CoinEx链测试网3000查看提案1的投票信息：
 
+```
+$ ./cetcli query gov vote 1 cettest1ylvuksyr0kwg05v9h9pwgj76e0gv2why6hrany \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+{
+  "proposal_id": "1",
+  "voter": "cettest1ylvuksyr0kwg05v9h9pwgj76e0gv2why6hrany",
+  "option": "No"
+}
+```
 
 
 
 ### proposer
+
+查看提案的发起者，用法：
 
 ```
 $ ./cetcli query gov proposer -h
@@ -641,11 +851,28 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明   |
+| ----- | ---------------- | -------- | ------ | ------ |
+| 参数1 | int              | ✔        |        | 提案ID |
+
+例1，在CoinEx链测试网3000查看提案1的发起者：
+
+```
+$ ./cetcli query gov proposer 1 \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+{
+  "proposal_id": "1",
+  "proposer": "cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm"
+}
+```
 
 
 
 ### tally
+
+查看提案的点票结果，用法：
 
 ```
 $ ./cetcli query gov tally -h
@@ -662,28 +889,23 @@ Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明   |
+| ----- | ---------------- | -------- | ------ | ------ |
+| 参数1 | int              | ✔        |        | 提案ID |
 
-
-
-
-
-### param
+例1，在CoinEx链测试网3000查看提案1的点票结果：
 
 ```
-$ ./cetcli query gov param -h
-Query the all the parameters for the governance process.
-
-Example:
-$ cetcli query gov param voting
-$ cetcli query gov param tallying
-$ cetcli query gov param deposit
-
-Usage:
-  cetcli query gov param [param-type] [flags]
-
-Flags: 省略
-Global Flags: 省略
+$ ./cetcli query gov tally 1 \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 -o json --indent
+{
+  "yes": "0",
+  "abstain": "0",
+  "no": "0",
+  "no_with_veto": "0"
+}
 ```
 
 
