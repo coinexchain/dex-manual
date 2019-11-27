@@ -31,7 +31,7 @@ Global Flags: 省略
 
 ### submit-proposal
 
-
+发起提案，用法：
 
 ```
 $ ./cetcli tx gov submit-proposal -h
@@ -89,19 +89,205 @@ Flags:
 Global Flags: 省略
 ```
 
+主要选项：
+
+| 选项          | 类型（取值范围）                                  | 是否必填 | 默认值 | 说明     |
+| ------------- | ------------------------------------------------- | -------- | ------ | -------- |
+| --title       | string                                            |          |        | 提案标题 |
+| --description | string                                            |          |        | 提案描述 |
+| --type        | string (text\|parameter_change\|software_upgrade) |          |        | 最大供应 |
+| --deposit     | string                                            |          |        | 价格     |
+| --proposal    | string                                            |          |        | 初始价格 |
+
+例1，在CoinEx测试网3000发起文本提案，初始充值5000CET，提案参数由命令行选项指定：
+
+```
+$ ./cetcli tx gov submit-proposal --type=text \
+	--title=proposal001 \
+	--description='my first proposal' \
+	--deposit=500000000000cet \
+  --node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
+
+例2，在CoinEx测试网3000发起文本提案，初始充值100CET，提案参数由文件制定：
+
+```
+$ echo '{
+  "title": "proposal002",
+  "description": "my second proposal",
+  "type": "Text",
+  "deposit": "100cet"
+}' > proposal002.json
+$ ./cetcli tx gov submit-proposal --proposal=proposal002.json \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
+
+> 注意⚠️：提案类型必须是首字母大写的`Text`
 
 
-param-change
 
-community-pool-spend
+### param-change
+
+发起参数变更提案，用法：
+
+```
+$ ./cetcli tx gov submit-proposal param-change -h
+Submit a parameter proposal along with an initial deposit.
+The proposal details must be supplied via a JSON file. For values that contains
+objects, only non-empty fields will be updated.
+
+IMPORTANT: Currently parameter changes are evaluated but not validated, so it is
+very important that any "value" change is valid (ie. correct type and within bounds)
+for its respective parameter, eg. "MaxValidators" should be an integer and not a decimal.
+
+Proper vetting of a parameter change proposal should prevent this from happening
+(no deposits should occur during the governance process), but it should be noted
+regardless.
+
+Example:
+$ cetcli tx gov submit-proposal param-change <path/to/proposal.json> --from=<key_or_address>
+
+Where proposal.json contains:
+
+{
+  "title": "Staking Param Change",
+  "description": "Update max validators",
+  "changes": [
+    {
+      "subspace": "staking",
+      "key": "MaxValidators",
+      "value": 105
+    }
+  ],
+  "deposit": [
+    {
+      "denom": "stake",
+      "amount": "10000"
+    }
+  ]
+}
+
+Usage:
+  cetcli tx gov submit-proposal param-change [proposal-file] [flags]
+
+Flags: 省略
+Global Flags: 省略
+```
+
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明     |
+| ----- | ---------------- | -------- | ------ | -------- |
+| 参数1 | string           | ✔        |        | 提案标题 |
+
+例1，在CoinEx测试网3000发起参数变更提案，将验证者上限提高到50（当前为42）：
+
+```
+$ echo '{
+  "title": "Staking Param Change",
+  "description": "Update max validators",
+  "changes": [
+    {
+      "subspace": "staking",
+      "key": "MaxValidators",
+      "value": 50
+    }
+  ],
+  "deposit": [
+    {
+      "denom": "cet",
+      "amount": "10000"
+    }
+  ]
+}' > proposal003.json
+$ ./cetcli tx gov submit-proposal param-change proposal003.json \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
 
 
+
+### community-pool-spend
+
+发起“community pool spend”提案，用法：
+
+```
+$ ./cetcli tx gov submit-proposal community-pool-spend -h                                                                        
+Submit a community pool spend proposal along with an initial deposit.
+The proposal details must be supplied via a JSON file.
+
+Example:
+$ cetcli tx gov submit-proposal community-pool-spend <path/to/proposal.json> --from=<key_or_address>
+
+Where proposal.json contains:
+
+{
+  "title": "Community Pool Spend",
+  "description": "Pay me some Atoms!",
+  "recipient": "cettest1s5afhd6gxevu37mkqcvvsj8qeylhn0rzp3yvun",
+  "amount": [
+    {
+      "denom": "stake",
+      "amount": "10000"
+    }
+  ],
+  "deposit": [
+    {
+      "denom": "stake",
+      "amount": "10000"
+    }
+  ]
+}
+
+Usage:
+  cetcli tx gov submit-proposal community-pool-spend [proposal-file] [flags]
+
+Flags: 省略
+Global Flags: 省略
+```
+
+参数：
+
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明 |
+| ----- | ---------------- | -------- | ------ | ---- |
+| 参数1 | string           | ✔        |        |      |
+
+例1，在CoinEx测试网3000发起“community pool spend”提案：
+
+```
+$ echo '{
+  "title": "Community Pool Spend",
+  "description": "Pay me some CET!",
+  "recipient": "cettest1ww4767g5sf5y4pn5gutf7hgetc42w7hughzscm",
+  "amount": [
+    {
+      "denom": "cet",
+      "amount": "10000"
+    }
+  ],
+  "deposit": [
+    {
+      "denom": "cet",
+      "amount": "10000"
+    }
+  ]
+}' > proposal004.json
+$ ./cetcli tx gov submit-proposal community-pool-spend proposal004.json \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
 
 
 
 ### deposit
 
-
+给提案充值，用法：
 
 ```
 $ ./cetcli tx gov deposit -h
@@ -114,41 +300,36 @@ $ cetcli tx gov deposit 1 10cet --from mykey
 Usage:
   cetcli tx gov deposit [proposal-id] [deposit] [flags]
 
-Flags:
-  -a, --account-number uint     The account number of the signing account (offline mode only)
-  -b, --broadcast-mode string   Transaction broadcasting mode (sync|async|block) (default "sync")
-      --dry-run                 ignore the --gas flag and perform a simulation of a transaction, but don't broadcast it
-      --fees string             Fees to pay along with transaction; eg: 10cet
-      --from string             Name or address of private key with which to sign
-      --gas string              gas limit to set per-transaction; set to "auto" to calculate required gas automatically (default 200000) (default "200000")
-      --gas-adjustment float    adjustment factor to be multiplied against the estimate returned by the tx simulation; if the gas limit is set manually this flag is ignored  (default 1)
-      --gas-prices string       Gas prices to determine the transaction fee (e.g. 10cet)
-      --generate-only           Build an unsigned transaction and write it to STDOUT (when enabled, the local Keybase is not accessible and the node operates offline)
-  -h, --help                    help for deposit
-      --indent                  Add indent to JSON response
-      --ledger                  Use a connected Ledger device
-      --memo string             Memo to send along with transaction
-      --node string             <host>:<port> to tendermint rpc interface for this chain (default "tcp://localhost:26657")
-  -s, --sequence uint           The sequence number of the signing account (offline mode only)
-      --trust-node              Trust connected full node (don't verify proofs for responses) (default true)
-  -y, --yes                     Skip tx broadcasting prompt confirmation
-
+Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ----- | ---------------- | -------- | ------ | ---------------------- |
+| 参数1 | uint             | ✔        |        | 提案ID                 |
+| 参数2 | string           | ✔        |        | 充值金额，例如10000cet |
+
+例1，在CoinEx链测试网3000给提案1充值5000CET：
+
+```
+$ ./cetcli tx gov deposit 1 500000000000cet \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
 
 
 
 ### vote
 
-
+给提案投票，用法：
 
 ```
 $ ./cetcli tx gov vote -h
 Submit a vote for an active proposal. You can
 find the proposal-id by running "cetcli query gov proposals".
-
 
 Example:
 $ cetcli tx gov vote 1 yes --from mykey
@@ -156,35 +337,25 @@ $ cetcli tx gov vote 1 yes --from mykey
 Usage:
   cetcli tx gov vote [proposal-id] [option] [flags]
 
-Flags:
-  -a, --account-number uint     The account number of the signing account (offline mode only)
-  -b, --broadcast-mode string   Transaction broadcasting mode (sync|async|block) (default "sync")
-      --dry-run                 ignore the --gas flag and perform a simulation of a transaction, but don't broadcast it
-      --fees string             Fees to pay along with transaction; eg: 10cet
-      --from string             Name or address of private key with which to sign
-      --gas string              gas limit to set per-transaction; set to "auto" to calculate required gas automatically (default 200000) (default "200000")
-      --gas-adjustment float    adjustment factor to be multiplied against the estimate returned by the tx simulation; if the gas limit is set manually this flag is ignored  (default 1)
-      --gas-prices string       Gas prices to determine the transaction fee (e.g. 10cet)
-      --generate-only           Build an unsigned transaction and write it to STDOUT (when enabled, the local Keybase is not accessible and the node operates offline)
-  -h, --help                    help for vote
-      --indent                  Add indent to JSON response
-      --ledger                  Use a connected Ledger device
-      --memo string             Memo to send along with transaction
-      --node string             <host>:<port> to tendermint rpc interface for this chain (default "tcp://localhost:26657")
-  -s, --sequence uint           The sequence number of the signing account (offline mode only)
-      --trust-node              Trust connected full node (don't verify proofs for responses) (default true)
-  -y, --yes                     Skip tx broadcasting prompt confirmation
-
+Flags: 省略
 Global Flags: 省略
 ```
 
+参数：
 
+| 参数  | 类型（取值范围）                      | 是否必填 | 默认值 | 说明                   |
+| ----- | ------------------------------------- | -------- | ------ | ---------------------- |
+| 参数1 | uint                                  | ✔        |        | 提案ID                 |
+| 参数2 | string (Yes\|Abstain\|No\|NoWithVeto) | ✔        |        | 投票（赞同、弃权、反对、强烈反对） |
 
+例1，在CoinEx链测试网3000给提案1投赞同票：
 
-
-
-
-
+```
+$ ./cetcli tx gov vote 1 Yes \
+	--node=3.13.170.79:26657 --chain-id=coinexdex-test3000 \
+  --gas=30000 --fees=800000cet \
+  --from=bob
+```
 
 
 
@@ -269,7 +440,7 @@ $ ./cetcli query gov params --node=47.252.23.106:26657 --chain-id=coinexdex -o j
 
 ### proposals
 
-
+查看全部提案，用法：
 
 ```
 $ ./cetcli query gov proposals -h
@@ -298,7 +469,49 @@ Flags:
 Global Flags: 省略
 ```
 
+主要选项：
 
+| 参数        | 类型（取值范围）                                         | 是否必填 | 默认值 | 说明                                             |
+| ----------- | -------------------------------------------------------- | -------- | ------ | ------------------------------------------------ |
+| --depositor | string                                                   |          |        | 通过提案赞助者（Bech32地址）过滤提案             |
+| --voter     | string                                                   |          |        | 通过提案投票者（Bech32地址）过滤提案             |
+| --status    | string (deposit_period\|voting_period\|passed\|rejected) |          |        | 通过提案状态（预案、投票中、通过、拒绝）过滤提案 |
+
+例1，查看CoinEx链测试网3000全部提案：
+
+```
+$ ./cetcli query gov proposals --node=3.13.170.79:26657 --chain-id=coinexdex -o json --indent
+[
+  {
+    "content": {
+      "type": "cosmos-sdk/TextProposal",
+      "value": {
+        "title": "proposal001",
+        "description": "my first proposal"
+      }
+    },
+    "id": "1",
+    "proposal_status": "VotingPeriod",
+    "final_tally_result": {
+      "yes": "0",
+      "abstain": "0",
+      "no": "0",
+      "no_with_veto": "0"
+    },
+    "submit_time": "2019-11-27T02:37:16.602399366Z",
+    "deposit_end_time": "2019-12-11T02:37:16.602399366Z",
+    "total_deposit": [
+      {
+        "denom": "cet",
+        "amount": "1010000000000"
+      }
+    ],
+    "voting_start_time": "2019-11-27T03:36:54.939461379Z",
+    "voting_end_time": "2019-12-11T03:36:54.939461379Z"
+  },
+  ...
+]
+```
 
 
 
