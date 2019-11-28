@@ -58,7 +58,7 @@
 
 coin结构
 
-| 参数   | 类型   | 是否必须 | 描述 |
+| 字段名 | 类型   | 是否必须 | 描述 |
 | ------ | ------ | -------- | ---- |
 | amount | string | required | 数额 |
 | denom  | string | required | 币种 |
@@ -77,7 +77,7 @@ POST /bank/accounts/{address}/transfers
 
 消息结构
 
-| 参数         | 类型   | 是否必须 | 描述                                                         |
+| 字段名       | 类型   | 是否必须 | 描述                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
 | from_address | string | required | 发送地址                                                     |
 | to_address   | string | required | 接收地址                                                     |
@@ -121,7 +121,7 @@ POST /bank/accounts/memo
 
 消息结构
 
-| 参数     | 类型   | 是否必须 | 描述     |
+| 字段名   | 类型   | 是否必须 | 描述     |
 | -------- | ------ | -------- | -------- |
 | address  | string | required | 地址     |
 | required | bool   | required | 是否必须 |
@@ -150,7 +150,7 @@ POST /bank/accounts/{address}/supervised_transfers
 
 消息结构
 
-| 参数         | 类型   | 是否必须 | 描述                                                         |
+| 字段名       | 类型   | 是否必须 | 描述                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
 | from_address | string | required | 发送地址                                                     |
 | supervisor   | string | optional | 监督人地址                                                   |
@@ -192,7 +192,7 @@ POST /alias/update
 
 消息结构
 
-| 参数       | 类型   | 是否必须 | 描述               |
+| 字段名     | 类型   | 是否必须 | 描述               |
 | ---------- | ------ | -------- | ------------------ |
 | owner      | string | required | owner              |
 | alias      | string | required | 别名               |
@@ -227,7 +227,7 @@ POST /staking/delegators/{delegatorAddr}/delegations
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述       |
+| 字段名            | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
 | delegator_address | string | required | 委托人地址 |
 | validator_address | string | required | 验证人地址 |
@@ -261,7 +261,7 @@ POST /staking/delegators/{delegatorAddr}/unbonding_delegations
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述         |
+| 字段名            | 类型   | 是否必须 | 描述         |
 | ----------------- | ------ | -------- | ------------ |
 | delegator_address | string | required | 委托人地址   |
 | validator_address | string | required | 验证人地址   |
@@ -296,7 +296,7 @@ POST /staking/delegators/{delegatorAddr}/redelegations
 
 消息结构
 
-| 参数                  | 类型   | 是否必须 | 描述         |
+| 字段名                | 类型   | 是否必须 | 描述         |
 | --------------------- | ------ | -------- | ------------ |
 | delegator_address     | string | required | 委托人地址   |
 | validator_src_address | string | required | 原验证人地址 |
@@ -332,7 +332,7 @@ POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述       |
+| 字段名            | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
 | validator_address | string | required | 验证人地址 |
 
@@ -359,7 +359,7 @@ POST /distribution/delegators/{delegatorAddr}/rewards
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述       |
+| 字段名            | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
 | delegator_address | string | required | 委托人地址 |
 | validator_address | string | required | 验证人地址 |
@@ -388,7 +388,7 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述         |
+| 字段名            | 类型   | 是否必须 | 描述         |
 | ----------------- | ------ | -------- | ------------ |
 | delegator_address | string | required | 委托人地址   |
 | withdraw_address  | string | required | 收益取回地址 |
@@ -415,7 +415,7 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 消息结构
 
-| 参数                | 类型   | 是否必须 | 描述             |
+| 字段名              | 类型   | 是否必须 | 描述             |
 | ------------------- | ------ | -------- | ---------------- |
 | delegator_address   | string | required | 创建人地址       |
 | validator_address   | string | required | 验证人运营地址   |
@@ -427,7 +427,7 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 description结构
 
-| 参数             | 类型   | 是否必须 | 描述                          |
+| 字段名           | 类型   | 是否必须 | 描述                          |
 | ---------------- | ------ | -------- | ----------------------------- |
 | moniker          | string | required | 代号                          |
 | identity         | string | optional | identity signature(keybase等) |
@@ -437,7 +437,7 @@ description结构
 
 commission结构
 
-| 参数            | 类型   | 是否必须 | 描述                     |
+| 字段名          | 类型   | 是否必须 | 描述                     |
 | --------------- | ------ | -------- | ------------------------ |
 | rate            | string | required | 佣金率                   |
 | max_rate        | string | required | 最大佣金率               |
@@ -480,7 +480,7 @@ commission结构
 
 消息结构
 
-| 参数      | 类型   | 是否必须 | 描述       |
+| 字段名     | 类型   | 是否必须 | 描述       |
 | --------- | ------ | -------- | ---------- |
 | address | string | required | 地址 |
 | commission_rate | string | optional | 佣金率 |
@@ -489,7 +489,7 @@ commission结构
 
 description结构
 
-| 参数             | 类型   | 是否必须 | 描述                          |
+| 字段名           | 类型   | 是否必须 | 描述                          |
 | ---------------- | ------ | -------- | ----------------------------- |
 | moniker          | string | required | 代号                          |
 | identity         | string | optional | identity signature(keybase等) |
@@ -524,7 +524,7 @@ description结构
 
 消息结构
 
-| 参数                  | 类型   | 是否必须 | 描述         |
+| 字段名                | 类型   | 是否必须 | 描述         |
 | --------------------- | ------ | -------- | ------------ |
 | sender                | string | required | 发送人       |
 | invariant_module_name | string | required | 不变量模块名 |
@@ -557,7 +557,7 @@ POST /gov/proposals/community_pool_spend
 
 消息结构
 
-| 参数            | 类型   | 是否必须 | 描述       |
+| 字段名          | 类型   | 是否必须 | 描述       |
 | --------------- | ------ | -------- | ---------- |
 | proposer        | string | required | 提案发起人 |
 | initial_deposit | coin[] | required | 初始押金   |
@@ -565,14 +565,14 @@ POST /gov/proposals/community_pool_spend
 
 content结构
 
-| 参数  | 类型   | 是否必须 | 描述     |
-| ----- | ------ | -------- | -------- |
-| type  | string | required | 提案类型 |
-| value | object | required | 提案详情 |
+| 字段名 | 类型   | 是否必须 | 描述     |
+| ------ | ------ | -------- | -------- |
+| type   | string | required | 提案类型 |
+| value  | object | required | 提案详情 |
 
 value结构
 
-| 参数        | 类型     | 是否必须 | 描述                               |
+| 字段名      | 类型     | 是否必须 | 描述                               |
 | ----------- | -------- | -------- | ---------------------------------- |
 | title       | string   | required | 标题                               |
 | description | string   | required | 描述                               |
@@ -582,7 +582,7 @@ value结构
 
 changes结构
 
-| 参数     | 类型   | 是否必须 | 描述       |
+| 字段名   | 类型   | 是否必须 | 描述       |
 | -------- | ------ | -------- | ---------- |
 | subspace | string | required | 模块       |
 | key      | string | required | 参数key    |
@@ -658,7 +658,7 @@ POST /gov/proposals/{proposalId}/deposits
 
 消息结构
 
-| 参数        | 类型   | 是否必须 | 描述       |
+| 字段名      | 类型   | 是否必须 | 描述       |
 | ----------- | ------ | -------- | ---------- |
 | depositor   | string | required | 提案发起人 |
 | proposal_id | string | required | 提案ID     |
@@ -694,7 +694,7 @@ POST /gov/proposals/{proposalId}/votes
 
 消息结构
 
-| 参数        | 类型   | 是否必须 | 描述                                                       |
+| 字段名      | 类型   | 是否必须 | 描述                                                       |
 | ----------- | ------ | -------- | ---------------------------------------------------------- |
 | voter       | string | required | 投票人                                                     |
 | proposal_id | string | required | 提案ID                                                     |
@@ -725,7 +725,7 @@ POST /distribution/{accAddress}/donates
 
 消息结构
 
-| 参数      | 类型   | 是否必须 | 描述       |
+| 字段名    | 类型   | 是否必须 | 描述       |
 | --------- | ------ | -------- | ---------- |
 | from_addr | string | required | 捐献人地址 |
 | amount    | coin[] | required | 捐赠金额   |
@@ -761,7 +761,7 @@ POST /slashing/validators/{validatorAddr}/unjail
 
 消息结构
 
-| 参数    | 类型   | 是否必须 | 描述       |
+| 字段名  | 类型   | 是否必须 | 描述       |
 | ------- | ------ | -------- | ---------- |
 | address | string | required | 验证人地址 |
 
@@ -790,7 +790,7 @@ POST /asset/tokens
 
 消息结构
 
-| 参数              | 类型   | 是否必须 | 描述                          |
+| 字段名            | 类型   | 是否必须 | 描述                          |
 | ----------------- | ------ | -------- | ----------------------------- |
 | symbol            | string | required | 符号                          |
 | name              | string | required | 名字                          |
@@ -837,7 +837,7 @@ POST /asset/tokens/{symbol}/ownerships
 
 消息结构
 
-| 参数           | 类型   | 是否必须 | 描述    |
+| 字段名         | 类型   | 是否必须 | 描述    |
 | -------------- | ------ | -------- | ------- |
 | symbol         | string | required | 符号    |
 | original_owner | string | required | 原owner |
@@ -868,7 +868,7 @@ POST /asset/tokens/{symbol}/mints
 
 消息结构
 
-| 参数          | 类型   | 是否必须 | 描述      |
+| 字段名        | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
 | symbol        | string | required | 符号      |
 | owner_address | string | required | owner地址 |
@@ -899,7 +899,7 @@ POST /asset/tokens/{symbol}/burns
 
 消息结构
 
-| 参数          | 类型   | 是否必须 | 描述      |
+| 字段名        | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
 | symbol        | string | required | 符号      |
 | owner_address | string | required | owner地址 |
@@ -930,7 +930,7 @@ POST /asset/tokens/{symbol}/forbids
 
 消息结构
 
-| 参数          | 类型   | 是否必须 | 描述      |
+| 字段名        | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
 | symbol        | string | required | 符号      |
 | owner_address | string | required | owner地址 |
@@ -959,7 +959,7 @@ POST /asset/tokens/{symbol}/unforbids
 
 消息结构
 
-| 参数          | 类型   | 是否必须 | 描述      |
+| 字段名        | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
 | symbol        | string | required | 符号      |
 | owner_address | string | required | owner地址 |
@@ -988,7 +988,7 @@ POST /asset/tokens/{symbol}/forbidden/whitelist
 
 消息结构
 
-| 参数          | 类型     | 是否必须 | 描述                |
+| 字段名        | 类型     | 是否必须 | 描述                |
 | ------------- | -------- | -------- | ------------------- |
 | symbol        | string   | required | 符号                |
 | owner_address | string   | required | owner地址           |
@@ -1021,7 +1021,7 @@ POST /asset/tokens/{symbol}/unforbidden/whitelist
 
 消息结构
 
-| 参数          | 类型     | 是否必须 | 描述                        |
+| 字段名        | 类型     | 是否必须 | 描述                        |
 | ------------- | -------- | -------- | --------------------------- |
 | symbol        | string   | required | 符号                        |
 | owner_address | string   | required | owner地址                   |
@@ -1054,7 +1054,7 @@ POST /asset/tokens/{symbol}/forbidden/addresses
 
 消息结构
 
-| 参数          | 类型     | 是否必须 | 描述         |
+| 字段名        | 类型     | 是否必须 | 描述         |
 | ------------- | -------- | -------- | ------------ |
 | symbol        | string   | required | 符号         |
 | owner_address | string   | required | owner地址    |
@@ -1088,7 +1088,7 @@ POST /asset/tokens/{symbol}/unforbidden/addresses
 
 消息结构
 
-| 参数          | 类型     | 是否必须 | 描述             |
+| 字段名        | 类型     | 是否必须 | 描述             |
 | ------------- | -------- | -------- | ---------------- |
 | symbol        | string   | required | 符号             |
 | owner_address | string   | required | owner地址        |
@@ -1121,7 +1121,7 @@ POST /asset/tokens/{symbol}/infos
 
 消息结构
 
-| 参数          | 类型   | 是否必须 | 描述      |
+| 字段名        | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
 | symbol        | string | required | 符号      |
 | owner_address | string | required | owner地址 |
@@ -1155,7 +1155,7 @@ POST /comment/new-thread
 
 消息结构
 
-| 参数         | 类型     | 是否必须 | 描述                                                         |
+| 字段名       | 类型     | 是否必须 | 描述                                                         |
 | ------------ | -------- | -------- | ------------------------------------------------------------ |
 | token        | string   | required | 被评论的币种                                                 |
 | sender       | string   | required | 发送者                                                       |
@@ -1196,7 +1196,7 @@ POST /market/trading-pairs
 
 消息结构
 
-| 参数            | 类型    | 是否必须 | 描述                                                    |
+| 字段名          | 类型    | 是否必须 | 描述                                                    |
 | --------------- | ------- | -------- | ------------------------------------------------------- |
 | creator         | string  | required | 创建者，是stock或money的发行者                          |
 | money           | string  | required | money，必须是链上已经被创建的token                      |
@@ -1231,7 +1231,7 @@ POST /market/cancel-trading-pair
 
 消息结构
 
-| 参数           | 类型   | 是否必须 | 描述                    |
+| 字段名         | 类型   | 是否必须 | 描述                    |
 | -------------- | ------ | -------- | ----------------------- |
 | sender         | string | required | 发送者                  |
 | trading_pair   | string | required | 交易对                  |
@@ -1263,7 +1263,7 @@ POST /market/ioc-orders
 
 消息结构
 
-| 参数            | 类型    | 是否必须 | 描述                                                         |
+| 字段名          | 类型    | 是否必须 | 描述                                                         |
 | --------------- | ------- | -------- | ------------------------------------------------------------ |
 | sender          | string  | required | 发送者                                                       |
 | identify        | integer | required | 消息在交易内序号                                             |
@@ -1308,7 +1308,7 @@ POST /market/cancel-order
 
 消息结构
 
-| 参数     | 类型   | 是否必须 | 描述   |
+| 字段名   | 类型   | 是否必须 | 描述   |
 | -------- | ------ | -------- | ------ |
 | order_id | string | required | 订单ID |
 | sender   | string | required | 发送者 |
@@ -1337,7 +1337,7 @@ POST /market/price-precision
 
 消息结构
 
-| 参数            | 类型    | 是否必须 | 描述                                               |
+| 字段名          | 类型    | 是否必须 | 描述                                               |
 | --------------- | ------- | -------- | -------------------------------------------------- |
 | trading_pair    | string  | required | 交易对                                             |
 | sender          | string  | required | 发送者                                             |
@@ -1368,7 +1368,7 @@ POST /bancorlite/bancor-init
 
 消息结构
 
-| 参数                 | 类型    | 是否必须 | 描述                                                    |
+| 字段名               | 类型    | 是否必须 | 描述                                                    |
 | -------------------- | ------- | -------- | ------------------------------------------------------- |
 | owner                | string  | required | owner地址                                               |
 | money                | string  | required | money                                                   |
@@ -1409,11 +1409,11 @@ POST /bancorlite/bancor-cancel
 
 消息结构
 
-| 参数  | 类型   | 是否必须 | 描述      |
-| ----- | ------ | -------- | --------- |
-| owner | string | required | owner地址 |
-| money | string | required | money     |
-| stock | string | required | stock     |
+| 字段名 | 类型   | 是否必须 | 描述      |
+| ------ | ------ | -------- | --------- |
+| owner  | string | required | owner地址 |
+| money  | string | required | money     |
+| stock  | string | required | stock     |
 
 示例
 
@@ -1440,7 +1440,7 @@ POST /bancorlite/bancor-trade
 
 消息结构
 
-| 参数        | 类型   | 是否必须 | 描述      |
+| 字段名      | 类型   | 是否必须 | 描述      |
 | ----------- | ------ | -------- | --------- |
 | sender      | string | required | 发送者    |
 | money       | string | required | money     |
