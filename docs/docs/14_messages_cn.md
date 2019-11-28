@@ -63,6 +63,7 @@ coin结构
 | amount | string | required | 数额 |
 | denom  | string | required | 币种 |
 
+说明：POST接口返回的是未签名交易，POST接口参数参考[swagger文档](https://dex-api.coinex.org/swagger/)。
 
 # 转账
 
@@ -74,7 +75,7 @@ POST /bank/accounts/{address}/transfers
 
 消息类型：bankx/MsgSend
 
-参数
+消息结构
 
 | 参数         | 类型   | 是否必须 | 描述                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
@@ -118,7 +119,7 @@ POST /bank/accounts/memo
 
 消息类型：bankx/MsgSetMemoRequired
 
-参数
+消息结构
 
 | 参数     | 类型   | 是否必须 | 描述     |
 | -------- | ------ | -------- | -------- |
@@ -147,7 +148,7 @@ POST /bank/accounts/{address}/supervised_transfers
 
 消息类型：bankx/MsgSupervisedSend
 
-参数
+消息结构
 
 | 参数         | 类型   | 是否必须 | 描述                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
@@ -189,7 +190,7 @@ POST /alias/update
 
 消息类型：alias/MsgAliasUpdate
 
-参数
+消息结构
 
 | 参数       | 类型   | 是否必须 | 描述               |
 | ---------- | ------ | -------- | ------------------ |
@@ -224,7 +225,7 @@ POST /staking/delegators/{delegatorAddr}/delegations
 
 消息类型：cosmos-sdk/MsgDelegate
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
@@ -258,7 +259,7 @@ POST /staking/delegators/{delegatorAddr}/unbonding_delegations
 
 消息类型：cosmos-sdk/MsgUndelegate
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述         |
 | ----------------- | ------ | -------- | ------------ |
@@ -293,7 +294,7 @@ POST /staking/delegators/{delegatorAddr}/redelegations
 
 消息类型：cosmos-sdk/MsgBeginRedelegate
 
-参数
+消息结构
 
 | 参数                  | 类型   | 是否必须 | 描述         |
 | --------------------- | ------ | -------- | ------------ |
@@ -329,7 +330,7 @@ POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
 
 消息类型：cosmos-sdk/MsgWithdrawDelegationReward
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
@@ -356,7 +357,7 @@ POST /distribution/delegators/{delegatorAddr}/rewards
 
 消息类型：cosmos-sdk/MsgWithdrawDelegationReward
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述       |
 | ----------------- | ------ | -------- | ---------- |
@@ -385,7 +386,7 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 消息类型：cosmos-sdk/MsgModifyWithdrawAddress
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述         |
 | ----------------- | ------ | -------- | ------------ |
@@ -412,7 +413,7 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 消息类型：cosmos-sdk/MsgCreateValidator
 
-参数
+消息结构
 
 | 参数                | 类型   | 是否必须 | 描述             |
 | ------------------- | ------ | -------- | ---------------- |
@@ -477,7 +478,7 @@ commission结构
 
 消息类型：cosmos-sdk/MsgEditValidator
 
-参数
+消息结构
 
 | 参数      | 类型   | 是否必须 | 描述       |
 | --------- | ------ | -------- | ---------- |
@@ -521,7 +522,7 @@ description结构
 
 消息类型：cosmos-sdk/MsgVerifyInvariant
 
-参数
+消息结构
 
 | 参数                  | 类型   | 是否必须 | 描述         |
 | --------------------- | ------ | -------- | ------------ |
@@ -554,7 +555,7 @@ POST /gov/proposals/community_pool_spend
 
 消息类型：cosmos-sdk/MsgSubmitProposal
 
-参数
+消息结构
 
 | 参数            | 类型   | 是否必须 | 描述       |
 | --------------- | ------ | -------- | ---------- |
@@ -655,7 +656,7 @@ POST /gov/proposals/{proposalId}/deposits
 
 消息类型：cosmos-sdk/MsgDeposit
 
-参数
+消息结构
 
 | 参数        | 类型   | 是否必须 | 描述       |
 | ----------- | ------ | -------- | ---------- |
@@ -691,7 +692,7 @@ POST /gov/proposals/{proposalId}/votes
 
 消息类型：bankx/MsgSend
 
-参数
+消息结构
 
 | 参数        | 类型   | 是否必须 | 描述                                                       |
 | ----------- | ------ | -------- | ---------------------------------------------------------- |
@@ -722,7 +723,7 @@ POST /distribution/{accAddress}/donates
 
 消息类型：distrx/MsgDonateToCommunityPool
 
-参数
+消息结构
 
 | 参数      | 类型   | 是否必须 | 描述       |
 | --------- | ------ | -------- | ---------- |
@@ -758,7 +759,7 @@ POST /slashing/validators/{validatorAddr}/unjail
 
 消息类型：asset/MsgUnjail
 
-参数
+消息结构
 
 | 参数    | 类型   | 是否必须 | 描述       |
 | ------- | ------ | -------- | ---------- |
@@ -787,7 +788,7 @@ POST /asset/tokens
 
 消息类型：asset/MsgIssueToken
 
-参数
+消息结构
 
 | 参数              | 类型   | 是否必须 | 描述                          |
 | ----------------- | ------ | -------- | ----------------------------- |
@@ -834,7 +835,7 @@ POST /asset/tokens/{symbol}/ownerships
 
 消息类型：asset/MsgTransferOwnership
 
-参数
+消息结构
 
 | 参数           | 类型   | 是否必须 | 描述    |
 | -------------- | ------ | -------- | ------- |
@@ -865,7 +866,7 @@ POST /asset/tokens/{symbol}/mints
 
 消息类型：asset/MsgMintToken
 
-参数
+消息结构
 
 | 参数          | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
@@ -896,7 +897,7 @@ POST /asset/tokens/{symbol}/burns
 
 消息类型：asset/MsgBurnToken
 
-参数
+消息结构
 
 | 参数          | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
@@ -927,7 +928,7 @@ POST /asset/tokens/{symbol}/forbids
 
 消息类型：asset/MsgForbidToken
 
-参数
+消息结构
 
 | 参数          | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
@@ -956,7 +957,7 @@ POST /asset/tokens/{symbol}/unforbids
 
 消息类型：asset/MsgUnForbidToken
 
-参数
+消息结构
 
 | 参数          | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
@@ -985,7 +986,7 @@ POST /asset/tokens/{symbol}/forbidden/whitelist
 
 消息类型：asset/MsgAddTokenWhitelist
 
-参数
+消息结构
 
 | 参数          | 类型     | 是否必须 | 描述                |
 | ------------- | -------- | -------- | ------------------- |
@@ -1018,7 +1019,7 @@ POST /asset/tokens/{symbol}/unforbidden/whitelist
 
 消息类型：asset/MsgRemoveTokenWhitelist
 
-参数
+消息结构
 
 | 参数          | 类型     | 是否必须 | 描述                        |
 | ------------- | -------- | -------- | --------------------------- |
@@ -1051,7 +1052,7 @@ POST /asset/tokens/{symbol}/forbidden/addresses
 
 消息类型：asset/MsgForbidAddr
 
-参数
+消息结构
 
 | 参数          | 类型     | 是否必须 | 描述         |
 | ------------- | -------- | -------- | ------------ |
@@ -1085,7 +1086,7 @@ POST /asset/tokens/{symbol}/unforbidden/addresses
 
 消息类型：asset/MsgUnForbidAddr
 
-参数
+消息结构
 
 | 参数          | 类型     | 是否必须 | 描述             |
 | ------------- | -------- | -------- | ---------------- |
@@ -1118,7 +1119,7 @@ POST /asset/tokens/{symbol}/infos
 
 消息类型：asset/MsgModifyTokenInfo
 
-参数
+消息结构
 
 | 参数          | 类型   | 是否必须 | 描述      |
 | ------------- | ------ | -------- | --------- |
@@ -1152,7 +1153,7 @@ POST /comment/new-thread
 
 消息类型：comment/MsgCommentToken
 
-参数
+消息结构
 
 | 参数         | 类型     | 是否必须 | 描述                                                         |
 | ------------ | -------- | -------- | ------------------------------------------------------------ |
@@ -1193,7 +1194,7 @@ POST /market/trading-pairs
 
 消息类型：market/MsgCreateTradingPair
 
-参数
+消息结构
 
 | 参数            | 类型    | 是否必须 | 描述                                                    |
 | --------------- | ------- | -------- | ------------------------------------------------------- |
@@ -1228,7 +1229,7 @@ POST /market/cancel-trading-pair
 
 消息类型：market/MsgCancelTradingPair
 
-参数
+消息结构
 
 | 参数           | 类型   | 是否必须 | 描述                    |
 | -------------- | ------ | -------- | ----------------------- |
@@ -1260,7 +1261,7 @@ POST /market/ioc-orders
 
 消息类型：market/MsgCreateOrder
 
-参数
+消息结构
 
 | 参数            | 类型    | 是否必须 | 描述                                                         |
 | --------------- | ------- | -------- | ------------------------------------------------------------ |
@@ -1305,7 +1306,7 @@ POST /market/cancel-order
 
 消息类型：market/MsgCancelOrder
 
-参数
+消息结构
 
 | 参数     | 类型   | 是否必须 | 描述   |
 | -------- | ------ | -------- | ------ |
@@ -1334,7 +1335,7 @@ POST /market/price-precision
 
 消息类型：market/MsgModifyPricePrecision
 
-参数
+消息结构
 
 | 参数            | 类型    | 是否必须 | 描述                                               |
 | --------------- | ------- | -------- | -------------------------------------------------- |
@@ -1365,7 +1366,7 @@ POST /bancorlite/bancor-init
 
 消息类型：bancorlite/MsgBancorInit
 
-参数
+消息结构
 
 | 参数                 | 类型    | 是否必须 | 描述                                                    |
 | -------------------- | ------- | -------- | ------------------------------------------------------- |
@@ -1406,7 +1407,7 @@ POST /bancorlite/bancor-cancel
 
 消息类型：bancorlite/MsgBancorCancel
 
-参数
+消息结构
 
 | 参数  | 类型   | 是否必须 | 描述      |
 | ----- | ------ | -------- | --------- |
@@ -1437,7 +1438,7 @@ POST /bancorlite/bancor-trade
 
 消息类型：bancorlite/MsgBancorTrade
 
-参数
+消息结构
 
 | 参数        | 类型   | 是否必须 | 描述      |
 | ----------- | ------ | -------- | --------- |
