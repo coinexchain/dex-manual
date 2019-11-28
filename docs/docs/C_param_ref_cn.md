@@ -55,10 +55,10 @@
 |              | downtime_jail_duration            |     600000000000 | 10分钟，可用性差关监狱时间（单位是纳秒）                     |
 |              | slash_fraction_double_sign        |             0.05 | 5%，双签资金罚没比例                                         |
 |              | slash_fraction_downtime           |           0.0001 | 0.01%，可用性差资金罚没比例                                  |
-| staking      | unbonding_time                    | 1814400000000000 | 21天                                                         |
+| staking      | unbonding_time                    | 1814400000000000 | 21天，Unbonding成熟时间（单位是纳秒）                        |
 |              | max_validators                    |               42 | 验证者节点数量上限                                           |
-|              | max_entries                       |                7 |                                                              |
-|              | bond_denom                        |              cet |                                                              |
-|              | min_self_delegation               |  500000000000000 | 5000000CET                                                   |
-|              | min_mandatory_commission_rate     |              0.1 |                                                              |
+|              | max_entries                       |                7 | undelegation/redelegation队列长度上限                        |
+|              | bond_denom                        |              cet | 质押币种                                                     |
+|              | min_self_delegation               |  500000000000000 | 5000000CET，节点最低自我质押金额                             |
+|              | min_mandatory_commission_rate     |              0.1 | 10%，节点最低佣金费率                                        |
 
