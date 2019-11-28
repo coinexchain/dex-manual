@@ -1444,7 +1444,7 @@ POST /bancorlite/bancor-trade
 | sender      | string | required | 发送者    |
 | money       | string | required | money     |
 | stock       | string | required | stock     |
-| is_buy      | string | required | 买或卖    |
+| is_buy      | bool   | required | 买或卖    |
 | amount      | string | required | 数量      |
 | money_limit | string | required | money限制 |
 
