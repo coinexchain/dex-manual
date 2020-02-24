@@ -14,7 +14,7 @@
 "cosmos-sdk/MsgUndelegate" 取消委托
 "cosmos-sdk/MsgBeginRedelegate" 转移委托
 
-"cosmos-sdk/MsgWithdrawValidatorCommission" 提取手续费
+"cosmos-sdk/MsgWithdrawValidatorCommission" 提取佣金
 "cosmos-sdk/MsgWithdrawDelegationReward" 提取委托收益
 "cosmos-sdk/MsgModifyWithdrawAddress" 修改收益取回地址
 
@@ -322,7 +322,7 @@ POST /staking/delegators/{delegatorAddr}/redelegations
 
 
 
-## 提取手续费
+## 提取佣金
 
 ```http
 POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
