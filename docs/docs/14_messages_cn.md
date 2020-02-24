@@ -328,7 +328,7 @@ POST /staking/delegators/{delegatorAddr}/redelegations
 POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
 ```
 
-消息类型：cosmos-sdk/MsgWithdrawDelegationReward
+消息类型：cosmos-sdk/MsgWithdrawValidatorCommission
 
 消息结构
 
