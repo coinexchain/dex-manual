@@ -1,6 +1,6 @@
 ### "亚特兰提斯"硬分叉升级指南
 
-#### 概述
+#### 0. 概述
 
 CoinEx Chain将于2020年3月30日进行代号为“亚特兰提斯”的硬分叉升级。此次升级，将基于genesis.json来进行数据的迁移，旧链所生成数据目录（其中存储着历史区块、最新状态等信息）将不再有用，新链将使用新的数据目录，并且有新的Chain-ID。
 
@@ -15,7 +15,7 @@ CoinEx Chain将于2020年3月30日进行代号为“亚特兰提斯”的硬分�
 
 
 
-#### 停止旧链和备份数据
+#### 1. 停止旧链和备份数据
 
 当旧链到达预先约定的高度的时候（或者超过这个高度若干个块的时候），请停止旧链的cetd的执行。用如下命令可以查看目前执行到了哪个高度：
 
@@ -35,7 +35,7 @@ Validator投票时所使用的ED25519私钥文件，重要性尤其的高，所�
 
 
 
-#### 生成新链所使用的genesis.json文件（可选）
+#### 2. 生成新链所使用的genesis.json文件（可选）
 
 本步骤并不是必须的，因为您也可选择直接使用其他节点所生成的genesis文件，免去自己生成的麻烦。但是为了避免其他节点传给您的genesis文件是错误的，建议您最好还是自己生成genesis文件来使用，或者，将自己生成的genesis文件同其他节点所生成的genesis文件进行比对、确认无误后，再使用它。
 
@@ -64,9 +64,9 @@ diff 1 2
 
 
 
-#### 使用genesis.json启动新链
+#### 3. 使用genesis.json启动新链
 
-##### 下载新版本的二进制文件
+##### 3.1. 下载新版本的二进制文件
 
 首先定义若干环境变量：
 ```bash
@@ -95,7 +95,7 @@ chmod a+x cetd cetcli
 
 
 
-#### 创建新的数据目录
+#### 3.2. 创建新的数据目录
 
 1. `${RUN_DIR}/cetd init moniker --chain-id=coinexdex2 --home=${RUN_DIR}/.cetd`
 2. 拷贝下载的genesis.json 到数据目录: `cp genesis.json ${RUN_DIR}/.cetd/config`
@@ -112,7 +112,7 @@ chmod a+x cetd cetcli
    *  `bash dex2_check.sh`
 
     
-#### 用nohup启动新节点
+#### 3.3. 用nohup启动新节点
 
 首先定义seeds节点的列表，seeds节点是硬分叉升级时首先启动的若干个节点，具体是哪些，需要等到硬分叉的时刻才能得知：
 
@@ -129,7 +129,7 @@ nohup ${RUN_DIR}/cetd start --home=${RUN_DIR}/.cetd --minimum-gas-prices=20.0cet
 
 
 
-#### 使用systemctl或supervisor等工具来配置新链的cetd的自动运行
+#### 3.4. 使用systemctl或supervisor等工具来配置新链的cetd的自动运行
 
 等待cetd稳定运行1～2个小时之后，可以把cetd进程kill掉，转而使用systemctl或supervisor等工具来配置新链cetd的自动运行。
 
