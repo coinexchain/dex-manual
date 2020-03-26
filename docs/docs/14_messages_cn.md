@@ -10,6 +10,8 @@
 
 "alias/MsgAliasUpdate" 设置别名
 
+"authx/MsgSetReferee" 设置介绍人
+
 "cosmos-sdk/MsgDelegate" 委托
 "cosmos-sdk/MsgUndelegate" 取消委托
 "cosmos-sdk/MsgBeginRedelegate" 转移委托
@@ -210,6 +212,33 @@ POST /alias/update
         "is_add": true,
         "owner": "coinex1gx8dy25uhrmxap37fe094f6ujhd2hq5r02jgrn"
     }
+}
+```
+
+## 设置介绍人
+
+```http
+POST /auth/accounts/{address}/referee
+```
+
+消息类型：authx/MsgSetReferee
+
+消息结构
+
+| 字段名  | 类型           | 是否必须 | 描述       |
+| ------- | -------------- | -------- | ---------- |
+| sender  | sdk.AccAddress | required | 发送方地址 |
+| referee | sdk.AccAddress | required | 介绍人地址 |
+
+示例
+
+```json
+{
+  	"type":"authx/MsgSetReferee",
+  	"value"：{
+  		"sender":"coinex10pd6h8rqsplgn696gw9shygj8c8n2y7hcyj8vg",
+  		"referee":"coinex1gx8dy25uhrmxap37fe094f6ujhd2hq5r02jgrn"
+		}
 }
 ```
 
