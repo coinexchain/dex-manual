@@ -33,7 +33,7 @@ CoinEx Chain将于2020年3月30日进行代号为“亚特兰提斯”的硬分�
 
 Validator投票时所使用的ED25519私钥文件，重要性尤其的高，所以务必采用多个物理设备（移动硬盘、U盘）对它进行保存，如果之前没有特别的设置，那么这个私钥文件将位于：$HOME/.cetd/config/priv_validator_key.json 
 
-
+各个节点找到自己的私钥文件后，请再次确认它里面包含的地址，的确是自己节点的地址，所有节点的地址可以在这里查看：https://docs.google.com/spreadsheets/d/1oZOa1PLzilOdUbCIxkXy7nQbus5qd5pjn81DCCf5-CY/edit#gid=0 
 
 #### 2. 生成新链所使用的genesis.json文件（可选）
 
