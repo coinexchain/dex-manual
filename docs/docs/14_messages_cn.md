@@ -21,7 +21,7 @@
 |         | "bankx/MsgMultiSend"                        | 多重发送         |  |
 |         | "bankx/MsgSetMemoRequired"                  | 设置memo是否必须 |  |
 |         | "bankx/MsgSupervisedSend"                   | 发送担保交易     |  |
-| authx   | "authx/MsgSetReferee"                       | 设置介绍人       | DEX2新增 |
+| authx   | "authx/MsgSetReferee"                       | 设置介绍人       | DEX2新增消息 |
 | distrx  | "distrx/MsgDonateToCommunityPool"           | 向community pool捐赠 |  |
 | alias   | "alias/MsgAliasUpdate"                      | 设置别名         |  |
 | asset   | "asset/MsgIssueToken"                       | 发行token|  |
@@ -34,13 +34,13 @@
 |         | "asset/MsgRemoveTokenWhitelist"             | 从token白名单移除|  |
 |         | "asset/MsgForbidAddr"                       | 冻结地址token|  |
 |         | "asset/MsgUnForbidAddr"                     | 取消冻结地址token|  |
-|         | "asset/MsgModifyTokenInfo"                  | 修改token信息|  |
+|         | "asset/MsgModifyTokenInfo"                  | 修改token信息| DEX2添加字段 |
 | market  | "market/MsgCreateTradingPair"               | 创建交易对|  |
 |         | "market/MsgCancelTradingPair"               | 取消交易对|  |
 |         | "market/MsgCreateOrder"                     | 创建订单|  |
 |         | "market/MsgCancelOrder"                     | 取消订单|  |
 |         | "market/MsgModifyPricePrecision"            | 修改价格精度|  |
-| bancor  | "bancorlite/MsgBancorInit"                  | 创建bancor|  |
+| bancor  | "bancorlite/MsgBancorInit"                  | 创建bancor| DEX2添加字段 |
 |         | "bancorlite/MsgBancorCancel"                | 取消bancor|  |
 |         | "bancorlite/MsgBancorTrade"                 | 和bancor交易|  |
 | comment | "comment/MsgCommentToken"                   | 对token发表评论|  |
@@ -206,7 +206,7 @@ POST /alias/update
 }
 ```
 
-## 设置介绍人
+## 设置介绍人（DEX2新增）
 
 ```http
 POST /auth/accounts/{address}/referee
@@ -1141,12 +1141,18 @@ POST /asset/tokens/{symbol}/infos
 
 消息结构
 
-| 字段名        | 类型   | 是否必须 | 描述      |
-| ------------- | ------ | -------- | --------- |
-| symbol        | string | required | 符号      |
-| owner_address | string | required | owner地址 |
-| description   | string | optional | 描述      |
-| url           | string | optional | URL       |
+| 字段名            | 类型   | 是否必须 | 描述             | 备注     |
+| ----------------- | ------ | -------- | ---------------- | -------- |
+| symbol            | string | required | 符号             |          |
+| owner_address     | string | required | owner地址        |          |
+| description       | string | optional | 描述             |          |
+| url               | string | optional | URL              |          |
+| name              | string | optional | 名称             | DEX2新增 |
+| total_supply      | string | optional | 总发行量         | DEX2新增 |
+| mintable          | bool   | optional | 可否增发         | DEX2新增 |
+| burnable          | bool   | optional | 可否燃烧         | DEX2新增 |
+| addr_forbiddable  | bool   | optional | 可否根据地址冻结 | DEX2新增 |
+| token_forbiddable | bool   | optional | 可否全局冻结     | DEX2新增 |
 
 示例
 
@@ -1388,16 +1394,17 @@ POST /bancorlite/bancor-init
 
 消息结构
 
-| 字段名               | 类型    | 是否必须 | 描述                                                    |
-| -------------------- | ------- | -------- | ------------------------------------------------------- |
-| owner                | string  | required | owner地址                                               |
-| money                | string  | required | money                                                   |
-| stock                | string  | required | stock                                                   |
-| init_price           | string  | required | 初始价格                                                |
-| max_price            | string  | required | 最大价格                                                |
-| max_supply           | string  | required | 最大数量                                                |
-| earliest_cancel_time | string  | required | 最早可以被取消的时间(戳)                                |
-| stock_precision      | integer | required | 下单精度，下单数量必须是10的order_precision次方的整数倍 |
+| 字段名               | 类型    | 是否必须 | 描述                                                    | 备注     |
+| -------------------- | ------- | -------- | ------------------------------------------------------- | -------- |
+| owner                | string  | required | owner地址                                               |          |
+| money                | string  | required | money                                                   |          |
+| stock                | string  | required | stock                                                   |          |
+| init_price           | string  | required | 初始价格                                                |          |
+| max_price            | string  | required | 最大价格                                                |          |
+| max_supply           | string  | required | 最大数量                                                |          |
+| earliest_cancel_time | string  | required | 最早可以被取消的时间(戳)                                |          |
+| stock_precision      | integer | required | 下单精度，下单数量必须是10的order_precision次方的整数倍 |          |
+| max_money            | string  | optional |                                                         | DEX2新增 |
 
 示例
 
