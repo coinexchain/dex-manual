@@ -76,8 +76,8 @@ export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli
 export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh
 export GENESIS_URL=${ARTIFACTS_BASE_URL}/genesis.json
 export SHA256_CHECKSUM_URL=${ARTIFACTS_BASE_URL}/sha256.sum
-export PUBLIC_IP=123.36.28.137
-export RUN_DIR=/home/ubuntu/data-cetd-dex2
+export PUBLIC_IP=～～123.36.28.137～～
+export RUN_DIR=～～/home/ubuntu/data-cetd-dex2～～
 ```
 注意，上面的`PUBLIC_IP`和`RUN_DIR`的取值仅仅用作示意，请根据自己的情况来设置它们。
 
