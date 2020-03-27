@@ -1,61 +1,50 @@
 # 消息结构说明
 
-目前支持的消息类型
+目前支持的消息类型：
 
-```
-"bankx/MsgSend"  发送
-"bankx/MsgMultiSend" 多重发送
-"bankx/MsgSetMemoRequired" 设置memo是否必须
-"bankx/MsgSupervisedSend" 发送担保交易
+| 模块    | 消息                                         | 用途             |
+| ------- | ------------------------------------------- | ---------------- |
+|         | "cosmos-sdk/MsgDelegate"                    | 委托             |
+|         | "cosmos-sdk/MsgUndelegate"                  | 取消委托         |
+|         | "cosmos-sdk/MsgBeginRedelegate"             | 转移委托         |
+|         | "cosmos-sdk/MsgWithdrawValidatorCommission" | 提取佣金         |
+|         | "cosmos-sdk/MsgWithdrawDelegationReward"    | 提取委托收益     |
+|         | "cosmos-sdk/MsgModifyWithdrawAddress"       | 修改收益取回地址 |
+|         | "cosmos-sdk/MsgCreateValidator"             | 创建验证人       |
+|         | "cosmos-sdk/MsgEditValidator"               | 修改验证人       |
+|         | "cosmos-sdk/MsgVerifyInvariant"             | 不变量检查       |
+|         | "cosmos-sdk/MsgSubmitProposal"              | 发起提案 |
+|         | "cosmos-sdk/MsgDeposit"                     | 给提案存押金 |
+|         | "cosmos-sdk/MsgVote"                        | 提案投票 |
+|         | "cosmos-sdk/MsgUnjail"                      | 赦免            |
+| bankx   | "bankx/MsgSend"                             | 发送             |
+|         | "bankx/MsgMultiSend"                        | 多重发送         |
+|         | "bankx/MsgSetMemoRequired"                  | 设置memo是否必须 |
+|         | "bankx/MsgSupervisedSend"                   | 发送担保交易     |
+| authx   | "authx/MsgSetReferee"                       | 设置介绍人       |
+| distrx  | "distrx/MsgDonateToCommunityPool"           | 向community pool捐赠 |
+| alias   | "alias/MsgAliasUpdate"                      | 设置别名         |
+| asset   | "asset/MsgIssueToken"                       | 发行token|
+|         | "asset/MsgTransferOwnership"                | 转移token的owner|
+|         | "asset/MsgMintToken"                        | token增发|
+|         | "asset/MsgBurnToken"                        | token燃烧|
+|         | "asset/MsgForbidToken"                      | 冻结token|
+|         | "asset/MsgUnForbidToken"                    | 取消冻结token|
+|         | "asset/MsgAddTokenWhitelist"                | 加入token白名单|
+|         | "asset/MsgRemoveTokenWhitelist"             | 从token白名单移除|
+|         | "asset/MsgForbidAddr"                       | 冻结地址token|
+|         | "asset/MsgUnForbidAddr"                     | 取消冻结地址token|
+|         | "asset/MsgModifyTokenInfo"                  | 修改token信息|
+| market  | "market/MsgCreateTradingPair"               | 创建交易对|
+|         | "market/MsgCancelTradingPair"               | 取消交易对|
+|         | "market/MsgCreateOrder"                     | 创建订单|
+|         | "market/MsgCancelOrder"                     | 取消订单|
+|         | "market/MsgModifyPricePrecision"            | 修改价格精度|
+| bancor  | "bancorlite/MsgBancorInit"                  | 创建bancor|
+|         | "bancorlite/MsgBancorCancel"                | 取消bancor|
+|         | "bancorlite/MsgBancorTrade"                 | 和bancor交易|
+| comment | "comment/MsgCommentToken"                   | 对token发表评论|
 
-"alias/MsgAliasUpdate" 设置别名
-
-"authx/MsgSetReferee" 设置介绍人
-
-"cosmos-sdk/MsgDelegate" 委托
-"cosmos-sdk/MsgUndelegate" 取消委托
-"cosmos-sdk/MsgBeginRedelegate" 转移委托
-
-"cosmos-sdk/MsgWithdrawValidatorCommission" 提取佣金
-"cosmos-sdk/MsgWithdrawDelegationReward" 提取委托收益
-"cosmos-sdk/MsgModifyWithdrawAddress" 修改收益取回地址
-
-"cosmos-sdk/MsgCreateValidator" 创建验证人
-"cosmos-sdk/MsgEditValidator" 修改验证人
-"cosmos-sdk/MsgVerifyInvariant" 不变量检查
-
-"cosmos-sdk/MsgSubmitProposal" 发起提案
-"cosmos-sdk/MsgDeposit" 给提案存押金
-"cosmos-sdk/MsgVote" 提案投票
-
-"distrx/MsgDonateToCommunityPool" 向community pool捐赠
-
-"cosmos-sdk/MsgUnjail" 赦免
-
-"market/MsgCreateTradingPair" 创建交易对
-"market/MsgCancelTradingPair" 取消交易对
-"market/MsgCreateOrder" 创建订单
-"market/MsgCancelOrder" 取消订单
-"market/MsgModifyPricePrecision" 修改价格精度
-
-"bancorlite/MsgBancorInit" 创建bancor
-"bancorlite/MsgBancorCancel" 取消bancor
-"bancorlite/MsgBancorTrade" 和bancor交易
-
-"asset/MsgIssueToken" 发行token
-"asset/MsgTransferOwnership" 转移token的owner
-"asset/MsgMintToken" token增发
-"asset/MsgBurnToken" token燃烧
-"asset/MsgForbidToken" 冻结token
-"asset/MsgUnForbidToken" 取消冻结token
-"asset/MsgAddTokenWhitelist" 加入token白名单
-"asset/MsgRemoveTokenWhitelist" 从token白名单移除
-"asset/MsgForbidAddr" 冻结地址token
-"asset/MsgUnForbidAddr" 取消冻结地址token
-"asset/MsgModifyTokenInfo" 修改token信息
-    
-"comment/MsgCommentToken" 对token发表评论
-```
 
 
 coin结构
@@ -66,6 +55,8 @@ coin结构
 | denom  | string | required | 币种 |
 
 说明：POST接口返回的是未签名交易，POST接口参数参考[swagger文档](https://dex-api.coinex.org/swagger/)。
+
+
 
 # 转账
 
