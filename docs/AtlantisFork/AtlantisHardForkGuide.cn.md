@@ -69,16 +69,16 @@ diff 1 2
 ##### 3.1. 下载新版本的二进制文件
 
 首先定义若干环境变量：
-```bash
-export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2
-export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd
-export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli
-export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh
-export GENESIS_URL=${ARTIFACTS_BASE_URL}/genesis.json
-export SHA256_CHECKSUM_URL=${ARTIFACTS_BASE_URL}/sha256.sum
-export PUBLIC_IP=～～123.36.28.137～～
-export RUN_DIR=～～/home/ubuntu/data-cetd-dex2～～
-```
+
+>  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2 <br/>
+>  export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd <br/>
+>  export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli <br/>
+>  export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh <br/>
+>  export GENESIS_URL=${ARTIFACTS_BASE_URL}/genesis.json <br/>
+>  export SHA256_CHECKSUM_URL=${ARTIFACTS_BASE_URL}/sha256.sum <br/>
+>  export PUBLIC_IP=~~123.36.28.137~~ <br/>
+>  export RUN_DIR=~~/home/ubuntu/data-cetd-dex2~~ <br/>
+
 注意，上面的`PUBLIC_IP`和`RUN_DIR`的取值仅仅用作示意，请根据自己的情况来设置它们。
 
 接下来下载文件：
