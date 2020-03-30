@@ -71,7 +71,7 @@ Here jq is used to sort json files to make them readable.
 First define some environmenal variables:
 
 
->  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2 <br/>
+>  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/master/coinexdex-v0.2 <br/>
 >  export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd <br/>
 >  export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli <br/>
 >  export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh <br/>

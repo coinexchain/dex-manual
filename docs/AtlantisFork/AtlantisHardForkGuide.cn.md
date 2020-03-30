@@ -70,7 +70,7 @@ diff 1 2
 
 首先定义若干环境变量：
 
->  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2 <br/>
+>  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/master/coinexdex-v0.2 <br/>
 >  export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd <br/>
 >  export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli <br/>
 >  export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh <br/>
