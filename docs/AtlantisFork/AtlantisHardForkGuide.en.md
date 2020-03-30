@@ -42,13 +42,13 @@ This step is not mandatory. Because you can also use the genesis file generated 
 Please use cetd of the old chain to export the chain's state, which will be stored in genesis.exported.json file:
 
 ```bash
-/path/to/old/cetd export --height=<predefined-height> --for-zero-height > genesis.exported.json
+/path/to/old/cetd export --height=4545600 --for-zero-height=true > genesis.exported.json
 ```
 
 Then use the cetd of the new chain to process genesis.exported.json file, and you can get a genesis.json file:
 
 ```bash
-/path/to/new/cetd migrate genesis.exported.json --genesis-block-height=<predefined-height> --output genesis.json 
+/path/to/new/cetd migrate genesis.exported.json --genesis-block-height=4545600 --output genesis.json 
 
 ```
 
@@ -71,7 +71,7 @@ Here jq is used to sort json files to make them readable.
 First define some environmenal variables:
 
 ```bash
-export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/testnets/master/coinexdex-test-upgrade
+export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2
 export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd
 export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli
 export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh

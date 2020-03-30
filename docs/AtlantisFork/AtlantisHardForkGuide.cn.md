@@ -42,13 +42,13 @@ Validator投票时所使用的ED25519私钥文件，重要性尤其的高，所�
 使用旧链的cetd导出预先约定的高度下链的状态，生成genesis.exported.json文件：
 
 ```bash
-/path/to/old/cetd export --height=<predefined-height> --for-zero-height > genesis.exported.json
+/path/to/old/cetd export --height=4545600 --for-zero-height=true > genesis.exported.json
 ```
 
 使用新链的cetd对上述genesis.exported.json文件进行处理，得到新链所使用的genesis.json文件：
 
 ```bash
-/path/to/new/cetd migrate genesis.exported.json --genesis-block-height=<predefined-height> --output genesis.json 
+/path/to/new/cetd migrate genesis.exported.json --genesis-block-height=4545600 --output genesis.json 
 
 ```
 
@@ -70,7 +70,7 @@ diff 1 2
 
 首先定义若干环境变量：
 ```bash
-export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/testnets/master/coinexdex-test-upgrade
+export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2
 export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd
 export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli
 export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh
