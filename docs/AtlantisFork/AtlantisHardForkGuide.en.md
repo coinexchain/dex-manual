@@ -119,7 +119,7 @@ First define a list of seed nodes. Seed nodes are the several nodes who start fi
 
 
 ```bash
-export CHAIN_SEEDS=<the-chain-seeds-which-would-be-known-then>
+export CHAIN_SEEDS=903458cf236851ccf8604689c3f391c528191f47@47.75.37.80:26656,9be765dffed72adcd27ebb37c79bf8ac501f43e8@47.52.155.115:26656,cd79d6c2b3b6b561c91b61b8e3a706249b532ca4@47.56.215.151:26656,cf34ba278ce69be1240f1dabad9b57ffecae206a@47.75.60.29:26656,c70feea1a4f8ea2fd55c366fdcb7ca4d53f1c775@18.144.85.87:26656,94b718f31dedf4afee4c04d768343166625cf961@47.52.70.137:26656,2cbef50b8c996745b9c8a0059fe32a1fbfef8b46@47.52.129.186:26656,17ec2dcfd7c72fabcb7c7cfe2d71006fc39c85c9@18.180.56.174:26656
 ```
 
 Then use nohup to start cetd:

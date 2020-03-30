@@ -39,10 +39,10 @@ Validator投票时所使用的ED25519私钥文件，重要性尤其的高，所�
 
 本步骤并不是必须的，因为您也可选择直接使用其他节点所生成的genesis文件，免去自己生成的麻烦。但是为了避免其他节点传给您的genesis文件是错误的，建议您最好还是自己生成genesis文件来使用，或者，将自己生成的genesis文件同其他节点所生成的genesis文件进行比对、确认无误后，再使用它。
 
-使用旧链的cetd导出预先约定的高度下链的状态，生成genesis.exported.json文件：
+使用旧链的cetd导出预先约定的高度下链的状态，生成genesis.exported.json文件（有修改过默认目录的，需要加上 --home=自定义目录/.cetd）：
 
 ```bash
-/path/to/old/cetd export --height=4545600 --for-zero-height=true > genesis.exported.json
+/path/to/old/cetd export --height=4545600 --for-zero-height=true --home=<home-dir-of-old-cetd> > genesis.exported.json
 ```
 
 使用新链的cetd对上述genesis.exported.json文件进行处理，得到新链所使用的genesis.json文件：
@@ -118,7 +118,7 @@ chmod a+x cetd cetcli
 
 
 ```bash
-export CHAIN_SEEDS=<the-chain-seeds-which-would-be-known-then>
+export CHAIN_SEEDS=903458cf236851ccf8604689c3f391c528191f47@47.75.37.80:26656,9be765dffed72adcd27ebb37c79bf8ac501f43e8@47.52.155.115:26656,cd79d6c2b3b6b561c91b61b8e3a706249b532ca4@47.56.215.151:26656,cf34ba278ce69be1240f1dabad9b57ffecae206a@47.75.60.29:26656,c70feea1a4f8ea2fd55c366fdcb7ca4d53f1c775@18.144.85.87:26656,94b718f31dedf4afee4c04d768343166625cf961@47.52.70.137:26656,2cbef50b8c996745b9c8a0059fe32a1fbfef8b46@47.52.129.186:26656,17ec2dcfd7c72fabcb7c7cfe2d71006fc39c85c9@18.180.56.174:26656
 ```
 
 接下来用nohup来启动cetd：
