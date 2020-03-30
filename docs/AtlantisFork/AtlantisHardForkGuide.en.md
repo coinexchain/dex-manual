@@ -70,16 +70,16 @@ Here jq is used to sort json files to make them readable.
 
 First define some environmenal variables:
 
-```bash
-export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2
-export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd
-export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli
-export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh
-export GENESIS_URL=${ARTIFACTS_BASE_URL}/genesis.json
-export SHA256_CHECKSUM_URL=${ARTIFACTS_BASE_URL}/sha256.sum
-export PUBLIC_IP=123.36.28.137
-export RUN_DIR=/home/ubuntu/data-cetd-dex2
-```
+
+>  export ARTIFACTS_BASE_URL=https://raw.githubusercontent.com/coinexchain/artifacts/tree/master/coinexdex-v0.2 <br/>
+>  export CETD_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetd <br/>
+>  export CETCLI_URL=${ARTIFACTS_BASE_URL}/linux_x86_64/cetcli <br/>
+>  export CHECK_SH=${ARTIFACTS_BASE_URL}/dex2_check.sh <br/>
+>  export GENESIS_URL=${ARTIFACTS_BASE_URL}/genesis.json <br/>
+>  export SHA256_CHECKSUM_URL=${ARTIFACTS_BASE_URL}/sha256.sum <br/>
+>  export PUBLIC_IP=~~123.36.28.137~~ <br/>
+>  export RUN_DIR=~~/home/ubuntu/data-cetd-dex2~~ <br/>
+
 Please not the above `PUBLIC_IP` and `RUN_DIR` have example values, which may not be suitable for your case, so you must change them according to your needs.
 
 Then you can download the files:
