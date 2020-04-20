@@ -3,7 +3,7 @@
 `alias`命令用来维护账户地址和别名的对应关系。
 
 ```
-~ $ cetcli tx alias -h
+$ cetcli tx alias -h
 alias transactions subcommands
 
 Usage:
