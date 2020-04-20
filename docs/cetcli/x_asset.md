@@ -6,7 +6,7 @@ Asset模块用于资产发行和管理。
 
 ## tx命令
 
-用法：
+用于发起资产相关交易，用法：
 
 ```
 $ cetcli tx asset -h
@@ -67,18 +67,18 @@ Usage:
 
 主要选项：
 
-| 选项名            | 类型（取值范围） | 是否必填 | 默认值 | 说明                                     |
-| ----------------- | ---------------- | -------- | ------ | ---------------------------------------- |
-| name              | string           | ✔        |        | token的名字                              |
-| symbol            | string           | ✔        |        | token的symbol                            |
-| total-supply      | int              | ✔        |        | token的总供应量                          |
-| mintable          | bool             | ✔        |        | 是否可增发                               |
-| burnable          | bool             | ✔        |        | 是否可燃烧                               |
-| addr-forbiddable  | bool             | ✔        |        | 是否可以禁止指定地址上该token的流通      |
-| token-forbiddable | bool             | ✔        |        | 是否可以禁止该token的流通                |
-| url               | string           | ✔        |        | token发行者可以添加一个url               |
-| description       | string           | ✔        |        | token的描述                              |
-| identity          | string           | ✔        |        | token的identity号码，比如来自keybase的id |
+| 选项名              | 类型（取值范围） | 是否必填 | 默认值 | 说明                                     |
+| ------------------- | ---------------- | -------- | ------ | ---------------------------------------- |
+| --name              | string           | ✔        |        | token的名字                              |
+| --symbol            | string           | ✔        |        | token的symbol                            |
+| --total-supply      | int              | ✔        |        | token的总供应量                          |
+| --mintable          | bool             | ✔        |        | 是否可增发                               |
+| --burnable          | bool             | ✔        |        | 是否可燃烧                               |
+| --addr-forbiddable  | bool             | ✔        |        | 是否可以禁止指定地址上该token的流通      |
+| --token-forbiddable | bool             | ✔        |        | 是否可以禁止该token的流通                |
+| --url               | string           | ✔        |        | token发行者可以添加一个url               |
+| --description       | string           | ✔        |        | token的描述                              |
+| --identity          | string           | ✔        |        | token的identity号码，比如来自keybase的id |
 
 例子见上面的命令帮助。
 
@@ -101,12 +101,12 @@ Usage:
   cetcli tx asset transfer-ownership [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名    | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
-| --------- | ---------------- | -------- | ------ | ------------- |
-| symbol    | string           | ✔        |        | token的symbol |
-| new-owner | string           | ✔        |        | 新owner的地址 |
+| 选项名      | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
+| ----------- | ---------------- | -------- | ------ | ------------- |
+| --symbol    | string           | ✔        |        | token的symbol |
+| --new-owner | string           | ✔        |        | 新owner的地址 |
 
 例子见上面的命令帮助。
 
@@ -129,12 +129,12 @@ Usage:
   cetcli tx asset mint-token [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名 | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
-| ------ | ---------------- | -------- | ------ | ------------- |
-| symbol | string           | ✔        |        | token的symbol |
-| amount | int              | ✔        |        | 增加的发行量  |
+| 选项名   | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
+| -------- | ---------------- | -------- | ------ | ------------- |
+| --symbol | string           | ✔        |        | token的symbol |
+| --amount | int              | ✔        |        | 增加的发行量  |
 
 例子见上面的命令帮助。
 
@@ -157,12 +157,12 @@ Usage:
   cetcli tx asset burn-token [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名 | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
-| ------ | ---------------- | -------- | ------ | ------------- |
-| symbol | string           | ✔        |        | token的symbol |
-| amount | int              | ✔        |        | 本次燃烧量    |
+| 选项名   | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
+| -------- | ---------------- | -------- | ------ | ------------- |
+| --symbol | string           | ✔        |        | token的symbol |
+| --amount | int              | ✔        |        | 本次燃烧量    |
 
 例子见上面的命令帮助。
 
@@ -184,11 +184,11 @@ Usage:
   cetcli tx asset forbid-token [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名 | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
-| ------ | ---------------- | -------- | ------ | ------------- |
-| symbol | string           | ✔        |        | token的symbol |
+| 选项名   | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
+| -------- | ---------------- | -------- | ------ | ------------- |
+| --symbol | string           | ✔        |        | token的symbol |
 
 例子见上面的命令帮助。
 
@@ -210,11 +210,11 @@ Usage:
   cetcli tx asset unforbid-token [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名 | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
-| ------ | ---------------- | -------- | ------ | ------------- |
-| symbol | string           | ✔        |        | token的symbol |
+| 选项名   | 类型（取值范围） | 是否必填 | 默认值 | 说明          |
+| -------- | ---------------- | -------- | ------ | ------------- |
+| --symbol | string           | ✔        |        | token的symbol |
 
 例子见上面的命令帮助。
 
@@ -237,12 +237,12 @@ Usage:
   cetcli tx asset add-whitelist [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名    | 类型（取值范围） | 是否必填 | 默认值 | 说明                                   |
-| --------- | ---------------- | -------- | ------ | -------------------------------------- |
-| symbol    | string           | ✔        |        | token的symbol                          |
-| whitelist | string           | ✔        |        | 要添加到白名单中的地址列表，用逗号隔开 |
+| 选项名      | 类型（取值范围） | 是否必填 | 默认值 | 说明                                   |
+| ----------- | ---------------- | -------- | ------ | -------------------------------------- |
+| --symbol    | string           | ✔        |        | token的symbol                          |
+| --whitelist | string           | ✔        |        | 要添加到白名单中的地址列表，用逗号隔开 |
 
 例子见上面的命令帮助。
 
@@ -266,12 +266,12 @@ Usage:
   cetcli tx asset remove-whitelist [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名    | 类型（取值范围） | 是否必填 | 默认值 | 说明                                   |
-| --------- | ---------------- | -------- | ------ | -------------------------------------- |
-| symbol    | string           | ✔        |        | token的symbol                          |
-| whitelist | string           | ✔        |        | 要从白名单中删除的地址列表，用逗号隔开 |
+| 选项名      | 类型（取值范围） | 是否必填 | 默认值 | 说明                                   |
+| ----------- | ---------------- | -------- | ------ | -------------------------------------- |
+| --symbol    | string           | ✔        |        | token的symbol                          |
+| --whitelist | string           | ✔        |        | 要从白名单中删除的地址列表，用逗号隔开 |
 
 例子见上面的命令帮助。
 
@@ -295,12 +295,12 @@ Usage:
   cetcli tx asset forbid-addr [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名    | 类型（取值范围） | 是否必填 | 默认值 | 说明                             |
-| --------- | ---------------- | -------- | ------ | -------------------------------- |
-| symbol    | string           | ✔        |        | token的symbol                    |
-| whitelist | string           | ✔        |        | 将要被禁止的地址列表，用逗号隔开 |
+| 选项名      | 类型（取值范围） | 是否必填 | 默认值 | 说明                             |
+| ----------- | ---------------- | -------- | ------ | -------------------------------- |
+| --symbol    | string           | ✔        |        | token的symbol                    |
+| --addresses | string           | ✔        |        | 将要被禁止的地址列表，用逗号隔开 |
 
 例子见上面的命令帮助。
 
@@ -324,12 +324,12 @@ Usage:
   cetcli tx asset unforbid-addr [flags]
 ```
 
-主要参数：
+主要选项：
 
-| 选项名    | 类型（取值范围） | 是否必填 | 默认值 | 说明                                 |
-| --------- | ---------------- | -------- | ------ | ------------------------------------ |
-| symbol    | string           | ✔        |        | token的symbol                        |
-| whitelist | string           | ✔        |        | 将要被取消禁止的地址列表，用逗号隔开 |
+| 选项名      | 类型（取值范围） | 是否必填 | 默认值 | 说明                                 |
+| ----------- | ---------------- | -------- | ------ | ------------------------------------ |
+| --symbol    | string           | ✔        |        | token的symbol                        |
+| --addresses | string           | ✔        |        | 将要被取消禁止的地址列表，用逗号隔开 |
 
 例子见上面的命令帮助。
 
@@ -345,6 +345,12 @@ $ cetcli tx asset modify-token-info -h
 Create and sign a modify token info msg, broadcast to nodes.
 Example:
 $ cetcli tx asset modify-token-info --symbol="abc" \
+	--name="ABC Token" \
+	--total-supply=2100000000000000 \
+	--mintable=false \
+	--burnable=true \
+	--addr-forbiddable=false \
+	--token-forbiddable=false \
 	--url="www.abc.com" \
 	--description="abc example description" \
 	--identity="552A83BA62F9B1F8" \
@@ -354,17 +360,33 @@ Usage:
   cetcli tx asset modify-token-info [flags]
 ```
 
-**参数解释**
+主要选项：
 
-- `--url`: token的url
-- `--description`: token的描述
-- `--identity`：token的identity
+| 选项名              | 类型（取值范围） | 是否必填 | 默认值            | 说明                                | 何时可修改               |
+| ------------------- | ---------------- | -------- | ----------------- | ----------------------------------- | ------------------------ |
+| --symbol            | string           | ✔        |                   | token的symbol                       | 不可修改                 |
+| --name              | string           |          | "[do-not-modify]" | 新的token名字                       | 扩散前                   |
+| --total-supply      | string           |          | "[do-not-modify]" | 新的token的总供应量                 | 扩散前                   |
+| --mintable          | string           |          | "[do-not-modify]" | 是否可增发                          | 扩散前；扩散后有条件修改 |
+| --burnable          | string           |          | "[do-not-modify]" | 是否可燃烧                          | 扩散前；扩散后有条件修改 |
+| --addr-forbiddable  | string           |          | "[do-not-modify]" | 是否可以禁止指定地址上该token的流通 | 扩散前；扩散后有条件修改 |
+| --token-forbiddable | string           |          | "[do-not-modify]" | 是否可以禁止该token的流通           | 扩散前；扩散后有条件修改 |
+| --url               | string           |          | "[do-not-modify]" | 新的url                             | 总是                     |
+| --description       | string           |          | "[do-not-modify]" | 重新设置token的描述                 | 总是                     |
+| --identity          | string           |          | "[do-not-modify]" | 重新设置token的identity号码         | 总是                     |
+
+例子见上面的命令帮助。特别说明，如果taken已经扩散，则：
+
+* mintable只能由true变为false；且token的TotalMint状态将被清零。
+* burnable只能由fasle变为true；且token的TotalBurn状态将被清零。
+* addr-forbiddable只能由true变为false；且token的禁止流通黑名单将被情况。
+* token-forbiddable只能由true变为false；且token的IsForbidden状态将被重置为false。
 
 
 
 ## query命令
 
-用法：
+用于查询已发行资产的相关状态，用法：
 
 ```
 $ cetcli query asset -h
@@ -382,13 +404,23 @@ Available Commands:
   reserved-symbols    Query reserved symbols
 ```
 
-从上面的帮助中可以看到可供查询的项目，下面依次介绍
+从上面的帮助中可以看到可供查询的项目，下面依次介绍。
 
 
 
 ### 查询asset模块参数
 
 用法：
+
+```
+$ cetcli query asset params -h
+Query asset params
+
+Usage:
+  cetcli query asset params [flags]
+```
+
+示例：
 
 ```
 $ cetcli query asset params --trust-node=true
@@ -398,45 +430,25 @@ $ cetcli query asset params --trust-node=true
 }
 ```
 
-参数描述了发币的费用，记得去掉八个零才是真实的花费数额
-
-
-
-### 查询指定token信息
-
-用法：
-
-```
-$ cetcli query asset token cet --trust-node=true
-{
-  "type": "asset/BaseToken",
-  "value": {
-    "name": "CoinEx Chain Native Token",
-    "symbol": "cet",
-    "total_supply": "586884903761317189",
-    "send_lock": "0",
-    "owner": "coinex1n6jzlyd48p9wpfuta6dwlxc6w3a4h6q39nkcar",
-    "mintable": false,
-    "burnable": true,
-    "addr_forbiddable": false,
-    "token_forbiddable": false,
-    "total_burn": "413115096238682811",
-    "total_mint": "0",
-    "is_forbidden": false,
-    "url": "www.coinex.org",
-    "description": "A public chain built for the decentralized exchange",
-    "identity": "552A83BA62F9B1F8"
-  }
-}
-```
-
-返回的字段对应上面tx命令中发行token命令的字段。
+参数描述了发币的费用，记得去掉八个零才是真实的花费数额。
 
 
 
 ### 查询全部token信息
 
 用法：
+
+```
+$ cetcli query asset tokens -h
+Query details for all tokens. 
+Example:
+$ cetcli query asset tokens
+
+Usage:
+  cetcli query asset tokens  [flags]
+```
+
+示例：
 
 ```
 $ cetcli query asset tokens --trust-node=true
@@ -466,9 +478,79 @@ $ cetcli query asset tokens --trust-node=true
 
 
 
+### 查询指定token信息
+
+用法：
+
+```
+$ cetcli query asset token -h
+Query details for a token. You can find the token by token symbol".
+
+Example:
+$ cetcli query asset token abc
+
+Usage:
+  cetcli query asset token [symbol] [flags]
+```
+
+参数：
+
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 交易对 |
+
+示例：
+
+```
+$ cetcli query asset token cet --trust-node=true
+{
+  "type": "asset/BaseToken",
+  "value": {
+    "name": "CoinEx Chain Native Token",
+    "symbol": "cet",
+    "total_supply": "586884903761317189",
+    "send_lock": "0",
+    "owner": "coinex1n6jzlyd48p9wpfuta6dwlxc6w3a4h6q39nkcar",
+    "mintable": false,
+    "burnable": true,
+    "addr_forbiddable": false,
+    "token_forbiddable": false,
+    "total_burn": "413115096238682811",
+    "total_mint": "0",
+    "is_forbidden": false,
+    "url": "www.coinex.org",
+    "description": "A public chain built for the decentralized exchange",
+    "identity": "552A83BA62F9B1F8"
+  }
+}
+```
+
+返回的字段对应上面tx命令中发行token命令的字段。
+
+
+
 ### 查询指定token的白名单
 
 用法：
+
+```
+$ cetcli query asset whitelist -h
+Query whitelist for a token. You can find it by token symbol".
+
+Example:
+$ cetcli query asset whitelist abc
+
+Usage:
+  cetcli query asset whitelist [symbol] [flags]
+```
+
+参数：
+
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 交易对 |
+
+示例：
 
 ```
 $ cetcli query asset whitelist -h
@@ -483,9 +565,28 @@ Usage:
 
 
 
-### 查询指定token的指定禁止流通地址名单
+### 查询指定token的黑名单
 
 用法：
+
+```
+$ cetcli query asset forbidden-addresses -h
+Query forbidden addresses for a token. You can find it by token symbol".
+
+Example:
+$ cetcli query asset forbidden-addresses abc
+
+Usage:
+  cetcli query asset forbidden-addresses [symbol] [flags]
+```
+
+参数：
+
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 交易对 |
+
+示例：
 
 ```
 $ cetcli query asset forbidden-addresses -h
@@ -503,6 +604,19 @@ Usage:
 ### 查询系统保留token列表
 
 用法：
+
+```
+$ cetcli query asset reserved-symbols -h
+Query reserved symbols list".
+
+Example:
+$ cetcli query asset reserved-symbols
+
+Usage:
+  cetcli query asset reserved-symbols [flags]
+```
+
+示例：
 
 ```
 $ etcli query asset reserved-symbols --trust-node=true
