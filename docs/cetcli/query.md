@@ -1,21 +1,82 @@
 # query命令
 
-#### 查询账户信息
+可以用`query`命令查询链上的各种状态，用法：
+
+```
+$ cetcli query -h
+Querying subcommands
+
+Usage:
+  cetcli query [command]
+
+Aliases:
+  query, q
+
+Available Commands:
+  account                  Query account balance
+              
+  tendermint-validator-set Get the full tendermint validator set at given height
+  block                    Get verified data for a the block at given height
+  txs                      Query for paginated transactions that match a set of events
+  tx                       Query for a transaction by hash in a committed block
+              
+  alias                    Querying commands for the alias module
+  asset                    Querying commands for the asset module
+  bancorlite               Querying commands for the bancorlite module
+  incentive                Querying commands for the incentive module
+  market                   Querying commands for the market module
+  auth                     Querying commands for the auth module
+  bank                     Querying commands for the bank module
+  staking                  Querying commands for the staking module
+  gov                      Querying commands for the governance module
+  slashing                 Querying commands for the slashing module
+  distribution             Querying commands for the distribution module
+  supply                   Querying commands for the supply module
+
+Flags:
+  -h, --help   help for query
+
+Global Flags:
+      --chain-id string       Chain ID of tendermint node
+      --default-http          Use Http as default schema
+  -e, --encoding string       Binary encoding (hex|b64|btc) (default "hex")
+      --home string           directory for config and data (default "/Users/zxh/.cetcli")
+  -o, --output string         Output format (text|json) (default "text")
+      --swagger-host string   Default host of swagger API
+      --trace                 print out full stack trace on errors
+
+Use "cetcli query [command] --help" for more information about a command.
+```
+
+与模块相关的命令请看各个模块的命令说明文档，下面介绍单独的查询命令。
+
+
+
+## 查询账户信息
+
+该命令用于查询指定地址的账户信息，例如account id，sequence id和账户余额等，用法：
 
 ```
 $ cetcli query account -h
-
 Query account balance
+
 Usage:
   cetcli query account [address] [flags]
+
+Flags: 省略
+Global Flags: 省略
 ```
 
-该命令用于查询指定地址的账户信息，例如account id，sequence id和账户余额
+参数：
 
-**例子**
+| 参数  | 参数名  | 类型   | 是否必填 | 默认值 | 说明     |
+| ----- | ------- | ------ | -------- | ------ | -------- |
+| 参数1 | address | string | ✔        |        | 账户地址 |
+
+选项请查看命令帮助文档。例:
 
 ```
-cetcli query account coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m --chain-id=coinexdex
+$ cetcli query account coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m --chain-id=coinexdex
 {
   "address": "coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m",
   "coins": [
@@ -53,41 +114,63 @@ cetcli query account coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m --chain-id=co
 }
 ```
 
-#### 查询区块信息
+
+
+## 查询区块信息
+
+该命令会返回指定高度区块的元信息，例如区块hash，区块时间，区块交易数量等。用法：
 
 ```
-$ cetcli query  block -h
-
+$ cetcli query block -h
 Get verified data for a the block at given height
+
 Usage:
   cetcli query block [height] [flags]
+
+Flags: 省略
+Global Flags: 省略
 ```
 
-该命令会返回指定高度区块的元信息，例如区块hash，区块时间，区块交易数量等
+参数：
 
-**例子**
+| 参数  | 参数名 | 类型 | 是否必填 | 默认值 | 说明     |
+| ----- | ------ | ---- | -------- | ------ | -------- |
+| 参数1 | height | int  | ✔        |        | 区块高度 |
+
+选项请查看命令帮助文档。例:
 
 ```
-cetcli query  block 100  --chain-id=coinexdex
+$ cetcli query  block 100  --chain-id=coinexdex
 {"block_meta":{"block_id":{"hash":"0184F56E0C546805039C31BAE78318B2735328B347F79E604F8BC150B8E82CF4","parts":{"total":"1","hash":"7607C8B65BF6DA304BD6621E334F83775033F9C5BF048918ED0C108B7BA6A4B9"}},"header":{"version":{"block":"10","app":"0"},"chain_id":"coinexdex","height":"100","time":"2019-11-11T02:06:22.601271731Z","num_txs":"0","total_txs":"0","last_block_id":{"hash":"BB55B8FA890971B128A5F2F576230AC02E3ABA182067818F6921CBE9E3243422","parts":{"total":"1","hash":"31864F31B182424585B74E839CA0E35AC1D5EBE39DEE616E2A3BBCDAA86BE336"}},"last_commit_hash":"7930C6895CCB5225A7C63976A3CC01F26E8DB2B2BAE3458CB4174FE2ABF34659","data_hash":"","validators_hash":"EDE374E8865F83092C3D55B341DF059C2B7043F95701433ECB0EB597E52A055F","next_validators_hash":"EDE374E8865F83092C3D55B341DF059C2B7043F95701433ECB0EB597E52A055F","consensus_hash":"048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F","app_hash":"D8FAA41E29A4A985C18874C42B0688AA71B80BDEF75D0B9E56DE5833CAD17EB9","last_results_hash":"","evidence_hash":"","proposer_address":"EEE9E89D623F8C2871F05FEFA0A422474327CF20"}},"block":{"header":{"version":{"block":"10","app":"0"},"chain_id":"coinexdex","height":"100","time":"2019-11-11T02:06:22.601271731Z","num_txs":"0","total_txs":"0","last_block_id":{"hash":"BB55B8FA890971B128A5F2F576230AC02E3ABA182067818F6921CBE9E3243422","parts":{"total":"1","hash":"31864F31B182424585B74E839CA0E35AC1D5EBE39DEE616E2A3BBCDAA86BE336"}},"last_commit_hash":"7930C6895CCB5225A7C63976A3CC01F26E8DB2B2BAE3458CB4174FE2ABF34659","data_hash":"","validators_hash":"EDE374E8865F83092C3D55B341DF059C2B7043F95701433ECB0EB597E52A055F","next_validators_hash":"EDE374E8865F83092C3D55B341DF059C2B7043F95701433ECB0EB597E52A055F","consensus_hash":"048091BC7DDC283F77BFBF91D73C44DA58C3DF8A9CBC867405D8B7F3DAADA22F","app_hash":"D8FAA41E29A4A985C18874C42B0688AA71B80BDEF75D0B9E56DE5833CAD17EB9","last_results_hash":"","evidence_hash":"","proposer_address":"EEE9E89D623F8C2871F05FEFA0A422474327CF20"},"data":{"txs":null},"evidence":{"evidence":null},"last_commit":{"block_id":{"hash":"BB55B8FA890971B128A5F2F576230AC02E3ABA182067818F6921CBE9E3243422","parts":{"total":"1","hash":"31864F31B182424585B74E839CA0E35AC1D5EBE39DEE616E2A3BBCDAA86BE336"}},"precommits":[{"type":2,"height":"99","round":"0","block_id":{"hash":"BB55B8FA890971B128A5F2F576230AC02E3ABA182067818F6921CBE9E3243422","parts":{"total":"1","hash":"31864F31B182424585B74E839CA0E35AC1D5EBE39DEE616E2A3BBCDAA86BE336"}},"timestamp":"2019-11-11T02:06:22.601271731Z","validator_address":"EEE9E89D623F8C2871F05FEFA0A422474327CF20","validator_index":"0","signature":"/xZEGBEYrcona4zph3e0Kdf6xCE1iSBjCeTaRPV//8QW0dDFDu4VRg5t3dxkE3bem2yVDWlY4l+CwZjSL6L3DA=="}]}}}
 ```
 
-#### 查询交易详情
+
+
+## 查询交易详情
+
+该命令用于查询指定hash值的交易详情，用法：
 
 ```
-$ cetcli query  tx -h
+$ cetcli query tx -h
 
 Query for a transaction by hash in a committed block
 Usage:
   cetcli query tx [hash] [flags]
+
+Flags: 省略
+Global Flags: 省略
 ```
 
-该命令用于查询指定hash值的交易详情，例如下面是一笔转账交易。
+参数：
 
-**例子**
+| 参数  | 参数名 | 类型 | 是否必填 | 默认值 | 说明     |
+| ----- | ------ | ---- | -------- | ------ | -------- |
+| 参数1 | hash   | int  | ✔        |        | 交易哈希 |
+
+选项请查看命令帮助文档。例如下面是一笔转账交易：
 
 ```
-cetcli query  tx F9DC0B41F5C714B35A7CF96B8E1075C247EEA7DD8224EDBFEF2BA8985E59D885 --chain-id=coinexdex
+$ cetcli query  tx F9DC0B41F5C714B35A7CF96B8E1075C247EEA7DD8224EDBFEF2BA8985E59D885 --chain-id=coinexdex
 height: 513351
 txhash: F9DC0B41F5C714B35A7CF96B8E1075C247EEA7DD8224EDBFEF2BA8985E59D885
 code: 0
@@ -158,10 +241,12 @@ events:
     value: coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m
 ```
 
-#### 查询某类交易信息
+
+
+## 查询某类交易信息
 
 ```
-$ cetcli query  txs -h
+$ cetcli query txs -h
 
 Search for transactions that match the exact given tags where results are paginated.
 Example:
