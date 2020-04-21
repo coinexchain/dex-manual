@@ -245,6 +245,8 @@ events:
 
 ## 查询某类交易信息
 
+搜索交易，用法：
+
 ```
 $ cetcli query txs -h
 
@@ -261,23 +263,26 @@ Flags:
   -n, --node string    Node to connect to (default "tcp://localhost:26657")
       --page uint32    Query a specific page of paginated results (default 1)
       --tags string    tag:value list of tags that must match
-      --trust-node     Trust connected full node (don't verify proofs for responses)  
+      --trust-node     Trust connected full node (don't verify proofs for responses) 
+Global Flags: 省略
 ```
 
-**参数解释**
+主要选项：
 
-- `--limit:` 每一页显示的交易数量
-- `--page:` 指定查询结果的显示页数
-- `--tags:` 指定交易的过滤条件
+| 选项名  | 类型（取值范围） | 是否必填 | 默认值 | 说明                   |
+| ------- | ---------------- | -------- | ------ | ---------------------- |
+| --tags  | string           | ✔        |        | 指定交易的过滤条件     |
+| --page  | int              |          | 1      | 指定查询结果的显示页数 |
+| --limit | string           |          | 30     | 每一页显示的交易数量   |
 
-**例子**
+例1，按消息模块查询：
 
 ```
 cetcli query  txs --tags message.module:bankx --limit=2 --chain-id=coinexdex
 {"total_count":"23200","count":"2","page_number":"1","page_total":"11600","limit":"2","txs":[{"height":"780","txhash":"E26ACB4D854DE5609FF3AA16F44B2EF9A46757B069C14723DBD1A2A0903012B3","raw_log":"[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"sender\",\"value\":\"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn\"},{\"key\":\"module\",\"value\":\"bankx\"},{\"key\":\"sender\",\"value\":\"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn\"},{\"key\":\"action\",\"value\":\"send\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl\"},{\"key\":\"amount\",\"value\":\"100000000cet\"},{\"key\":\"recipient\",\"value\":\"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e\"},{\"key\":\"amount\",\"value\":\"999900000000cet\"},{\"key\":\"sender\",\"value\":\"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn\"}]}]}]","logs":[{"msg_index":0,"success":true,"log":"","events":[{"type":"message","attributes":[{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"module","value":"bankx"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"action","value":"send"}]},{"type":"transfer","attributes":[{"key":"recipient","value":"coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl"},{"key":"amount","value":"100000000cet"},{"key":"recipient","value":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e"},{"key":"amount","value":"999900000000cet"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"}]}]}],"gas_wanted":"40000","gas_used":"24140","tx":{"type":"cosmos-sdk/StdTx","value":{"msg":[{"type":"bankx/MsgSend","value":{"from_address":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn","to_address":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e","amount":[{"denom":"cet","amount":"1000000000000"}],"unlock_time":"0"}}],"fee":{"amount":[{"denom":"cet","amount":"800000"}],"gas":"40000"},"signatures":[{"pub_key":{"type":"tendermint/PubKeySecp256k1","value":"A39OwQ3ZTDyy/Nt3eH0WDZqdNKhafwCMUSZ8gbXkz6oU"},"signature":"FjefpxLNEN3u1jSvxn1mrRZAixqI1bp89zrghgYflzE249LwIMx3JYVefmbSaiOnM/jZxu25tlHrNEqtxDoUbg=="}],"memo":""}},"timestamp":"2019-11-11T02:29:17Z","events":[{"type":"message","attributes":[{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"module","value":"bankx"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"action","value":"send"}]},{"type":"transfer","attributes":[{"key":"recipient","value":"coinex17xpfvakm2amg962yls6f84z3kell8c5lm7j9tl"},{"key":"amount","value":"100000000cet"},{"key":"recipient","value":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e"},{"key":"amount","value":"999900000000cet"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"}]}]},{"height":"972","txhash":"2628E5C7B343F72A60CB0C5166AB42499D99F259D0D9490823E476FD9322BA38","raw_log":"[{\"msg_index\":0,\"success\":true,\"log\":\"\",\"events\":[{\"type\":\"message\",\"attributes\":[{\"key\":\"module\",\"value\":\"bankx\"},{\"key\":\"sender\",\"value\":\"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn\"},{\"key\":\"action\",\"value\":\"send\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e\"},{\"key\":\"amount\",\"value\":\"25000000000000000cet\"},{\"key\":\"sender\",\"value\":\"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn\"}]}]}]","logs":[{"msg_index":0,"success":true,"log":"","events":[{"type":"message","attributes":[{"key":"module","value":"bankx"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"action","value":"send"}]},{"type":"transfer","attributes":[{"key":"recipient","value":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e"},{"key":"amount","value":"25000000000000000cet"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"}]}]}],"gas_wanted":"40000","gas_used":"24220","tx":{"type":"cosmos-sdk/StdTx","value":{"msg":[{"type":"bankx/MsgSend","value":{"from_address":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn","to_address":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e","amount":[{"denom":"cet","amount":"25000000000000000"}],"unlock_time":"0"}}],"fee":{"amount":[{"denom":"cet","amount":"800000"}],"gas":"40000"},"signatures":[{"pub_key":{"type":"tendermint/PubKeySecp256k1","value":"A39OwQ3ZTDyy/Nt3eH0WDZqdNKhafwCMUSZ8gbXkz6oU"},"signature":"LxIHE/e4mvtfn3pV5U1G4CVMlmIYJa3qhQns4x4zHN0LlWafvkhVzNY4TCGGsgGw2gpKHnGnklbKV5Z02Xq/Pg=="}],"memo":""}},"timestamp":"2019-11-11T02:35:45Z","events":[{"type":"message","attributes":[{"key":"module","value":"bankx"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"},{"key":"action","value":"send"}]},{"type":"transfer","attributes":[{"key":"recipient","value":"coinex1ue6tfxm8qlthc43s3rg0fvwakrsfme0x2say3e"},{"key":"amount","value":"25000000000000000cet"},{"key":"sender","value":"coinex1tsw5tnf75r2ln4h2r33wzje4hd3vtautv3fchn"}]}]}]}
 ```
 
-再举一个查询某地址转账记录的例子
+例2，查询某地址转账记录：
 
 ```
 cetcli query  txs --tags message.sender:coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6gjg3m --limit=2 --chain-id=coinexdex
@@ -285,4 +290,29 @@ cetcli query  txs --tags message.sender:coinex1y6xsfgt9e7l2thrzu8j8mv0ahys34jaa6
 ```
 
 这个tags的种类非常多，不建议用户通过此命令过滤交易，请使用区块链浏览器。
+
+
+
+## 查询验证者集合
+
+查询指定高度区块的验证者集合：
+
+```
+$ cetcli query tendermint-validator-set -h
+Get the full tendermint validator set at given height
+
+Usage:
+  cetcli query tendermint-validator-set [height] [flags]
+
+Flags: 省略
+Global Flags: 省略
+```
+
+参数：
+
+| 参数  | 参数名 | 类型 | 是否必填 | 默认值 | 说明     |
+| ----- | ------ | ---- | -------- | ------ | -------- |
+| 参数1 | height | int  | ✔        |        | 区块高度 |
+
+选项请查看命令帮助文档。
 
