@@ -1,6 +1,6 @@
 # keys命令
 
-`keys`命令用来维护本地keystore：
+`keys`命令用来维护本地keystore，用法：
 
 ```
 $ ./cetcli keys -h
@@ -30,7 +30,7 @@ Available Commands:
 
 ## 添加秘钥
 
-可以使用`add`命令添加密钥：
+可以使用`add`命令添加密钥，用法：
 
 ```
 $ ./cetcli keys add -h
@@ -72,19 +72,21 @@ Flags:
 Global Flags: 省略
 ```
 
+参数和选项见命令帮助文档。
+
 例1，添加名为bob的普通密钥：`$ ./cetcli keys add bob`
 
 例2，添加名为t3的2-of-3多签密钥：`$ ./cetcli keys add t3 --multisig=bob,eve,jay --multisig-threshold=2 `
 
 例3，根据bip39助记词恢复密钥：`./cetcli keys add mykey1 --recover`
 
-例3，生成密钥，但是仅打印信息，不写入本地存储：`$ ./cetcli keys add mykey2 --dry-run`
+例4，生成密钥，但是仅打印信息，不写入本地存储：`$ ./cetcli keys add mykey2 --dry-run`
 
 
 
 ## 更新密码
 
-可以使用`update`命令更新密钥保护密码：
+可以使用`update`命令更新密钥保护密码，用法：
 
 ```
 $ ./cetcli keys update -h
@@ -99,13 +101,13 @@ Flags:
 Global Flags: 省略
 ```
 
-例：`$ ./cetcli keys update bob`
+参数和选项见命令帮助文档。例：`$ ./cetcli keys update bob`
 
 
 
 ## 列出全部密钥
 
-可以使用`list`列出全部密钥：
+可以使用`list`列出全部密钥，用法：
 
 ```
 $ ./cetcli keys list -h
@@ -122,13 +124,13 @@ Flags:
 Global Flags: 省略
 ```
 
-例：`$ ./cetcli keys list`
+参数和选项见命令帮助文档。例：`$ ./cetcli keys list`
 
 
 
 ## 显示单个密钥
 
-可以使用`show`命令显示单个密钥：
+可以使用`show`命令显示单个密钥，用法：
 
 ```
 $ ./cetcli keys show -h
@@ -151,6 +153,8 @@ Flags:
 Global Flags: 省略
 ```
 
+参数和选项见命令帮助文档。
+
 例1，显示bob的密钥信息：`$ ./cetcli keys show bob`
 
 例2，仅显示bob的地址：`$ ./cetcli keys show bob -a`
@@ -161,7 +165,7 @@ Global Flags: 省略
 
 ## 删除密钥
 
-可以使用`delete`命令删除密钥：
+可以使用`delete`命令删除密钥，用法：
 
 ```
 $ ./cetcli keys delete -h
@@ -182,13 +186,13 @@ Flags:
 Global Flags: 省略
 ```
 
-例，删除名为bob的密钥：`$ ./cetcli keys delete bob`
+参数和选项见命令帮助文档。例，删除名为bob的密钥：`$ ./cetcli keys delete bob`
 
 
 
 ## 导出密钥 
 
-可以使用`export`命令导出密钥：
+可以使用`export`命令导出密钥，用法：
 
 ```
 $ ./cetcli keys export -h
@@ -203,13 +207,13 @@ Flags:
 Global Flags: 省略
 ```
 
-例，导出bob的密钥：`$ ./cetcli keys export bob`
+参数和选项见命令帮助文档。例，导出bob的密钥：`$ ./cetcli keys export bob`
 
 
 
 ## 导入密钥
 
-可以使用`import`命令导人密钥：
+可以使用`import`命令导人密钥，用法：
 
 ```
 $ ./cetcli keys import -h
@@ -224,13 +228,13 @@ Flags:
 Global Flags: 省略
 ```
 
-例，导入bob的密钥：`$ ./cetcli keys import bob bob.key`
+参数和选项见命令帮助文档。例，导入bob的密钥：`$ ./cetcli keys import bob bob.key`
 
 
 
 ## 创建bip39助记词
 
-可以使用`mnemonic`命令创建bip39助记词：
+可以使用`mnemonic`命令创建bip39助记词，用法：
 
 ```
 $ ./cetcli keys mnemonic -h
@@ -246,3 +250,4 @@ Flags:
 Global Flags: 省略
 ```
 
+参数和选项见命令帮助文档。
