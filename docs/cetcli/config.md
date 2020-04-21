@@ -10,7 +10,7 @@
 2. 如果在配置文件中配置了选项值，那么使用这个值
 3. 否则使用选项的默认值
 
-CETCLI的配置文件路径是`$CETCLI_HOME/config/config.toml`，这是个普通的文本文件，采用[TOML](https://github.com/toml-lang/toml)格式。`config`命令的主要作用即是**编辑**或**查看**这个文件的内容。
+CETCLI的配置文件路径是`$CETCLI_HOME/config/config.toml`，这是个普通的文本文件，采用[TOML](https://github.com/toml-lang/toml)格式。`config`命令的主要作用就是**编辑**或**查看**这个文件的内容。
 
 
 
