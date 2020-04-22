@@ -588,3 +588,33 @@ Global Flags: 省略
 | ----- | ------ | -------- | ------ | ------ |
 | 参数1 | string | ✔        |        | 交易对 |
 
+例1，在DEX2主网查询`dac/cet`交易对的订单薄：
+
+```
+$ cetcli query market orderbook dac/cet \
+	--node=3.20.163.168:26657 --trust-node=true --chain-id=coinexdex2
+[
+  {
+    "order_id": "coinex1ls72x4nlhcs7qu89vx9afezgkp8w2tmdku4ppw-47104",
+    "sender": "coinex1ls72x4nlhcs7qu89vx9afezgkp8w2tmdku4ppw",
+    "sequence": "184",
+    "identify": 0,
+    "trading_pair": "dac/cet",
+    "order_type": 2,
+    "price": "0.511100000000000000",
+    "quantity": "198812126516",
+    "side": 1,
+    "time_in_force": "3",
+    "height": "5311075",
+    "frozen_commission": "101612878",
+    "exist_blocks": "2880000",
+    "frozen_feature_fee": "18800000",
+    "left_stock": "198812126516",
+    "freeze": "101612877863",
+    "deal_stock": "0",
+    "deal_money": "0"
+  },
+  ...
+]
+```
+
