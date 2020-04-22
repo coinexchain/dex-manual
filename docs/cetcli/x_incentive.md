@@ -2,6 +2,10 @@
 
 ## query
 
+该命令用来查询incentive模块相关参数。
+
+用法：
+
 ```BASH
 Query incentive params
 
@@ -9,7 +13,7 @@ Usage:
   cetcli query incentive params [flags]
 ```
 
-以上命令用来查询incentive模块相关参数。
+示例：
 
 ```BASH
 cetcli q incentive params --chain-id=coinexdex
@@ -51,5 +55,12 @@ cetcli q incentive params --chain-id=coinexdex
 
 ```
 
-返回的结果中，`plans`中记录了一系列当区块高度在start_height到end_height之间的每块的奖励以及总奖励。如果当前高度不在plans中，则按`default_reward_per_block`的奖励值来分发，前提是incentive_addr中有足够的钱。
+**参数解释**：
+
+| 参数                       | 含义                                                         |
+| -------------------------- | ------------------------------------------------------------ |
+| `default_reward_per_block` | 在当前高度不在任何激励计划内时，按当前值进行每块的激励分发   |
+| `plans`                    | 当区块高度在start_height到end_height之间的每块的激励以及总激励 |
+
+
 
