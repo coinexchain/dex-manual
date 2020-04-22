@@ -1,15 +1,15 @@
 # bancorlite命令
 
-与轻量级bancor市场相关的交易命令挂在`cetcli tx bancorlite`命令下，查询命令挂在`cetcli query bancorlite`命令下。
+bancorlite命令用于和bancor市场有关的活动，例如bancor市场的创建，bancor交易，bancor市场的取消，查询等。
 
 
 
-## 交易
+## tx命令
 
-`cetcli tx bancor`提供了3个子命令，分别用于：创建和取消轻量级bancor市场，以及在市场中进行交易。
+用于发起bancor相关交易，具体包含3个子命令，分别用于：创建bancor市场，在bancor市场中进行交易以及取消bancor市场。
 
 ```
-$ ./cetcli tx bancorlite -h
+$ cetcli tx bancorlite -h
 bancorlite transactions subcommands
 
 Usage:
@@ -30,18 +30,14 @@ Global Flags: 省略
 
 ### 创建bancorlite
 
-用法：
+创建bancor市场，用法：
 
 ```
-$ ./cetcli tx bancorlite init -h
-Initialize a bancor pool for a stock/money pair, specifying the maximum supply of this pool
-and the maximum reachable price when all the supply are sold out, specifying the init price, 
-and specifying the time before which no cancellation is allowed.
+$ cetcli tx bancorlite init -h
+Initialize a bancor pool for a stock/money pair, specifying the maximum supply of this pool and the maximum reachable price when all the supply are sold out, specifying the init price, and specifying the time before which no cancellation is allowed.
 
-Example: 
-	 cetcli tx bancorlite init stock money \
-	 	--max-supply=10000000000000 --stock-precision=3 --max-price=5 --init-price=1 \
-	 	--earliest-cancel-time=1563954165
+Example:
+	 cetcli tx bancorlite init stock money --max-supply=10000000000000 --max-money=100000 --stock-precision=3 --max-price=5 --init-price=1 --earliest-cancel-time=1563954165
 
 Usage:
   cetcli tx bancorlite init [stock] [money] [flags]
@@ -62,6 +58,7 @@ Flags:
       --indent                        Add indent to JSON response
       --init-price string             The init price of this bancor (default "0")
       --ledger                        Use a connected Ledger device
+      --max-money string              The maximum money of this pool (default "0")
       --max-price string              The maximum reachable price when all the supply are sold out (default "0")
       --max-supply string             The maximum supply of this pool. (default "0")
       --memo string                   Memo to send along with transaction
@@ -70,7 +67,6 @@ Flags:
       --stock-precision string        The precision of stock (default "0")
       --trust-node                    Trust connected full node (don't verify proofs for responses) (default true)
   -y, --yes                           Skip tx broadcasting prompt confirmation
-
 Global Flags: 省略
 ```
 
@@ -81,20 +77,22 @@ Global Flags: 省略
 | 参数1        | string           | ✔        |        | 基础Token（含义可以参考`market`命令） |
 | 参数2           | string    | ✔        |        | 计价Token（含义可以参考`market`命令）     |
 | --max-supply           | int       | ✔        |        | 最大供应                               |
+| --max-money | int | ✔ | | 基础Token全部售出后可获得的计价Token数量 |
 | --max-price            | decimal       | ✔        |        | 价格                                                   |
 | --init-price           | decimal | ✔        |        | 初始价格         |
 | --stock-precision      | int (0 ~ 8)    | ✔        |        | 数量精度，控制交易时的数量粒度 |
 | --earliest-cancel-time | int              | ✔        |        | Unix时间戳，单位是秒 |
 
-> 💡提示：只有某token的发行者才能创建以该token为基础token的bancorlite市场。例如，只有`abc`的发行者才能创建`abc/def`市场。
+例子：
 
-例1，创建`abc/def`市场，最大供应是10000000000000，最高价格是500，初始价格是5，交易量必须是1000（10^3）的倍数，最早退市时间是一个月后：
+创建`abc/def`市场，最大供应是10000000000000，最高价格是50，初始价格是5，计价Token数为300000000000000交易数量精度是3，最早退市时间是未来的某一个时间点$cancelTime：
 
 ```
 cancelTime=`python -c "import time; print(int((time.time() + 30*24*3600)))"` # one month later
 $ ./cetcli tx bancorlite init abc def \
 	--max-supply=10000000000000 \
-	--max-price=500 \
+	--max-money=300000000000000 \
+	--max-price=50 \
 	--init-price=5 \
 	--stock-precision=3 \
 	--earliest-cancel-time=$cancelTime \
@@ -107,10 +105,10 @@ $ ./cetcli tx bancorlite init abc def \
 
 ### 取消bancorlite
 
-用法：
+取消已存在的bancor市场，用法：
 
 ```
-$ ./cetcli tx bancorlite cancel -h
+$ cetcli tx bancorlite cancel -h
 Cancel a bancor pool for a stock/money pair, sender must be this stock owner
 
 Example: 
@@ -149,9 +147,9 @@ Global Flags: 省略
 | 参数1     | string           | ✔        |        | 基础Token |
 | 参数2     | string           | ✔        |        | 计价Token |
 
-> 💡提示：只有某bancorlite市场的创建者才能取消该市场。
+例子：
 
-例1，取消bancorlite市场`abc/def`：
+取消bancorlite市场`abc/def`：
 
 ```
 $ ./cetcli tx bancorlite cancel abc def \
@@ -164,10 +162,10 @@ $ ./cetcli tx bancorlite cancel abc def \
 
 ### 在bancorlite交易
 
-用法：
+与指定symbol的bancor市场交易，用法：
 
 ```
-$ ./cetcli tx bancorlite trade -h
+$ cetcli tx bancorlite trade -h
 Sell Stocks to a bancor pool or buy Stocks from a bancor pool.
 
 Example: 
@@ -210,13 +208,13 @@ Global Flags: 省略
 | 参数1         | string               | ✔        |        | 基础Token |
 | 参数2         | string               | ✔        |        | 计价Token |
 | --side        | string (buy \| sell) | ✔        |        | buy表示买入，sell表示卖出 |
-| --amount      | int                  | ✔        |        | 价格      |
-| --money-limit | int                  | ✔        |        | 初始价格  |
+| --amount      | int                  | ✔        |        | 基础Token的交易数量 |
+| --money-limit | int                  | ✔        |        | 该参数表示买时愿意付出的最大计价Token数量或卖时必须保障的最小计价Token数量。 |
 
 例1，从`abc/def`市场买入`50000abc`，花费不超过`100000def`
 
 ```
-$ ./cetcli tx bancorlite trade abc def \
+$ cetcli tx bancorlite trade abc def \
 	--side buy --amount 50000 --money-limit=100000 \
 	--node=47.252.23.106:26657 --chain-id=coinexdex \
 	--gas=30000 --fees=800000cet \
@@ -226,7 +224,7 @@ $ ./cetcli tx bancorlite trade abc def \
 例2，向`abc/def`市场卖出`50000abc`，收益不低于`100000def`
 
 ```
-$ ./cetcli tx bancorlite trade abc def \
+$ cetcli tx bancorlite trade abc def \
 	--side sell --amount 50000 --money-limit=100000 \
 	--node=47.252.23.106:26657 --chain-id=coinexdex \
 	--gas=30000 --fees=800000cet \
@@ -235,12 +233,12 @@ $ ./cetcli tx bancorlite trade abc def \
 
 
 
-## 查询
+## query命令
 
-可以执行`cetcli query bancorlite`子命令查询bancorlite系统参数或者某个bancorlite市场的信息。
+用于查询bancor的参数信息，指定symbol的bancor信息或者全部bancor信息
 
 ```
-$ ./cetcli query bancorlite -h
+cetcli query bancorlite -h
 Querying commands for the bancorlite module
 
 Usage:
@@ -249,9 +247,7 @@ Usage:
 Available Commands:
   params      Query bancorlite params
   info        query the banor pool's information about a symbol pair
-
-Flags:
-  -h, --help   help for bancorlite
+  infos       query all bancor infos in blockchain
 
 Global Flags: 省略
 ```
@@ -263,7 +259,7 @@ Global Flags: 省略
 用法：
 
 ```
-$ ./cetcli query bancorlite params -h
+$ cetcli query bancorlite params -h
 Query bancorlite params
 
 Usage:
@@ -276,7 +272,7 @@ Global Flags: 省略
 例1，查询CoinEx链主网bancorlite系统参数：
 
 ```
-$ ./cetcli query bancorlite params --node=47.252.23.106:26657 --chain-id=coinexdex
+$ cetcli query bancorlite params --node=47.252.23.106:26657 --chain-id=coinexdex
 {
   "create_bancor_fee": "10000000000",
   "cancel_bancor_fee": "10000000000",
@@ -293,7 +289,7 @@ $ ./cetcli query bancorlite params --node=47.252.23.106:26657 --chain-id=coinexd
 查询指定的bancorlite市场信息，用法：
 
 ```
-$ ./cetcli query bancorlite info -h
+$ cetcli query bancorlite info -h
 query the banor pool's information about a symbol pair. 
 
 Example : 
@@ -309,19 +305,80 @@ Global Flags: 省略
 例1，在CoinEx链主网上查询交易对为`dac/cet`的bancorlite市场信息
 
 ```
-$ ./cetcli query bancorlite info dac cet \
+$ cetcli query bancorlite info dac cet \
 	--node=47.252.23.106:26657 --chain-id=coinexdex
 {
+  "owner": "coinex13apesrc22aa2enl56fnz563v9fgzxwpm03prlm",
   "stock": "dac",
   "money": "cet",
-  "init_price": "2.000000000000000000",
+  "init_price": "0.100000000000000000",
   "max_supply": "10000000000000",
   "stock_precision": "0",
-  "max_price": "5.000000000000000000",
-  "current_price": "2.056565988257900000",
-  "stock_in_pool": "9811446705807",
-  "money_in_pool": "382439440099",
-  "earliest_cancel_time": "1970-01-01T08:00:00+08:00"
+  "max_price": "3.000000000000000000",
+  "max_money": "0",
+  "ar": "0",
+  "current_price": "0.625694031897830000",
+  "stock_in_pool": "8187261958973",
+  "money_in_pool": "657746588884",
+  "earliest_cancel_time": "0"
 }
 ```
+
+
+
+### 查询全部bancorlite市场信息
+
+查询全部的bancorlite市场信息，用法：
+
+```
+$ cetcli query bancorlite infos -h
+query all bancor infos in blockchain.
+
+Example :
+	cetcli query bancorlite infos \
+	--trust-node=true --chain-id=coinexdex
+
+Usage:
+  cetcli query bancorlite infos [flags]
+```
+
+例1，查询全部的bancorlite市场信息
+
+```
+$ cetcli query bancorlite info dac cet --chain-id=coinexdex
+[
+  {
+    "owner": "coinex1usennm7yszldclewmzkg3a570xkjngc9dj69hp",
+    "stock": "aaa",
+    "money": "cet",
+    "init_price": "0.000000010000000000",
+    "max_supply": "500000000000000",
+    "stock_precision": "8",
+    "max_price": "10.000000000000000000",
+    "max_money": "0",
+    "ar": "0",
+    "current_price": "0.020000009980000000",
+    "stock_in_pool": "499000000000000",
+    "money_in_pool": "10000009990",
+    "earliest_cancel_time": "1605024000"
+  },
+  {
+    "owner": "coinex1d5xqs50vey8sc8eg6uta0wfqnnn5u623cmwj0y",
+    "stock": "captainzxx001",
+    "money": "flychen999999999",
+    "init_price": "10.000000000000000000",
+    "max_supply": "100000000000000",
+    "stock_precision": "0",
+    "max_price": "1000.000000000000000000",
+    "max_money": "0",
+    "ar": "0",
+    "current_price": "10.080190000000000000",
+    "stock_in_pool": "99991900000000",
+    "money_in_pool": "81324769500",
+    "earliest_cancel_time": "1585584000"
+  }
+]
+```
+
+
 
