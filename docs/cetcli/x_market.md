@@ -369,6 +369,7 @@ Available Commands:
   params        Query market params
   trading-pair  query trading-pair info in blockchain
   trading-pairs query all trading-pair infos in blockchain
+  orderbook     query the orders in a market
   order-info    Query order info in blockchain
   order-list    Query user order list in blockchain
 
@@ -560,4 +561,30 @@ $ ./cetcli query market order-info <id> \
 	--node=47.252.23.106:26657 --chain-id=coinexdex
 ```
 
+
+
+### 查询订单簿
+
+查询某交易对的订单簿，用法：
+
+```
+$ cetcli query market orderbook -h
+query the orders in a market. 
+
+Example : 
+	cetcli query market orderbook eth/cet \
+		--trust-node=true --chain-id=coinexdex
+
+Usage:
+  cetcli query market orderbook [flags]
+
+Flags:  省略
+Global Flags: 省略
+```
+
+主要参数：
+
+| 参数  | 类型   | 是否必填 | 默认值 | 说明   |
+| ----- | ------ | -------- | ------ | ------ |
+| 参数1 | string | ✔        |        | 交易对 |
 
