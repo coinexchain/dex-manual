@@ -4,19 +4,23 @@
 
 该命令用来查询系统当前币的总量。
 
-```BASH
-Query total supply of coins that are held by accounts in the
-			chain.
-Example:
-$ cetcli query supply total
+用法：
 
-To query for the total supply of a specific coin denomination use:
-$ cetcli query supply total stake
+```BASH
+cetcli q supply -h
+Querying commands for the supply module
 
 Usage:
-  cetcli query supply total [denom] [flags]
+  cetcli query supply [flags]
+  cetcli query supply [command]
+
+Available Commands:
+  total       Query the total supply of coins of the chain
+
 
 ```
+
+示例：
 
 在不指定denom的情况下，默认查询系统中所有已发行币的总量。
 
