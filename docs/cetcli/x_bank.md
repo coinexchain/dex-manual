@@ -1,10 +1,14 @@
-# Bank
+# bank命令
 
 bank模块用于账户间的资产转移和资产查询。
 
+
+
 ## tx命令
 
-#### 转移指定资产
+
+
+### 转移指定资产
 
 该命令用于从`from`账户转移指定数量的某种token到`to`账户，可以指定这笔钱到账后在未来什么时刻之后生效，改设置可选。
 
@@ -35,7 +39,7 @@ Usage:
 cetcli tx send coinex1vg35xer0e34pfszhtktggvyhjfhnqhzpd67d9y 10000000000000000cet --unlock-time=1574245028 --from=coinex10x5hpff75438mpdz4k28yq6n35qa78h9sqj4yt --fees=2000000000cet --gas=6000000 --trust-node --chain-id=coinexdex-test1
 ```
 
-#### supervised转账
+### supervised转账
 
 该命令同样用于从`form`转移指定数量的某种token到`to`账户，与上面的命令不同的是，该命令还有第三个参与者，即`supervisor`地址，该地址作为这笔交易的中间人起到监督仲裁的作用，他有权发起两类交易：提前解锁发给`to`账户的token以及归还token给`from`账户。
 
@@ -110,7 +114,7 @@ Usage:
 
 
 
-#### 设置接受转账时该地址是否需要memo
+### 设置接受转账时该地址是否需要memo
 
 如果指定地址设置了需要memo，那么给该地址的转账都需要设置memo。
 
@@ -136,9 +140,7 @@ cetcli tx require-memo true --from=bob --fees=2000000000cet --gas=6000000 --memo
 
 ## query命令
 
-查询与bank相关的状态和参数。
-
-用法：
+查询与bank相关的状态和参数。用法：
 
 ```
 cetcli query bank -h
@@ -152,7 +154,9 @@ Available Commands:
   balances    Query account balance
 ```
 
-#### 查询模块参数
+
+
+### 查询模块参数
 
 示例：
 
@@ -173,11 +177,11 @@ cetcli query bank params --trust-node
 | `lock_coins_free_time`   | 免费锁定时间             |
 | `lock_coins_fee_per_day` | 超出免费锁定时间后的费率 |
 
-**查询账户余额**
 
-用来查询给定地址的账户余额。
 
-用法：
+### 查询账户余额
+
+用来查询给定地址的账户余额。用法：
 
 ```
 cetcli query bank balances -h

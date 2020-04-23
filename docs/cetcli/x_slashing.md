@@ -1,4 +1,4 @@
-# Slashing
+# slashing命令
 
 ## query
 

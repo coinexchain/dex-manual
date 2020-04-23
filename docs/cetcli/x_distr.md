@@ -1,4 +1,4 @@
-# Distribution 
+# distribution命令
 
 Distribution 相关命令用来处理与收益的提取、查询等操作。
 

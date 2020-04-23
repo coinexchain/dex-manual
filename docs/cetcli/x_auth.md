@@ -1,6 +1,6 @@
+# auth命令
 
 
-# auth
 
 ## query
 
@@ -29,6 +29,8 @@ Global Flags:
       --trace                 print out full stack trace on errors
 
 ```
+
+
 
 ### 查询auth模块参数
 

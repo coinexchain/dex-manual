@@ -1,4 +1,4 @@
-# Asset命令
+# asset命令
 
 Asset模块用于资产发行和管理。
 

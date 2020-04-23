@@ -1,6 +1,8 @@
-# Comment命令
+# comment命令
 
 `comment`命令用来对Token发出评论，以及对其他人的评论发表进一步的评论。基于它，可以实现一个链上的“股吧”。对这些评论的查询功能，需要其他相关工具（例如Trade-Server）来提供，cetd和cetcli并不支持。
+
+
 
 ## tx命令
 
@@ -33,11 +35,12 @@ Global Flags:
 Use "cetcli tx comment [command] --help" for more information about a command.
 ```
 
+
+
 ### 添加新评论
 
-可以使用`new-thread`子命令发表一个新评论。
+可以使用`new-thread`子命令发表一个新评论。用法：
 
-用法：
 ```
 cetcli tx comment new-thread -h
 Post a comment under some token, which creates a new thread, instead of following any other comments.
@@ -77,11 +80,12 @@ cetcli tx comment new-thread --token=cet --donation=2
 为了让这条评论可以排名比较靠前，这条命令还用donation选项向community pool当中捐赠了2个CET。
 
 
+
+
 ### 针对其他评论追加新评论
 
-可以使用`follow-up`子命令来针对某条评论来追加自己对它的评论。
+可以使用`follow-up`子命令来针对某条评论来追加自己对它的评论。用法：
 
-用法：
 ```
 $cetcli tx comment follow-up -h
 Post a comment to follow another comment in a thread.
@@ -122,11 +126,12 @@ cetcli tx comment follow-up --token=cet --donation=0 --follow="10001;coinex1qw50
 
 可选的态度包括：like, dislike, laugh, cry, angry, surprise, heart, sweat, speechless, favorite, condolences。
 
+
+
 ### 对若干评论进行打赏
 
-子命令`reward-comments`可以对某个贴吧下的多条评论进行打赏。
+子命令`reward-comments`可以对某个贴吧下的多条评论进行打赏。用法：
 
-用法：
 ```
 $cetcli tx comment reward-comments -h
 Reward the senders and some comments that you like, while showing why you like them individually.

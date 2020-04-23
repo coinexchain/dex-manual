@@ -1,13 +1,13 @@
-# Supply
+# supply命令
+
+
 
 ## query
 
-该命令用来查询系统当前币的总量。
-
-用法：
+该命令用来查询系统当前币的总量。用法：
 
 ```BASH
-cetcli q supply -h
+$ cetcli q supply -h
 Querying commands for the supply module
 
 Usage:
@@ -16,16 +16,12 @@ Usage:
 
 Available Commands:
   total       Query the total supply of coins of the chain
-
-
 ```
 
-示例：
-
-在不指定denom的情况下，默认查询系统中所有已发行币的总量。
+示例：在不指定denom的情况下，默认查询系统中所有已发行币的总量。
 
 ```BASH
-cetcli q supply total  --chain-id=coinexdex
+$ cetcli q supply total  --chain-id=coinexdex
 
 - denom: aaa
   amount: "10000000000000000"
@@ -165,12 +161,10 @@ cetcli q supply total  --chain-id=coinexdex
   amount: "1000000000000000000"
 ```
 
-上述返回结果为查询当时系统中的所有币的总量情况。
-
-在指定denom时，只返回查询币种的总量。
+上述返回结果为查询当时系统中的所有币的总量情况。在指定denom时，只返回查询币种的总量。
 
 ```bash
-cetcli query supply total cet --chain-id=coinexdex
+$ cetcli query supply total cet --chain-id=coinexdex
 
 "586884903761317189"
 ```

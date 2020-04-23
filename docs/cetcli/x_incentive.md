@@ -1,10 +1,10 @@
-# Crisis 
+# incentive命令
+
+
 
 ## query
 
-该命令用来查询incentive模块相关参数。
-
-用法：
+该命令用来查询incentive模块相关参数。用法：
 
 ```BASH
 Query incentive params

@@ -2,6 +2,8 @@
 
 Alias模块用来维护账户地址和别名的对应关系。
 
+
+
 ## tx命令
 
 用于发起设置别名的交易。
@@ -35,6 +37,8 @@ Use "cetcli tx alias [command] --help" for more information about a command.
 ```
 
 用户最多可以有MaxAliasCount个别名，参数MaxAliasCount的取值为5，通过投票可以修改。在这些别名当中，可以设置一个作为默认别名，也可以不设置默认别名。
+
+
 
 ### 添加别名
 
@@ -83,6 +87,8 @@ cetcli tx alias add superman --as-default no --from coinex1e06xh60m7juwl3mglkjvx
 那么就把默认别名superman改成了非默认别名。
 
 
+
+
 ### 删除别名
 
 可以使用`remove`子命令删除一个别名。
@@ -113,6 +119,8 @@ cetcli tx alias remove superman --from coinex1e06xh60m7juwl3mglkjvxgzfyrcphcp7yl
 ```
 
 这条命令执行之后，superman就不再是账户coinex1e06xh60m7juwl3mglkjvxgzfyrcphcp7ylh4wg的别名了。
+
+
 
 ## query命令
 
@@ -145,6 +153,8 @@ Global Flags:
 Use "cetcli query alias [command] --help" for more information about a command.
 ```
 
+
+
 ### 查询alias模块参数
 
 用法：
@@ -173,6 +183,7 @@ $./cetcli query alias params --trust-node=true
 ```
 
 参数`fee_for_alias_length_*`描述了设置不同长度（从2到7甚至更长）的alias所需要支付的功能费，记得去掉八个零才是真实的花费数额。参数`max_alias_count`指定了一个账户所能拥有的别名数量。
+
 
 
 ### 根据别名查询账户
@@ -208,6 +219,8 @@ Usage:
 ```
 
 经过以上命令的查询可知，“coinex”这个别名属于账户coinex1e06xh60m7juwl3mglkjvxgzfyrcphcp7ylh4wg
+
+
 
 ## 根据账户查询别名
 
