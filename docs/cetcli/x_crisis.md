@@ -1,13 +1,25 @@
 # crisis命令
 
-## Tx
 
-```BASH
-Usage:
-  cetcli tx crisis invariant-broken [module-name] [invariant-route] [flags]
+
+## tx命令
+
+该命令用来发送一条检查指定模块指定不变量的检查，用来检查该模块的指定不变量到现在为止是否被破坏。需要注意的是，该交易除了gas费之外，需要从发起的账户扣除一定功能费（当前coinex主网默认为100000CET）。用法：
+
 ```
+$ cetcli tx crisis -h
+Crisis transactions subcommands
 
-该命令用来发送一条检查指定模块指定不变量的检查，用来检查该模块的指定不变量到现在为止是否被破坏。需要注意的是，该交易除了gas费之外，需要从发起的账户扣除一定功能费（当前coinex主网默认为100000CET）。
+Usage:
+  cetcli tx crisis [flags]
+  cetcli tx crisis [command]
+
+Available Commands:
+  invariant-broken submit proof that an invariant broken to halt the chain
+
+Flags: 省略
+Global Flags: 省略
+```
 
 目前支持的不变量有：
 
@@ -26,10 +38,10 @@ Usage:
 | staking      | delegator-shares        | 检查validator上的所有delegations的shares总量是否与validator的shares总量一致。 |
 | supply       | total-supply            | 检查系统中所有已发行币的总量是否与所有账户的币总量一致。     |
 
-Example：
+例1，检查supply模块的total-supply不变量是否被破坏：
 
 ```bash
-cetcli tx crisis invariant-broken supply total-supply --from your_key_name --gas=30000 --fees=600000cet --chain-id=coinexdex
+$ cetcli tx crisis invariant-broken supply total-supply \
+	--from your_key_name --gas=30000 --fees=600000cet --chain-id=coinexdex
 ```
 
-以上命令用来检查supply模块的total-supply不变量是否被破坏。
