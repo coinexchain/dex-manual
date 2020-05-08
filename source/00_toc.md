@@ -40,6 +40,7 @@
     - [Java](./05_dg_sdk_java.md)
     - [Javascript](./05_dg_sdk_js.md)
     - [Python](./05_dg_sdk_py.md)
+  - [Construct Transaction in JSON](./05_dg_tx_json.md)
   - [Execution Logs for Watcher](./05_dg_watcher.md)
 - [Running a Validator](./06_val.md)
   - [Set up a validator node](./06_val_node.md)
