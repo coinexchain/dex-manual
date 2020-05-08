@@ -1,0 +1,2292 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Trade-Server for CoinEx Chain</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>Trade-Server for CoinEx Chain</h1>
+    <div class="app-desc">A REST interface for state queries</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="hello@helloreverb.com">hello@helloreverb.com</a></div>
+    <div class="app-desc">Version: 3.0</div>
+    <div class="app-desc">BasePath:</div>
+    <div class="license-info">All rights reserved</div>
+    <div class="license-url">http://apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+    <ol>
+      <li>HTTP Basic Authentication</li>
+    </ol>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Bancor">Bancor</a></h4>
+  <ul>
+  <li><a href="#queryBancorDeal"><code><span class="http-method">get</span> /bancorlite/deals</code></a></li>
+  <li><a href="#queryBancorInfo"><code><span class="http-method">get</span> /bancorlite/infos</code></a></li>
+  <li><a href="#queryBancorTrade"><code><span class="http-method">get</span> /bancorlite/trades</code></a></li>
+  </ul>
+  <h4><a href="#Comment">Comment</a></h4>
+  <ul>
+  <li><a href="#queryComment"><code><span class="http-method">get</span> /comment/comments</code></a></li>
+  </ul>
+  <h4><a href="#Expiry">Expiry</a></h4>
+  <ul>
+  <li><a href="#queryRedelegation"><code><span class="http-method">get</span> /expiry/redelegations</code></a></li>
+  <li><a href="#queryUnbonding"><code><span class="http-method">get</span> /expiry/unbondings</code></a></li>
+  <li><a href="#queryUnlock"><code><span class="http-method">get</span> /expiry/unlocks</code></a></li>
+  <li><a href="#querylocked"><code><span class="http-method">get</span> /expiry/lockeds</code></a></li>
+  </ul>
+  <h4><a href="#Market">Market</a></h4>
+  <ul>
+  <li><a href="#queryCandleStick"><code><span class="http-method">get</span> /market/candle-sticks</code></a></li>
+  <li><a href="#queryDeal"><code><span class="http-method">get</span> /market/deals</code></a></li>
+  <li><a href="#queryDepth"><code><span class="http-method">get</span> /market/depths</code></a></li>
+  <li><a href="#queryOrder"><code><span class="http-method">get</span> /market/user-orders</code></a></li>
+  <li><a href="#queryTickers"><code><span class="http-method">get</span> /market/tickers</code></a></li>
+  </ul>
+  <h4><a href="#Misc">Misc</a></h4>
+  <ul>
+  <li><a href="#queryBlockTimes"><code><span class="http-method">get</span> /misc/block-times</code></a></li>
+  <li><a href="#queryDonation"><code><span class="http-method">get</span> /misc/donations</code></a></li>
+  </ul>
+  <h4><a href="#Slash">Slash</a></h4>
+  <ul>
+  <li><a href="#querySlash"><code><span class="http-method">get</span> /slash/slashings</code></a></li>
+  </ul>
+  <h4><a href="#Tx">Tx</a></h4>
+  <ul>
+  <li><a href="#getTxFromTradeServer"><code><span class="http-method">get</span> /tx/txs/{hash}</code></a></li>
+  <li><a href="#queryIncome"><code><span class="http-method">get</span> /tx/incomes</code></a></li>
+  <li><a href="#queryTx"><code><span class="http-method">get</span> /tx/txs</code></a></li>
+  </ul>
+
+  <h1><a name="Bancor">Bancor</a></h1>
+  <div class="method"><a name="queryBancorDeal"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /bancorlite/deals</code></pre></div>
+    <div class="method-summary">Query bancor market deal (<span class="nickname">queryBancorDeal</span>)</div>
+    <div class="method-notes">Query bancor market deal until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; B:stock/money </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier deal count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_4">inline_response_200_4</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : 0,
+    "side" : 1,
+    "money" : "cet",
+    "money_limit" : 0,
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "transaction_price" : "0",
+    "tx_hash" : "tx_hash",
+    "block_height" : 0,
+    "stock" : "abc"
+  }, {
+    "amount" : 0,
+    "side" : 1,
+    "money" : "cet",
+    "money_limit" : 0,
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "transaction_price" : "0",
+    "tx_hash" : "tx_hash",
+    "block_height" : 0,
+    "stock" : "abc"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_4">inline_response_200_4</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryBancorInfo"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /bancorlite/infos</code></pre></div>
+    <div class="method-summary">Query bancor info (<span class="nickname">queryBancorInfo</span>)</div>
+    <div class="method-notes">Query bancor info until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; stock/money </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_3">inline_response_200_3</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "max_price" : "0",
+    "money" : "cet",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "price" : "0",
+    "enable_cancel_time" : 0,
+    "max_supply" : "0",
+    "stock_in_pool" : "0",
+    "init_price" : "0",
+    "block_height" : 0,
+    "stock" : "abc",
+    "money_in_pool" : "0"
+  }, {
+    "max_price" : "0",
+    "money" : "cet",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "price" : "0",
+    "enable_cancel_time" : 0,
+    "max_supply" : "0",
+    "stock_in_pool" : "0",
+    "init_price" : "0",
+    "block_height" : 0,
+    "stock" : "abc",
+    "money_in_pool" : "0"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_3">inline_response_200_3</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryBancorTrade"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /bancorlite/trades</code></pre></div>
+    <div class="method-summary">Query bancor trade (<span class="nickname">queryBancorTrade</span>)</div>
+    <div class="method-notes">Query bancor trade until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_4">inline_response_200_4</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : 0,
+    "side" : 1,
+    "money" : "cet",
+    "money_limit" : 0,
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "transaction_price" : "0",
+    "tx_hash" : "tx_hash",
+    "block_height" : 0,
+    "stock" : "abc"
+  }, {
+    "amount" : 0,
+    "side" : 1,
+    "money" : "cet",
+    "money_limit" : 0,
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "transaction_price" : "0",
+    "tx_hash" : "tx_hash",
+    "block_height" : 0,
+    "stock" : "abc"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_4">inline_response_200_4</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Comment">Comment</a></h1>
+  <div class="method"><a name="queryComment"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /comment/comments</code></pre></div>
+    <div class="method-summary">Query token comment (<span class="nickname">queryComment</span>)</div>
+    <div class="method-notes">Query all comments about given token until to time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">token (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier comment count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_10">inline_response_200_10</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "content_type" : 3,
+    "references" : [ {
+      "reward_amount" : 100,
+      "attitudes" : [ 50, 50 ],
+      "reward_token" : "cet",
+      "id" : 1,
+      "reward_target" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "reward_amount" : 100,
+      "attitudes" : [ 50, 50 ],
+      "reward_token" : "cet",
+      "id" : 1,
+      "reward_target" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "donation" : 1,
+    "tx_hash" : "tx_hash",
+    "id" : 1,
+    "title" : "First Comment",
+    "content" : "Comment content",
+    "height" : 0,
+    "token" : "abc"
+  }, {
+    "content_type" : 3,
+    "references" : [ {
+      "reward_amount" : 100,
+      "attitudes" : [ 50, 50 ],
+      "reward_token" : "cet",
+      "id" : 1,
+      "reward_target" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "reward_amount" : 100,
+      "attitudes" : [ 50, 50 ],
+      "reward_token" : "cet",
+      "id" : 1,
+      "reward_target" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "donation" : 1,
+    "tx_hash" : "tx_hash",
+    "id" : 1,
+    "title" : "First Comment",
+    "content" : "Comment content",
+    "height" : 0,
+    "token" : "abc"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_10">inline_response_200_10</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Expiry">Expiry</a></h1>
+  <div class="method"><a name="queryRedelegation"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /expiry/redelegations</code></pre></div>
+    <div class="method-summary">Query redelegation (<span class="nickname">queryRedelegation</span>)</div>
+    <div class="method-notes">Query delegator's redelegation-completion info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_5">inline_response_200_5</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : "0",
+    "completion_time" : "0",
+    "dst" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "src" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "delegator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash"
+  }, {
+    "amount" : "0",
+    "completion_time" : "0",
+    "dst" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "src" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "delegator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_5">inline_response_200_5</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryUnbonding"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /expiry/unbondings</code></pre></div>
+    <div class="method-summary">Query Unbonding (<span class="nickname">queryUnbonding</span>)</div>
+    <div class="method-notes">Query delegator's unbonding-completion info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_6">inline_response_200_6</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : "0",
+    "completion_time" : "0",
+    "delegator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "validator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash"
+  }, {
+    "amount" : "0",
+    "completion_time" : "0",
+    "delegator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "validator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_6">inline_response_200_6</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryUnlock"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /expiry/unlocks</code></pre></div>
+    <div class="method-summary">Query Unlock (<span class="nickname">queryUnlock</span>)</div>
+    <div class="method-notes">Query Unlock info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_8">inline_response_200_8</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "coins" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "locked_coins" : [ {
+      "reward" : "0",
+      "from_address" : "coinex1y5kdxnzn2tfwayyntf2n28q8q2s80mcul852ke",
+      "unlock_time" : 1565740800,
+      "supervisor" : "coinex1dmz7e2fddhejdz5n7e3qc5szx3zn2gj3ta8rwj",
+      "coin" : {
+        "amount" : "0",
+        "denom" : "cet"
+      }
+    }, {
+      "reward" : "0",
+      "from_address" : "coinex1y5kdxnzn2tfwayyntf2n28q8q2s80mcul852ke",
+      "unlock_time" : 1565740800,
+      "supervisor" : "coinex1dmz7e2fddhejdz5n7e3qc5szx3zn2gj3ta8rwj",
+      "coin" : {
+        "amount" : "0",
+        "denom" : "cet"
+      }
+    } ],
+    "unlocked" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "frozen_coins" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "height" : 0
+  }, {
+    "address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "coins" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "locked_coins" : [ {
+      "reward" : "0",
+      "from_address" : "coinex1y5kdxnzn2tfwayyntf2n28q8q2s80mcul852ke",
+      "unlock_time" : 1565740800,
+      "supervisor" : "coinex1dmz7e2fddhejdz5n7e3qc5szx3zn2gj3ta8rwj",
+      "coin" : {
+        "amount" : "0",
+        "denom" : "cet"
+      }
+    }, {
+      "reward" : "0",
+      "from_address" : "coinex1y5kdxnzn2tfwayyntf2n28q8q2s80mcul852ke",
+      "unlock_time" : 1565740800,
+      "supervisor" : "coinex1dmz7e2fddhejdz5n7e3qc5szx3zn2gj3ta8rwj",
+      "coin" : {
+        "amount" : "0",
+        "denom" : "cet"
+      }
+    } ],
+    "unlocked" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "frozen_coins" : [ {
+      "amount" : "0",
+      "denom" : "cet"
+    }, {
+      "amount" : "0",
+      "denom" : "cet"
+    } ],
+    "height" : 0
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_8">inline_response_200_8</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="querylocked"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /expiry/lockeds</code></pre></div>
+    <div class="method-summary">Query lock tx (<span class="nickname">querylocked</span>)</div>
+    <div class="method-notes">Query lock transfer info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_7">inline_response_200_7</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : {
+      "amount" : "0",
+      "denom" : "cet"
+    },
+    "to_Address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash",
+    "from_address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "unlock_time" : 1565740800
+  }, {
+    "amount" : {
+      "amount" : "0",
+      "denom" : "cet"
+    },
+    "to_Address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "tx_hash" : "tx_hash",
+    "from_address" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "unlock_time" : 1565740800
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_7">inline_response_200_7</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Market">Market</a></h1>
+  <div class="method"><a name="queryCandleStick"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /market/candle-sticks</code></pre></div>
+    <div class="method-summary">Query market candleStick (<span class="nickname">queryCandleStick</span>)</div>
+    <div class="method-notes">Query candleStick until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; stock/money </div><div class="param">timespan (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; 1min/1hour/1day </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier candleStick count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#CandleStick">CandleStick</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "market" : "abc/cet",
+  "high" : "0",
+  "total" : "0",
+  "time_span" : 16,
+  "low" : "0",
+  "unix_time" : 1565740800,
+  "close" : "0",
+  "open" : "0"
+}, {
+  "market" : "abc/cet",
+  "high" : "0",
+  "total" : "0",
+  "time_span" : 16,
+  "low" : "0",
+  "unix_time" : 1565740800,
+  "close" : "0",
+  "open" : "0"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryDeal"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /market/deals</code></pre></div>
+    <div class="method-summary">Query market deal (<span class="nickname">queryDeal</span>)</div>
+    <div class="method-notes">Query market deal until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; stock/money </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier deal count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_2">inline_response_200_2</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "side" : 1,
+    "left_stock" : 0,
+    "freeze" : 0,
+    "price" : "0",
+    "trading_pair" : "abc/cet",
+    "curr_stock" : 0,
+    "deal_stock" : 0,
+    "curr_money" : 0,
+    "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+    "deal_money" : 0,
+    "height" : 0
+  }, {
+    "side" : 1,
+    "left_stock" : 0,
+    "freeze" : 0,
+    "price" : "0",
+    "trading_pair" : "abc/cet",
+    "curr_stock" : 0,
+    "deal_stock" : 0,
+    "curr_money" : 0,
+    "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+    "deal_money" : 0,
+    "height" : 0
+  } ],
+  "timesid" : [ 6, 6 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_2">inline_response_200_2</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryDepth"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /market/depths</code></pre></div>
+    <div class="method-summary">Query market depth (<span class="nickname">queryDepth</span>)</div>
+    <div class="method-notes">Query purchases and sales of a market at all price levels</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; stock/money </div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_1">inline_response_200_1</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "asks" : [ {
+    "amount" : "0",
+    "price" : "0"
+  }, {
+    "amount" : "0",
+    "price" : "0"
+  } ],
+  "bids" : [ {
+    "amount" : "0",
+    "price" : "0"
+  }, {
+    "amount" : "0",
+    "price" : "0"
+  } ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryOrder"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /market/user-orders</code></pre></div>
+    <div class="method-summary">Query account's order (<span class="nickname">queryOrder</span>)</div>
+    <div class="method-notes">Query account's order activities in all markets until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier order count limited to 1024 format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div><div class="param">tag (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Filter responses type by tag string create/fill/cancel </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#UserOrder">UserOrder</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "fillOrderInfo" : {
+    "data" : [ {
+      "side" : 1,
+      "left_stock" : 0,
+      "freeze" : 0,
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "curr_stock" : 0,
+      "deal_stock" : 0,
+      "curr_money" : 0,
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "deal_money" : 0,
+      "height" : 0
+    }, {
+      "side" : 1,
+      "left_stock" : 0,
+      "freeze" : 0,
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "curr_stock" : 0,
+      "deal_stock" : 0,
+      "curr_money" : 0,
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "deal_money" : 0,
+      "height" : 0
+    } ],
+    "timesid" : [ 6, 6 ]
+  },
+  "cancelOrderInfo" : {
+    "data" : [ {
+      "side" : 1,
+      "used_commission" : 0,
+      "left_stock" : 0,
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "deal_stock" : 0,
+      "tx_hash" : "tx_hash",
+      "remain_amount" : 0,
+      "del_reason" : "cancel order reason",
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "deal_money" : 0,
+      "height" : 0
+    }, {
+      "side" : 1,
+      "used_commission" : 0,
+      "left_stock" : 0,
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "deal_stock" : 0,
+      "tx_hash" : "tx_hash",
+      "remain_amount" : 0,
+      "del_reason" : "cancel order reason",
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "deal_money" : 0,
+      "height" : 0
+    } ],
+    "timesid" : [ 1, 1 ]
+  },
+  "createOrderInfo" : {
+    "data" : [ {
+      "side" : 1,
+      "quantity" : 0,
+      "tx_hash" : "tx_hash",
+      "frozen_fee" : 0,
+      "feature_fee" : 0,
+      "time_in_force" : 3,
+      "freeze" : 0,
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "order_type" : 2,
+      "height" : 0
+    }, {
+      "side" : 1,
+      "quantity" : 0,
+      "tx_hash" : "tx_hash",
+      "frozen_fee" : 0,
+      "feature_fee" : 0,
+      "time_in_force" : 3,
+      "freeze" : 0,
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "price" : "0",
+      "trading_pair" : "abc/cet",
+      "order_id" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1",
+      "order_type" : 2,
+      "height" : 0
+    } ],
+    "timesid" : [ 0, 0 ]
+  }
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#UserOrder">UserOrder</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryTickers"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /market/tickers</code></pre></div>
+    <div class="method-summary">Query market tickers (<span class="nickname">queryTickers</span>)</div>
+    <div class="method-notes">Query tickers info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">market_list (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Market count limited to 1~100 </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Tickers">Tickers</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "market" : "abc/cet",
+  "new" : "0",
+  "old" : "0"
+}, {
+  "market" : "abc/cet",
+  "new" : "0",
+  "old" : "0"
+} ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Misc">Misc</a></h1>
+  <div class="method"><a name="queryBlockTimes"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /misc/block-times</code></pre></div>
+    <div class="method-summary">Query block time (<span class="nickname">queryBlockTimes</span>)</div>
+    <div class="method-notes">Query the block time up to given height</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">height (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Block height format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      array[Long]
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ 1565740800, 1565740800 ]</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryDonation"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /misc/donations</code></pre></div>
+    <div class="method-summary">Query donations info (<span class="nickname">queryDonation</span>)</div>
+    <div class="method-notes">Query donations by DonateToCommunityPool or CommentToken</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200">inline_response_200</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "amount" : "0",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+  }, {
+    "amount" : "0",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200">inline_response_200</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Slash">Slash</a></h1>
+  <div class="method"><a name="querySlash"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /slash/slashings</code></pre></div>
+    <div class="method-summary">Query validator slash info (<span class="nickname">querySlash</span>)</div>
+    <div class="method-notes">Query validator slash power, reason, and jailed status etc</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_11">inline_response_200_11</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "jailed" : false,
+    "reason" : "",
+    "validator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "power" : "0"
+  }, {
+    "jailed" : false,
+    "reason" : "",
+    "validator" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "power" : "0"
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_11">inline_response_200_11</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Tx">Tx</a></h1>
+  <div class="method"><a name="getTxFromTradeServer"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tx/txs/{hash}</code></pre></div>
+    <div class="method-summary">Get a Tx from trade server by hash (<span class="nickname">getTxFromTradeServer</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">hash (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; Tx hash </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#Tx">Tx</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "signers" : [ "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx", "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx" ],
+  "transfers" : [ {
+    "amount" : "0",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+  }, {
+    "amount" : "0",
+    "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+    "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+  } ],
+  "tx_json" : "",
+  "msg_types" : [ "", "" ],
+  "serial_number" : 0,
+  "hash" : "hash",
+  "height" : 0
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    Tx with the provided hash
+        <a href="#Tx">Tx</a>
+    <h4 class="field-label">500</h4>
+    Internal Server Error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryIncome"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tx/incomes</code></pre></div>
+    <div class="method-summary">Query account all income until to given time (<span class="nickname">queryIncome</span>)</div>
+    <div class="method-notes">Query income info</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_9">inline_response_200_9</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "signers" : [ "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx", "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx" ],
+    "transfers" : [ {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "tx_json" : "",
+    "msg_types" : [ "", "" ],
+    "serial_number" : 0,
+    "hash" : "hash",
+    "height" : 0
+  }, {
+    "signers" : [ "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx", "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx" ],
+    "transfers" : [ {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "tx_json" : "",
+    "msg_types" : [ "", "" ],
+    "serial_number" : 0,
+    "hash" : "hash",
+    "height" : 0
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_9">inline_response_200_9</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="queryTx"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /tx/txs</code></pre></div>
+    <div class="method-summary">Query transactions (<span class="nickname">queryTx</span>)</div>
+    <div class="method-notes">Query transactions signed by given account until to given time</div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">account (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Bech32 address </div><div class="param">time (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Unix timestamp format: int64</div><div class="param">sid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Sequence id format: int64</div><div class="param">count (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Querier count limited to 1024 format: int32</div><div class="param">token (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Symbol </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      <a href="#inline_response_200_9">inline_response_200_9</a>
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>{
+  "data" : [ {
+    "signers" : [ "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx", "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx" ],
+    "transfers" : [ {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "tx_json" : "",
+    "msg_types" : [ "", "" ],
+    "serial_number" : 0,
+    "hash" : "hash",
+    "height" : 0
+  }, {
+    "signers" : [ "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx", "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx" ],
+    "transfers" : [ {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    }, {
+      "amount" : "0",
+      "sender" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx",
+      "recipient" : "coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx"
+    } ],
+    "tx_json" : "",
+    "msg_types" : [ "", "" ],
+    "serial_number" : 0,
+    "hash" : "hash",
+    "height" : 0
+  } ],
+  "timesid" : [ 0, 0 ]
+}</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    OK
+        <a href="#inline_response_200_9">inline_response_200_9</a>
+    <h4 class="field-label">500</h4>
+    Server internal error
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Address"><code>Address</code> - </a></li>
+    <li><a href="#BancorInfo"><code>BancorInfo</code> - </a></li>
+    <li><a href="#BancorTrade"><code>BancorTrade</code> - </a></li>
+    <li><a href="#CancelOrderInfo"><code>CancelOrderInfo</code> - </a></li>
+    <li><a href="#CandleStick"><code>CandleStick</code> - </a></li>
+    <li><a href="#Coin"><code>Coin</code> - </a></li>
+    <li><a href="#Comment"><code>Comment</code> - </a></li>
+    <li><a href="#CommentRef"><code>CommentRef</code> - </a></li>
+    <li><a href="#CreateOrderInfo"><code>CreateOrderInfo</code> - </a></li>
+    <li><a href="#Donation"><code>Donation</code> - </a></li>
+    <li><a href="#FillOrderInfo"><code>FillOrderInfo</code> - </a></li>
+    <li><a href="#Locked"><code>Locked</code> - </a></li>
+    <li><a href="#LockedCoin"><code>LockedCoin</code> - </a></li>
+    <li><a href="#PricePoint"><code>PricePoint</code> - </a></li>
+    <li><a href="#Redelegation"><code>Redelegation</code> - </a></li>
+    <li><a href="#Slash"><code>Slash</code> - </a></li>
+    <li><a href="#Tickers"><code>Tickers</code> - </a></li>
+    <li><a href="#TransferRecord"><code>TransferRecord</code> - </a></li>
+    <li><a href="#Tx"><code>Tx</code> - </a></li>
+    <li><a href="#Unbonding"><code>Unbonding</code> - </a></li>
+    <li><a href="#Unlock"><code>Unlock</code> - </a></li>
+    <li><a href="#UserOrder"><code>UserOrder</code> - </a></li>
+    <li><a href="#UserOrder_cancelOrderInfo"><code>UserOrder_cancelOrderInfo</code> - </a></li>
+    <li><a href="#UserOrder_createOrderInfo"><code>UserOrder_createOrderInfo</code> - </a></li>
+    <li><a href="#inline_response_200"><code>inline_response_200</code> - </a></li>
+    <li><a href="#inline_response_200_1"><code>inline_response_200_1</code> - </a></li>
+    <li><a href="#inline_response_200_10"><code>inline_response_200_10</code> - </a></li>
+    <li><a href="#inline_response_200_11"><code>inline_response_200_11</code> - </a></li>
+    <li><a href="#inline_response_200_2"><code>inline_response_200_2</code> - </a></li>
+    <li><a href="#inline_response_200_3"><code>inline_response_200_3</code> - </a></li>
+    <li><a href="#inline_response_200_4"><code>inline_response_200_4</code> - </a></li>
+    <li><a href="#inline_response_200_5"><code>inline_response_200_5</code> - </a></li>
+    <li><a href="#inline_response_200_6"><code>inline_response_200_6</code> - </a></li>
+    <li><a href="#inline_response_200_7"><code>inline_response_200_7</code> - </a></li>
+    <li><a href="#inline_response_200_8"><code>inline_response_200_8</code> - </a></li>
+    <li><a href="#inline_response_200_9"><code>inline_response_200_9</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Address"><code>Address</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'>Bech32 encoded address</div>
+    <div class="field-items">
+          </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BancorInfo"><code>BancorInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc</span></div>
+<div class="param">money (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: cet</span></div>
+<div class="param">init_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">max_supply (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">max_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">stock_in_pool (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">money_in_pool (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">enable_cancel_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">block_height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="BancorTrade"><code>BancorTrade</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc</span></div>
+<div class="param">money (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: cet</span></div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">side (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> BUY:1/SELL:2 format: byte</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">money_limit (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">transaction_price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">block_height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CancelOrderInfo"><code>CancelOrderInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">order_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1</span></div>
+<div class="param">trading_pair (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc/cet</span></div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">side (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> BUY:1/SELL:2 format: byte</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">del_reason (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: cancel order reason</span></div>
+<div class="param">used_commission (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order used commission format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">left_stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">remain_amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">deal_stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">deal_money (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CandleStick"><code>CandleStick</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">open (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> open price </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">close (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> close price </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">high (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> high price </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">low (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> low price </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">total (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> total deal </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">unix_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> ending unix time format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1565740800</span></div>
+<div class="param">time_span (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Minute:16/Hour:32/Day:48 format: uint8</div>
+          <div class="param-desc"><span class="param-type">example: 16</span></div>
+<div class="param">market (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc/cet</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Coin"><code>Coin</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">denom (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: cet</span></div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Comment"><code>Comment</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: uint64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">token (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc</span></div>
+<div class="param">donation (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">title (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: First Comment</span></div>
+<div class="param">content (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: Comment content</span></div>
+<div class="param">content_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> IPFS:0,Magnet:1,HTTP:2,UTF8Text:3,RawBytes:6 format: int8</div>
+          <div class="param-desc"><span class="param-type">example: 3</span></div>
+<div class="param">references (optional)</div><div class="param-desc"><span class="param-type"><a href="#CommentRef">array[CommentRef]</a></span>  </div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CommentRef"><code>CommentRef</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  format: uint64</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">reward_target (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">reward_token (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: cet</span></div>
+<div class="param">reward_amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 100</span></div>
+<div class="param">attitudes (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">array[Integer]</a></span>  format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="CreateOrderInfo"><code>CreateOrderInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">order_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1</span></div>
+<div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">trading_pair (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc/cet</span></div>
+<div class="param">order_type (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> Limited value 2 format: byte</div>
+          <div class="param-desc"><span class="param-type">example: 2</span></div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">quantity (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">side (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> BUY:1/SELL:2 format: byte</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">time_in_force (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> GTE:3/IOC:4 format: int32</div>
+          <div class="param-desc"><span class="param-type">example: 3</span></div>
+<div class="param">feature_fee (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order feature fee, sato.CET as the unit format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">frozen_fee (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order frozen fee, sato.CET as the unit format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">freeze (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Freeze sato.CET amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Donation"><code>Donation</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="FillOrderInfo"><code>FillOrderInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">order_id (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: coinex1nv3ghvdnpgc28mvjfkyrle5ccx0m3vesqp8tdx-1</span></div>
+<div class="param">trading_pair (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc/cet</span></div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">side (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> BUY:1/SELL:2 format: byte</div>
+          <div class="param-desc"><span class="param-type">example: 1</span></div>
+<div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">left_stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order left stock format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">freeze (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Freeze sato.CET amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">deal_stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order accumulated deal stock amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">deal_money (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Order accumulated deal money amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">curr_stock (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Current block deal stock amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">curr_money (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Current block deal money amount format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Locked"><code>Locked</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">from_address (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">to_Address (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coin">Coin</a></span>  </div>
+<div class="param">unlock_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> The unix timestamp when tokens can transfer again format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1565740800</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="LockedCoin"><code>LockedCoin</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">coin (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coin">Coin</a></span>  </div>
+<div class="param">unlock_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> The unix timestamp when tokens can transfer again format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 1565740800</span></div>
+<div class="param">from_address (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: coinex1y5kdxnzn2tfwayyntf2n28q8q2s80mcul852ke</span></div>
+<div class="param">supervisor (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: coinex1dmz7e2fddhejdz5n7e3qc5szx3zn2gj3ta8rwj</span></div>
+<div class="param">reward (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="PricePoint"><code>PricePoint</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">price (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Price of depth without precision consolidation </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Amount of all the unfilled orders </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Redelegation"><code>Redelegation</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">delegator (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">src (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">dst (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">completion_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Slash"><code>Slash</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">validator (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">power (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Vote power </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">reason (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: </span></div>
+<div class="param">jailed (optional)</div><div class="param-desc"><span class="param-type"><a href="#boolean">Boolean</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: false</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Tickers"><code>Tickers</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">market (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: abc/cet</span></div>
+<div class="param">new (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Newest price </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">old (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Old price one day ago </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="TransferRecord"><code>TransferRecord</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">sender (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">recipient (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Tx"><code>Tx</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">signers (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">array[Address]</a></span>  </div>
+<div class="param">transfers (optional)</div><div class="param-desc"><span class="param-type"><a href="#TransferRecord">array[TransferRecord]</a></span>  </div>
+<div class="param">serial_number (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span> Tx global serial number format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">msg_types (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+<div class="param">tx_json (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Raw tx json byte </div>
+          <div class="param-desc"><span class="param-type">example: </span></div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Unbonding"><code>Unbonding</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">delegator (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">validator (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">amount (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">completion_time (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+<div class="param">tx_hash (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The tx hash </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Unlock"><code>Unlock</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">address (optional)</div><div class="param-desc"><span class="param-type"><a href="#Address">Address</a></span>  </div>
+<div class="param">unlocked (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coin">array[Coin]</a></span>  </div>
+<div class="param">locked_coins (optional)</div><div class="param-desc"><span class="param-type"><a href="#LockedCoin">array[LockedCoin]</a></span>  </div>
+<div class="param">frozen_coins (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coin">array[Coin]</a></span>  </div>
+<div class="param">coins (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coin">array[Coin]</a></span>  </div>
+<div class="param">height (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+          <div class="param-desc"><span class="param-type">example: 0</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="UserOrder"><code>UserOrder</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">createOrderInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserOrder_createOrderInfo">UserOrder_createOrderInfo</a></span>  </div>
+<div class="param">fillOrderInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#inline_response_200_2">inline_response_200_2</a></span>  </div>
+<div class="param">cancelOrderInfo (optional)</div><div class="param-desc"><span class="param-type"><a href="#UserOrder_cancelOrderInfo">UserOrder_cancelOrderInfo</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="UserOrder_cancelOrderInfo"><code>UserOrder_cancelOrderInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#CancelOrderInfo">array[CancelOrderInfo]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="UserOrder_createOrderInfo"><code>UserOrder_createOrderInfo</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#CreateOrderInfo">array[CreateOrderInfo]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200"><code>inline_response_200</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Donation">array[Donation]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_1"><code>inline_response_200_1</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">asks (optional)</div><div class="param-desc"><span class="param-type"><a href="#PricePoint">array[PricePoint]</a></span>  </div>
+<div class="param">bids (optional)</div><div class="param-desc"><span class="param-type"><a href="#PricePoint">array[PricePoint]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_10"><code>inline_response_200_10</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Comment">array[Comment]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_11"><code>inline_response_200_11</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Slash">array[Slash]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_2"><code>inline_response_200_2</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#FillOrderInfo">array[FillOrderInfo]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_3"><code>inline_response_200_3</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#BancorInfo">array[BancorInfo]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_4"><code>inline_response_200_4</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#BancorTrade">array[BancorTrade]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_5"><code>inline_response_200_5</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Redelegation">array[Redelegation]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_6"><code>inline_response_200_6</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Unbonding">array[Unbonding]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_7"><code>inline_response_200_7</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Locked">array[Locked]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_8"><code>inline_response_200_8</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Unlock">array[Unlock]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="inline_response_200_9"><code>inline_response_200_9</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">data (optional)</div><div class="param-desc"><span class="param-type"><a href="#Tx">array[Tx]</a></span>  </div>
+<div class="param">timesid (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">array[Long]</a></span>  format: int64</div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
