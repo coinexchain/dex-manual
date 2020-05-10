@@ -41,31 +41,7 @@ Example:
 Usage:
   cetcli tx bancorlite init [stock] [money] [flags]
 
-Flags:
-  -a, --account-number uint           The account number of the signing account (offline mode only)
-  -b, --broadcast-mode string         Transaction broadcasting mode (sync|async|block) (default "sync")
-      --dry-run                       ignore the --gas flag and perform a simulation of a transaction, but don't broadcast it
-      --earliest-cancel-time string   The time that bancor can be canceled (default "0")
-      --fees string                   Fees to pay along with transaction; eg: 10cet
-      --from string                   Name or address of private key with which to sign
-      --gas string                    gas limit to set per-transaction; set to "auto" to calculate required gas automatically (default 200000) (default "200000")
-      --gas-adjustment float          adjustment factor to be multiplied against the estimate returned by the tx simulation; if the gas limit is set manually this flag is ignored  (default 1)
-      --gas-prices string             Gas prices to determine the transaction fee (e.g. 10cet)
-      --generate-only                 Build an unsigned transaction and write it to STDOUT (when enabled, the local Keybase is not accessible and the node operates offline)
-      --generate-unsigned-tx          Generate a unsigned tx
-  -h, --help                          help for init
-      --indent                        Add indent to JSON response
-      --init-price string             The init price of this bancor (default "0")
-      --ledger                        Use a connected Ledger device
-      --max-price string              The maximum reachable price when all the supply are sold out (default "0")
-      --max-supply string             The maximum supply of this pool. (default "0")
-      --memo string                   Memo to send along with transaction
-      --node string                   <host>:<port> to tendermint rpc interface for this chain (default "tcp://localhost:26657")
-  -s, --sequence uint                 The sequence number of the signing account (offline mode only)
-      --stock-precision string        The precision of stock (default "0")
-      --trust-node                    Trust connected full node (don't verify proofs for responses) (default true)
-  -y, --yes                           Skip tx broadcasting prompt confirmation
-
+Flags: ...
 Global Flags: ...
 ```
 
@@ -82,19 +58,21 @@ Major options:
 | ---------------------- | ----------| -------- | ------------- | ------------------------------  |
 | --max-supply           | int       | ✔        |              | The maximum stock supply       |
 | --max-price            | decimal   | ✔        |              | The maximum price when all stock are sold out |
-| --init-price           | decimal   | ✔        |              | The initial price when no stock are sold out |
+| --init-price | decimal | ✔ | | The initial price when no stock are sold out |
+| --max-money  | decimal   | ✔        |              | The maximum gained money when all the stock are sold out. |
 | --stock-precision      | int (0 ~ 8) | ✔      |              | Controls the granularity in trading |
 | --earliest-cancel-time | int       | ✔        |              | Unix timestamp (in seconds) |
 
 
 > 💡Note: only the token owner (who issued this token) can create a bancor market with this token as stock. For example, only the owner of `abc` can create a bancor market `abc/def`.
 
-Example 1: create a bancor market `abc/def`, whose max supply is 10000000000000, max price is 500, initial price is 5, stock volumn in each trade must integral multiple of 100 (10^3), and earliest cancel time is one month later.
+Example 1: create a bancor market `abc/def`, whose max supply is 10000000000000, max price is 500, initial price is 5, max gained money 300000000000000, stock volumn in each trade must integral multiple of 100 (10^3), and earliest cancel time is one month later.
 
 ```
 cancelTime=`python -c "import time; print(int((time.time() + 30*24*3600)))"` # one month later
 $ ./cetcli tx bancorlite init abc def \
 	--max-supply=10000000000000 \
+	--max-money=300000000000000 \
 	--max-price=500 \
 	--init-price=5 \
 	--stock-precision=3 \

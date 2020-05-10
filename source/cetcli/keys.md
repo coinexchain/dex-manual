@@ -80,6 +80,7 @@ Example 3: Recover a private key according to bip39 mnemonic: `./cetcli keys add
 
 Example 4: Generate a private key but only print its information to console, instead of writting to local disk: `$ ./cetcli keys add mykey2 --dry-run`
 
+Plase note the names used here (bob, eve, jay) are different from alias, which are on-chain and with consensus. The names use here are totally local to your computer.
 
 
 ## Update the passphrase
