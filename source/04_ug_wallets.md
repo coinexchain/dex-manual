@@ -1,5 +1,2 @@
-## User Guide
+## Wallets
 
-### Account Management
-
-- 

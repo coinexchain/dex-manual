@@ -40,6 +40,32 @@ When a subscribed topic needs to carry parameters, you can use a colon `:` to se
 
 > [Response data example](https://github.com/coinexchain/trade-server/blob/master/docs/websocket-data-examples.md)
 
+### 	
+
+## Heartbeat
+
+Send "ping" on the client, and the server will respond with "pong".
+
+Ping Format：`{"op":"ping"}`
+Pong Response: `{"type":"pong"}`
+
+If you are concerned that your connection will be silently terminated, we recommend that you use the following process:
+
+*	After receiving each message, set a 5-second timer.
+*	If you have received new message when the timer is triggered, reset the timer.
+*	If the timer is triggered, which means no new message has been received within 5 seconds, send a ping packet.
+
+
+## Unsubscription
+
+If you want to unsubscribe to a topic after the user program has been running for a period of time, you can use the `unsubscribe` command.
+
+e.g. `{"op":"unsubscribe", "args":[<subscriptionTopic>, ...]}`
+
+
+
+
+
 ## Response Format
 
 The response of Websocket may include the following three types:
@@ -80,12 +106,26 @@ When a block is confirmed on the chain every time, related data includes the hei
 {
 	"type": "blockinfo",
 	"payload": {	
+            "chain_id": "coinexdex2",
             "height": 162537, 			// height
             "time": 673571293,			// unix time second
-            "hash": "000000000000000000ac6c4c9a6c2e406ac32b53af5910039be27f669d767356" // block hash
+            "last_block_hash": "000000000000000000ac6c4c9a6c2e406ac32b53af5910039be27f669d767356" // block hash
 	}
 }
 ```
+
+### 
+
+**payload:**
+
+| Field           | json Type | Description             |
+| --------------- | --------- | ----------------------- |
+| chain_id        | String    | Current chain ID        |
+| height          | Number    | Current block height    |
+| timestamp       | Number    | Current block timestamp |
+| last_block_hash | String    | Last block hash         |
+
+
 
 ### Confirmed Transactions
 
@@ -127,7 +167,26 @@ Get transactions that require user's signature in each block.
 
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Tx type definition`
+**payload** : 
+
+| Field         | Type                   | Description                                           |
+| ------------- | ---------------------- | ----------------------------------------------------- |
+| signers       | String                 | Signers                                               |
+| transfers     | Object(TransferRecord) | See the chart below                                   |
+| serial_number | Number                 | Current Tx serial number                              |
+| msg_types     | String                 | Tx message types                                      |
+| tx_json       | String                 | Tx serialized data (json)                             |
+| height        | Number                 | Current Tx height                                     |
+| hash          | String                 | Tx hash                                               |
+| extra_info    | String                 | Extra information provided when the transaction fails |
+
+**TransferRecord**
+
+| Field     | Type   | Description  |
+| --------- | ------ | ------------ |
+| sender    | String | Tx sender    |
+| recipient | String | Tx recipient |
+| amount    | String | Amount       |
 
 ### Validator's Slash
 
@@ -150,7 +209,16 @@ Get slash in the block.
 }	
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Slash type definition`
+**payload** : 
+
+| Field     | Type    | Description              |
+| --------- | ------- | ------------------------ |
+| validator | String  | Validator address        |
+| power     | String  | Validator's voting power |
+| reason    | String  | Reason for slash         |
+| jailed    | Boolean | Jailed?                  |
+
+
 
 ### Ticker of Trading Pairs
 
@@ -178,7 +246,16 @@ Get ticker of the trading pairs.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Tickers type definition`
+**payload:** 
+
+| Field         | Type   | Description                             |
+| ------------- | ------ | --------------------------------------- |
+| market        | String | Trading pair                            |
+| new           | String | The latest price for the current minute |
+| old           | String | Price one day before the current minute |
+| minute_in_day | Number | Ticker in the xx minute of a day        |
+
+### 
 
 ### K-line of a Certain Precision for Trading Pairs 
 
@@ -210,7 +287,20 @@ K-line Precision : Currently, 1min, 1hour and 1day are supported.
 }	 	
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml  CandleStick type definition`
+**payload** : 
+
+| Field     | Type   | Description                   |
+| --------- | ------ | ----------------------------- |
+| open      | String | Opening                       |
+| close     | String | Closing                       |
+| high      | String | High                          |
+| low       | String | Low                           |
+| total     | String | Total executions              |
+| unix_time | Number | Timestamp of pushing K-line   |
+| time_span | String | Time range: 1min、1hour、1day |
+| market    | String | Trading pair                  |
+
+### 
 
 ### Depth of Trading Pairs
 
@@ -251,6 +341,8 @@ Get depth of trading pairs.
 
 depth_change: * depth_full: * depth_delta: **payload** : Refer to `../swagger/swagger.yaml  /market/depths request response`
 
+
+
 ### Execution of Trading Pairs
 
 Subscribe to specific trading pairs with execution data.
@@ -280,7 +372,24 @@ Subscribe to specific trading pairs with execution data.
 
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml  FillOrderInfo type definition`
+**payload** : 
+
+| Field        | Type   | Description                            |
+| ------------ | ------ | -------------------------------------- |
+| order_id     | String | Order ID                               |
+| trading_pair | String | Trading pair                           |
+| height       | Number | Executed height                        |
+| side         | Number | Side; BUY:1, SELL:2                    |
+| price        | String | Price                                  |
+| left_stock   | Number | Unexecuted stock quantity              |
+| freeze       | Number | Remaining unexecuted frozen assets     |
+| deal_stock   | Number | Executed stock quantity                |
+| deal_money   | Number | Executed amount                        |
+| curr_stock   | Number | Executed stock quantity for this order |
+| curr_money   | Number | Executed amount for this order         |
+| fill_price   | String | Executed price for this order          |
+
+### 
 
 
 ### Orders of Trading Pairs
@@ -358,6 +467,51 @@ There are three main types: Create order, Fill order and Cancel order.
 
 ```
 
+**Payload:**
+
+**create_order**
+
+| Field              | Type   | Description                                                  |
+| ------------------ | ------ | ------------------------------------------------------------ |
+| order_id           | String | Order ID                                                     |
+| sender             | String | Creator's address                                            |
+| trading_pair       | String | Trading pair                                                 |
+| order_type         | Number | 2:Limit order; Currently, Limit order available only         |
+| price              | String | Price                                                        |
+| quantity           | Number | Stock quantity                                               |
+| side               | Number | Side; BUY:1, SELL:2                                          |
+| time_in_force      | Number | Order type; GTE: Good Till Expire; IOC: Immediate or Cancel  |
+| height             | Number | Block height when creating order                             |
+| freeze             | Number | Used funds                                                   |
+| frozen_feature_fee | Number | Freeze the max. service fee of order; Return it in terms of storage time when cancelling order |
+| frozen_commission  | Number | Freeze the max. commission of order; Return it according to the deal status when cancelling order |
+| tx_hash            | String | Tx hash                                                      |
+
+**fill_order**
+
+Same as the above **execution of trading pairs.**
+
+**cancel_order**
+
+| Field               | Type   | Description                        |
+| ------------------- | ------ | ---------------------------------- |
+| order_id            | String | OrderID                            |
+| trading_pair        | String | Trading pair                       |
+| height              | Number | Block height when cancelling order |
+| side                | Number | Side; BUY:1, SELL:2                |
+| price               | String | Price                              |
+| del_reason          | String | Reason for cancellation            |
+| used_commission     | Number | Actual used commission             |
+| used_feature_fee    | Number | Actual used service fee            |
+| rebate_amount       | Number | Commission amount                  |
+| rebate_referee_addr | String | Commission address                 |
+| left_stock          | Number | Unexcuted stock quantity           |
+| remain_amount       | Number | Remaining unexecuted amount        |
+| deal_stock          | Number | Executed stock quantity            |
+| deal_money          | Number | Executed amount                    |
+
+### 
+
 ### Comments 
 
 Get comments of specific token on the forum.
@@ -396,7 +550,32 @@ Get comments of specific token on the forum.
 
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml  Comment type definition`
+**payload** :
+
+| Field        | Type                 | Description          |
+| ------------ | -------------------- | -------------------- |
+| id           | Number               |                      |
+| height       | Number               | Comment block height |
+| sender       | String               | Comment sender       |
+| token        | String               | Token                |
+| donation     | Number               | Donated amount       |
+| title        | String               | Title                |
+| content      | String               | Content              |
+| content_type | Number               | Content type         |
+| references   | []Object(CommentRef) |                      |
+| tx_hash      | String               | Tx hash              |
+
+**CommentRef**
+
+| Field         | Type     | Description |
+| ------------- | -------- | ----------- |
+| id            | Number   |             |
+| reward_target | String   |             |
+| reward_token  | String   |             |
+| reward_amount | Number   |             |
+| attitudes     | []Number |             |
+
+**meaning of content_type**
 
 Content Type | value |
 -----------|------------|
@@ -407,7 +586,7 @@ Magnet | 1
 IPFS | 0
 
 
-### Bancor Contract
+### Bancor Contract Information
 
 Get information of specific trading pairs in the bancor contract.
 
@@ -437,7 +616,25 @@ Get information of specific trading pairs in the bancor contract.
 
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml  BancorInfo type definition`
+**payload** : 
+
+| Field                | Type   | Description                   |
+| -------------------- | ------ | ----------------------------- |
+| owner                | String | Bancor owner                  |
+| stock                | String | Stock quantity                |
+| money                | String | Amount                        |
+| init_price           | String | Initial price of trading pair |
+| max_supply           | String | Max. supply                   |
+| max_price            | String | Max. price                    |
+| current_price        | String | Current price                 |
+| stock_in_pool        | String | Stock quantity                |
+| money_in_pool        | String | Deposit amount                |
+| earliest_cancel_time | Number | Earliest cancel time          |
+| stock_precision      | String | Stock Precision               |
+| max_money            | String | Max. deposit amount           |
+| ar                   | String | Supply-price index            |
+
+### 
 
 ### Execution of Bancor Contract Address
 
@@ -464,7 +661,22 @@ Get execution information of specific address in the bancor contract.
 }
 ```
 
-**payload** : Refer to`../swagger/swagger.yaml  BancorTrade 类型定义`
+**payload** : 
+
+| Field               | Type   | Description                                                  |
+| ------------------- | ------ | ------------------------------------------------------------ |
+| sender              | String | Order creator                                                |
+| stock               | String | stock quantity                                               |
+| money               | String | amount                                                       |
+| amount              | Number | Order quantity                                               |
+| side                | Number | Side; BUY:1, SELL:2                                          |
+| money_limit         | Number | Bid price of buying order, ask price of selling order        |
+| transaction_price   | String | Executed average price for this order, unit: price per stock |
+| block_height        | Number | Block height                                                 |
+| tx_hash             | String | Tx hash                                                      |
+| used_commission     | Number | Actual used commission                                       |
+| rebate_amount       | Number | Commission amount                                            |
+| rebate_referee_addr | String | Commission address                                           |
 
 ### Execution of Bancor Contract
 
@@ -489,7 +701,7 @@ Get execution information of specific address in the bancor contract.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml  BancorTrade type definition`
+**payload** : See above **Bancor Contract Information**.
 
 ### Amount Change of Account
 
@@ -529,7 +741,7 @@ Get amount change of specific users.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Tx type definition`
+**payload** : Same as above **Confirmed Transactions**.
 
 ### Redelegation
 
@@ -552,20 +764,31 @@ Get redelegation information of users.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Redelegation type definition`
+**payload** : 
+
+| Field           | Type   | Description                |
+| --------------- | ------ | -------------------------- |
+| delegator       | String | Delegator address          |
+| src             | String | Previous validator address |
+| dst             | String | Current validator address  |
+| amount          | String | Amount                     |
+| completion_time | Number | Completion time            |
+| tx_hash         | String | Tx hash                    |
+
+### 
 
 
-### Unbinding 
+### Unbonding 
 
 Get unbinding information of users.
 
-**SubscriptionTopic** : `unbinding:<address>`
+**SubscriptionTopic** : `unbonding:<address>`
 
 **Response**:
 
 ```json
 {
-	"type": "unbinding",
+	"type": "unbonding",
 	"payload": {       
             "delegator": "coinex1ughhs0eyames355v4tzq5nx2g806p55rna0d2x",
             "validator": "coinex1ughhs0eyames355v4tzq5nx2g806p55r323x",
@@ -575,7 +798,17 @@ Get unbinding information of users.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Unbinding type definition`
+**payload** :
+
+| Field           | Type   | Description       |
+| --------------- | ------ | ----------------- |
+| delegator       | String | Delegator address |
+| validator       | String | Validator address |
+| amount          | String | Amount            |
+| completion_time | Number | Completion time   |
+| tx_hash         | String | Tx hash           |
+
+### 
 
 
 ### Unlock
@@ -642,30 +875,33 @@ Get the delayed transfer information of users.
 }
 ```
 
-**payload** : Refer to `../swagger/swagger.yaml Unlock type definition`
-	
+**payload** : 
 
-## Heartbeat
+| Field        | Type                 | Description               |
+| ------------ | -------------------- | ------------------------- |
+| address      | String               | Address                   |
+| unlocked     | []Object(sdk.Coin)   | Unlocked amount           |
+| locked_coins | []Object(LockedCoin) | Remaining locked amount   |
+| frozen_coins | []Object(sdk.Coin)   | Current frozen amount     |
+| coins        | []Object(sdk.Coin)   | Available account balance |
+| height       | Number               | Current block height      |
 
-Send "ping" on the client, and the server will respond with "pong".
+**LockedCoin**
 
-Ping Format：`{"op":"ping"}`
-Pong Response: `{"type":"pong"}`
+| Field        | Type             | Description                  |
+| ------------ | ---------------- | ---------------------------- |
+| coin         | Object(sdk.Coin) | Amount                       |
+| unlock_time  | Number           | Unlock time                  |
+| from_address | String           | Unlock from                  |
+| supervisor   | String           | Supervisor address           |
+| reward       | Number           | Reward amount for supervisor |
 
-If you are concerned that your connection will be silently terminated, we recommend that you use the following process:
+**sdk.Coin**
 
-*	After receiving each message, set a 5-second timer.
-*	If you have received new message when the timer is triggered, reset the timer.
-*	If the timer is triggered, which means no new message has been received within 5 seconds, send a ping packet.
-
-
-## Unsubscription
-
-If you want to unsubscribe to a topic after the user program has been running for a period of time, you can use the `unsubscribe` command.
-
-e.g. `{"op":"unsubscribe", "args":[<subscriptionTopic>, ...]}`
-
-
+| Field  | Type   | Description    |
+| ------ | ------ | -------------- |
+| denom  | String | Token name     |
+| amount | String | Token quantity |
 
 
 
