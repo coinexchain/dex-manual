@@ -1,8 +1,8 @@
-# 消息结构说明
+# Message Compositions
 
-目前支持的消息类型：
+The message list:
 
-| 模块    | 消息                                        | 用途                 | 备注         |
+| Module  | Message                                     | Usage                | Note         |
 | ------- | ------------------------------------------- | -------------------- | ------------ |
 |         | "cosmos-sdk/MsgDelegate"                    | 委托                 |              |
 |         | "cosmos-sdk/MsgUndelegate"                  | 取消委托             |              |
@@ -21,7 +21,7 @@
 |         | "bankx/MsgMultiSend"                        | 多重发送             |              |
 |         | "bankx/MsgSetMemoRequired"                  | 设置memo是否必须     |              |
 |         | "bankx/MsgSupervisedSend"                   | 发送担保交易         |              |
-| authx   | "authx/MsgSetReferee"                       | 设置介绍人           | DEX2新增消息 |
+| authx   | "authx/MsgSetReferee"                       | 设置介绍人           | Added in DEX2 |
 | distrx  | "distrx/MsgDonateToCommunityPool"           | 向community pool捐赠 |              |
 | alias   | "alias/MsgAliasUpdate"                      | 设置别名             |              |
 | asset   | "asset/MsgIssueToken"                       | 发行token            |              |
@@ -34,50 +34,50 @@
 |         | "asset/MsgRemoveTokenWhitelist"             | 从token白名单移除    |              |
 |         | "asset/MsgForbidAddr"                       | 冻结地址token        |              |
 |         | "asset/MsgUnForbidAddr"                     | 取消冻结地址token    |              |
-|         | "asset/MsgModifyTokenInfo"                  | 修改token信息        | DEX2添加字段 |
+|         | "asset/MsgModifyTokenInfo"                  | 修改token信息        | Add New Field in DEX2 |
 | market  | "market/MsgCreateTradingPair"               | 创建交易对           |              |
 |         | "market/MsgCancelTradingPair"               | 取消交易对           |              |
 |         | "market/MsgCreateOrder"                     | 创建订单             |              |
 |         | "market/MsgCancelOrder"                     | 取消订单             |              |
 |         | "market/MsgModifyPricePrecision"            | 修改价格精度         |              |
-| bancor  | "bancorlite/MsgBancorInit"                  | 创建bancor           | DEX2添加字段 |
+| bancor  | "bancorlite/MsgBancorInit"                  | 创建bancor           | Add New Field in DEX2 |
 |         | "bancorlite/MsgBancorCancel"                | 取消bancor           |              |
 |         | "bancorlite/MsgBancorTrade"                 | 和bancor交易         |              |
 | comment | "comment/MsgCommentToken"                   | 对token发表评论      |              |
 
 
 
-coin结构
+coin struct
 
-| 字段名 | 类型   | 是否必须 | 描述 |
+| Field  | Type   | Required | Description |
 | ------ | ------ | -------- | ---- |
-| amount | string | required | 数额 |
-| denom  | string | required | 币种 |
+| amount | string | Yes      | 数额 |
+| denom  | string | Yes      | 币种 |
 
 说明：POST接口返回的是未签名交易，POST接口参数参考[swagger文档](https://dex-api.coinex.org/swagger/)。
 
 
 
-# 转账
+# Transferring Tokens
 
-## 发送
+## Send
 
 ```http 
 POST /bank/accounts/{address}/transfers
 ```
 
-消息类型：bankx/MsgSend
+Message Type: bankx/MsgSend
 
-消息结构
+Message Composition
 
-| 字段名       | 类型   | 是否必须 | 描述                                                         |
+| Field Name   | Type   | Required | Description                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
-| from_address | string | required | 发送地址                                                     |
-| to_address   | string | required | 接收地址                                                     |
-| amount       | coin[] | required | 金额                                                         |
-| unlock_time  | string | required | 非转帐锁定填0。非0时表示用户转帐的钱需要在指定时间T后才能再次流通 (the number of seconds elapsed since January 1, 1970 UTC) |
+| from_address | string | Yes      | 发送地址                                                     |
+| to_address   | string | Yes      | 接收地址                                                     |
+| amount       | coin[] | Yes      | 金额                                                         |
+| unlock_time  | string | Yes      | 非转帐锁定填0。非0时表示用户转帐的钱需要在指定时间T后才能再次流通 (the number of seconds elapsed since January 1, 1970 UTC) |
 
-示例
+Example:
 
 ```json
 {
@@ -98,28 +98,28 @@ POST /bank/accounts/{address}/transfers
 
 
 
-## 多重发送
+## Multiple-Sender-Reciever Send
 
-消息类型：bankx/MsgMultiSend
+Message Type: bankx/MsgMultiSend
 
 
 
-## 设置memo是否必须
+## Set the attribue of memo-required
 
 ```http
 POST /bank/accounts/memo
 ```
 
-消息类型：bankx/MsgSetMemoRequired
+Message Type: bankx/MsgSetMemoRequired
 
-消息结构
+Message Composition
 
-| 字段名   | 类型   | 是否必须 | 描述     |
+| Field    | Type   | Required | Description     |
 | -------- | ------ | -------- | -------- |
-| address  | string | required | 地址     |
-| required | bool   | required | 是否必须 |
+| address  | string | Yes      | 地址     |
+| required | bool   | Yes      | Required |
 
-示例
+Example:
 
 ```json
 {
@@ -133,27 +133,27 @@ POST /bank/accounts/memo
 
 
 
-## 发送担保交易
+## Send locked coins with a supervisor
 
 ```http 
 POST /bank/accounts/{address}/supervised_transfers
 ```
 
-消息类型：bankx/MsgSupervisedSend
+Message Type: bankx/MsgSupervisedSend
 
-消息结构
+Message Composition
 
-| 字段名       | 类型   | 是否必须 | 描述                                                         |
+| Field Name   | Type   | Required | Description                                                         |
 | ------------ | ------ | -------- | ------------------------------------------------------------ |
-| from_address | string | required | 发送地址                                                     |
+| from_address | string | Yes      | 发送地址                                                     |
 | supervisor   | string | optional | 监督人地址                                                   |
-| to_address   | string | required | 接收地址                                                     |
-| amount       | coin   | required | 金额                                                         |
-| unlock_time  | string | required | 非转帐锁定填0。非0时表示用户转帐的钱需要在指定时间T后才能再次流通 (the number of seconds elapsed since January 1, 1970 UTC) |
+| to_address   | string | Yes      | 接收地址                                                     |
+| amount       | coin   | Yes      | 金额                                                         |
+| unlock_time  | string | Yes      | 非转帐锁定填0。非0时表示用户转帐的钱需要在指定时间T后才能再次流通 (the number of seconds elapsed since January 1, 1970 UTC) |
 | reward       | string | optional | 给监督者的奖励                                               |
-| operation    | int    | required | 操作类型。0-创建交易，1-退给发送人，2-发送人提前解锁，3-监督人提前解锁 |
+| operation    | int    | Yes      | 操作类型。0-创建交易，1-退给发送人，2-发送人提前解锁，3-监督人提前解锁 |
 
-示例
+Example:
 
 ```json
 {
@@ -175,24 +175,24 @@ POST /bank/accounts/{address}/supervised_transfers
 
 
 
-## 设置别名
+## Update Aliases
 
 ```http
 POST /alias/update
 ```
 
-消息类型：alias/MsgAliasUpdate
+Message Type: alias/MsgAliasUpdate
 
-消息结构
+Message Composition
 
-| 字段名     | 类型   | 是否必须 | 描述               |
+| Field Name | Type   | Required | Description               |
 | ---------- | ------ | -------- | ------------------ |
-| owner      | string | required | owner              |
-| alias      | string | required | 别名               |
-| is_add     | bool   | required | 设置或删除         |
-| as_default | bool   | required | 设置是否为默认别名 |
+| owner      | string | Yes      | owner              |
+| alias      | string | Yes      | 别名               |
+| is_add     | bool   | Yes      | 设置或删除         |
+| as_default | bool   | Yes      | 设置是否为默认别名 |
 
-示例
+Example:
 
 ```json
 {
@@ -206,22 +206,22 @@ POST /alias/update
 }
 ```
 
-## 设置介绍人（DEX2新增）
+## Set a Referee (Added in DEX2)
 
 ```http
 POST /auth/accounts/{address}/referee
 ```
 
-消息类型：authx/MsgSetReferee
+Message Type: authx/MsgSetReferee
 
-消息结构
+Message Composition
 
-| 字段名  | 类型           | 是否必须 | 描述       |
+| Field   | Type           | Required | Description       |
 | ------- | -------------- | -------- | ---------- |
-| sender  | sdk.AccAddress | required | 发送方地址 |
-| referee | sdk.AccAddress | required | 介绍人地址 |
+| sender  | sdk.AccAddress | Yes      | 发送方地址 |
+| referee | sdk.AccAddress | Yes      | 介绍人地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -235,25 +235,25 @@ POST /auth/accounts/{address}/referee
 
 
 
-# Staking & 收益分配
+# Staking & Reward-distribution
 
-## 委托
+## Delegate
 
 ```http
 POST /staking/delegators/{delegatorAddr}/delegations
 ```
 
-消息类型：cosmos-sdk/MsgDelegate
+Message Type: cosmos-sdk/MsgDelegate
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述       |
+| Field Name        | Type   | Required | Description       |
 | ----------------- | ------ | -------- | ---------- |
-| delegator_address | string | required | 委托人地址 |
-| validator_address | string | required | 验证人地址 |
-| amount            | coin   | required | 委托金额   |
+| delegator_address | string | Yes      | 委托人地址 |
+| validator_address | string | Yes      | 验证人地址 |
+| amount            | coin   | Yes      | 委托金额   |
 
-示例
+Example:
 
 ```json
 {
@@ -271,24 +271,24 @@ POST /staking/delegators/{delegatorAddr}/delegations
 
 
 
-## 取消委托
+## Unbond
 
 ```http
 POST /staking/delegators/{delegatorAddr}/unbonding_delegations
 ```
 
-消息类型：cosmos-sdk/MsgUndelegate
+Message Type: cosmos-sdk/MsgUndelegate
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述         |
+| Field Name        | Type   | Required | Description         |
 | ----------------- | ------ | -------- | ------------ |
-| delegator_address | string | required | 委托人地址   |
-| validator_address | string | required | 验证人地址   |
-| amount            | coin   | required | 取消委托金额 |
+| delegator_address | string | Yes      | 委托人地址   |
+| validator_address | string | Yes      | 验证人地址   |
+| amount            | coin   | Yes      | 取消委托金额 |
 
 
-示例
+Example:
 
 ```json
 {
@@ -306,24 +306,24 @@ POST /staking/delegators/{delegatorAddr}/unbonding_delegations
 
 
 
-## 转移委托
+## Redelegate
 
 ```http
 POST /staking/delegators/{delegatorAddr}/redelegations
 ```
 
-消息类型：cosmos-sdk/MsgBeginRedelegate
+Message Type: cosmos-sdk/MsgBeginRedelegate
 
-消息结构
+Message Composition
 
-| 字段名                | 类型   | 是否必须 | 描述         |
+| Field Name            | Type   | Required | Description         |
 | --------------------- | ------ | -------- | ------------ |
-| delegator_address     | string | required | 委托人地址   |
-| validator_src_address | string | required | 原验证人地址 |
-| validator_dst_address | string | required | 新验证人地址 |
-| amount                | coin   | required | 委托金额     |
+| delegator_address     | string | Yes      | 委托人地址   |
+| validator_src_address | string | Yes      | 原验证人地址 |
+| validator_dst_address | string | Yes      | 新验证人地址 |
+| amount                | coin   | Yes      | 委托金额     |
 
-示例
+Example:
 
 ```json
 {
@@ -342,21 +342,21 @@ POST /staking/delegators/{delegatorAddr}/redelegations
 
 
 
-## 提取佣金
+## Withdraw Validator Commission (and rewards for self-delegation)
 
 ```http
-POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
+POST /distribution/validators/{validatorAddr}/rewards
 ```
 
-消息类型：cosmos-sdk/MsgWithdrawValidatorCommission
+Message Type: cosmos-sdk/MsgWithdrawValidatorCommission
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述       |
+| Field Name        | Type   | Required | Description       |
 | ----------------- | ------ | -------- | ---------- |
-| validator_address | string | required | 验证人地址 |
+| validator_address | string | Yes      | 验证人地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -369,22 +369,22 @@ POST /distribution/validators/{validatorAddr}/rewards  #委托收益也会取回
 
 
 
-## 提取委托收益
+## Withdraw rewards for self-delegation
 
 ```http
 POST /distribution/delegators/{delegatorAddr}/rewards
 ```
 
-消息类型：cosmos-sdk/MsgWithdrawDelegationReward
+Message Type: cosmos-sdk/MsgWithdrawDelegationReward
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述       |
+| Field Name        | Type   | Required | Description       |
 | ----------------- | ------ | -------- | ---------- |
-| delegator_address | string | required | 委托人地址 |
-| validator_address | string | required | 验证人地址 |
+| delegator_address | string | Yes      | 委托人地址 |
+| validator_address | string | Yes      | 验证人地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -398,22 +398,22 @@ POST /distribution/delegators/{delegatorAddr}/rewards
 
 
 
-## 修改收益取回地址
+## Modify the address where the rewards go
 
 ```http
 POST /distribution/delegators/{delegatorAddr}/withdraw_address
 ```
 
-消息类型：cosmos-sdk/MsgModifyWithdrawAddress
+Message Type: cosmos-sdk/MsgModifyWithdrawAddress
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述         |
+| Field Name        | Type   | Required | Description         |
 | ----------------- | ------ | -------- | ------------ |
-| delegator_address | string | required | 委托人地址   |
-| withdraw_address  | string | required | 收益取回地址 |
+| delegator_address | string | Yes      | 委托人地址   |
+| withdraw_address  | string | Yes      | 收益取回地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -427,43 +427,43 @@ POST /distribution/delegators/{delegatorAddr}/withdraw_address
 
 
 
-# 治理
+# Valiators
 
-## 创建验证人
+## Create a validator
 
-消息类型：cosmos-sdk/MsgCreateValidator
+Message Type: cosmos-sdk/MsgCreateValidator
 
-消息结构
+Message Composition
 
-| 字段名              | 类型   | 是否必须 | 描述             |
+| Field Name          | Type   | Required | Description             |
 | ------------------- | ------ | -------- | ---------------- |
-| delegator_address   | string | required | 创建人地址       |
-| validator_address   | string | required | 验证人运营地址   |
-| pubkey              | string | required | 共识pubkey       |
-| value               | coin   | required | 委托金额         |
-| min_self_delegation | string | required | 自我委托最小金额 |
-| description         | object | required | 描述             |
-| commission          | object | required | 佣金设置         |
+| delegator_address   | string | Yes      | 创建人地址       |
+| validator_address   | string | Yes      | 验证人运营地址   |
+| pubkey              | string | Yes      | 共识pubkey       |
+| value               | coin   | Yes      | 委托金额         |
+| min_self_delegation | string | Yes      | 自我委托最小金额 |
+| description         | object | Yes      | 描述             |
+| commission          | object | Yes      | 佣金设置         |
 
-description结构
+description struct
 
-| 字段名           | 类型   | 是否必须 | 描述                          |
+| Field Name       | Type   | Required | Description                          |
 | ---------------- | ------ | -------- | ----------------------------- |
-| moniker          | string | required | 代号                          |
+| moniker          | string | Yes      | 代号                          |
 | identity         | string | optional | identity signature(keybase等) |
 | website          | string | optional | 网站                          |
 | details          | string | optional | 详情                          |
 | security_contact | string | optional | 紧急联系人（接口暂未支持）    |
 
-commission结构
+commission struct
 
-| 字段名          | 类型   | 是否必须 | 描述                     |
+| Field Name      | Type   | Required | Description                     |
 | --------------- | ------ | -------- | ------------------------ |
-| rate            | string | required | 佣金率                   |
-| max_rate        | string | required | 最大佣金率               |
-| max_change_rate | string | required | 每天最多可以增加的佣金率 |
+| rate            | string | Yes      | 佣金率                   |
+| max_rate        | string | Yes      | 最大佣金率               |
+| max_change_rate | string | Yes      | 每天最多可以增加的佣金率 |
 
-示例
+Example:
 
 ```json
 {
@@ -494,30 +494,30 @@ commission结构
 
 
 
-## 修改验证人
+## Edit some information of a validator
 
-消息类型：cosmos-sdk/MsgEditValidator
+Message Type: cosmos-sdk/MsgEditValidator
 
-消息结构
+Message Composition
 
-| 字段名              | 类型   | 是否必须 | 描述             |
+| Field Name          | Type   | Required | Description             |
 | ------------------- | ------ | -------- | ---------------- |
-| address             | string | required | 地址             |
+| address             | string | Yes      | 地址             |
 | commission_rate     | string | optional | 佣金率           |
 | min_self_delegation | string | optional | 自我委托最小金额 |
 | Description         | object | optional | 描述             |
 
-description结构
+description struct
 
-| 字段名           | 类型   | 是否必须 | 描述                          |
+| Field Name       | Type   | Required | Description                          |
 | ---------------- | ------ | -------- | ----------------------------- |
-| moniker          | string | required | 代号                          |
+| moniker          | string | Yes      | 代号                          |
 | identity         | string | optional | identity signature(keybase等) |
 | website          | string | optional | 网站                          |
 | details          | string | optional | 详情                          |
 | security_contact | string | optional | 紧急联系人（接口暂未支持）    |
 
-示例
+Example:
 
 ```json
 {
@@ -538,19 +538,19 @@ description结构
 
 
 
-## 不变量检查
+## Invariant Check
 
-消息类型：cosmos-sdk/MsgVerifyInvariant
+Message Type: cosmos-sdk/MsgVerifyInvariant
 
-消息结构
+Message Composition
 
-| 字段名                | 类型   | 是否必须 | 描述         |
+| Field Name            | Type   | Required | Description         |
 | --------------------- | ------ | -------- | ------------ |
-| sender                | string | required | 发送人       |
-| invariant_module_name | string | required | 不变量模块名 |
-| invariant_route       | string | required | 不变量路径   |
+| sender                | string | Yes      | 发送人       |
+| invariant_module_name | string | Yes      | 不变量模块名 |
+| invariant_route       | string | Yes      | 不变量路径   |
 
-示例
+Example:
 
 ```json
 {
@@ -565,7 +565,7 @@ description结构
 
 
 
-## 发起提案
+## Create new proposal
 
 ```http
 POST /gov/proposals
@@ -573,43 +573,43 @@ POST /gov/proposals/param_change
 POST /gov/proposals/community_pool_spend
 ```
 
-消息类型：cosmos-sdk/MsgSubmitProposal
+Message Type: cosmos-sdk/MsgSubmitProposal
 
-消息结构
+Message Composition
 
-| 字段名          | 类型   | 是否必须 | 描述       |
+| Field Name      | Type   | Required | Description       |
 | --------------- | ------ | -------- | ---------- |
-| proposer        | string | required | 提案发起人 |
-| initial_deposit | coin[] | required | 初始押金   |
-| content         | object | required | 内容       |
+| proposer        | string | Yes      | 提案发起人 |
+| initial_deposit | coin[] | Yes      | 初始押金   |
+| content         | object | Yes      | 内容       |
 
-content结构
+content struct
 
-| 字段名 | 类型   | 是否必须 | 描述     |
+| Field  | Type   | Required | Description     |
 | ------ | ------ | -------- | -------- |
-| type   | string | required | 提案类型 |
-| value  | object | required | 提案详情 |
+| type   | string | Yes      | 提案类型 |
+| value  | object | Yes      | 提案详情 |
 
-value结构
+value struct
 
-| 字段名      | 类型     | 是否必须 | 描述                               |
+| Field       | Type     | Required | Description                               |
 | ----------- | -------- | -------- | ---------------------------------- |
-| title       | string   | required | 标题                               |
-| description | string   | required | 描述                               |
+| title       | string   | Yes      | 标题                               |
+| description | string   | Yes      | 描述                               |
 | changes     | object[] | optional | 变更参数（参数修改提案）           |
 | recipient   | string   | optional | 接收人（Community Pool花费提案）   |
 | amount      | coin     | optional | 接收金额（Community Pool花费提案） |
 
-changes结构
+changes struct
 
-| 字段名   | 类型   | 是否必须 | 描述       |
+| Field    | Type   | Required | Description       |
 | -------- | ------ | -------- | ---------- |
-| subspace | string | required | 模块       |
-| key      | string | required | 参数key    |
+| subspace | string | Yes      | 模块       |
+| key      | string | Yes      | 参数key    |
 | subkey   | string | optional | 参数subkey |
-| value    | any    | required | 参数值     |
+| value    | any    | Yes      | 参数值     |
 
-示例
+Example:
 
 ```json
 {
@@ -668,23 +668,23 @@ changes结构
 
 
 
-## 给提案存押金
+## Deposit for a proposal
 
 ```http
 POST /gov/proposals/{proposalId}/deposits
 ```
 
-消息类型：cosmos-sdk/MsgDeposit
+Message Type: cosmos-sdk/MsgDeposit
 
-消息结构
+Message Composition
 
-| 字段名      | 类型   | 是否必须 | 描述       |
+| Field Name  | Type   | Required | Description       |
 | ----------- | ------ | -------- | ---------- |
-| depositor   | string | required | 提案发起人 |
-| proposal_id | string | required | 提案ID     |
-| amount      | coin[] | required | 存入金额   |
+| depositor   | string | Yes      | 提案发起人 |
+| proposal_id | string | Yes      | 提案ID     |
+| amount      | coin[] | Yes      | 存入金额   |
 
-示例
+Example:
 
 ```json
 {
@@ -704,23 +704,23 @@ POST /gov/proposals/{proposalId}/deposits
 
 
 
-## 提案投票
+## Vote for a proposal
 
 ```http
 POST /gov/proposals/{proposalId}/votes
 ```
 
-消息类型：bankx/MsgSend
+Message Type: bankx/MsgSend
 
-消息结构
+Message Composition
 
-| 字段名      | 类型   | 是否必须 | 描述                                                       |
+| Field Name  | Type   | Required | Description                                                       |
 | ----------- | ------ | -------- | ---------------------------------------------------------- |
-| voter       | string | required | 投票人                                                     |
-| proposal_id | string | required | 提案ID                                                     |
-| option      | string | required | 投票选项有四种选项: `yes`, `no`, `no_with_veto`, `abstain` |
+| voter       | string | Yes      | 投票人                                                     |
+| proposal_id | string | Yes      | 提案ID                                                     |
+| option      | string | Yes      | 投票选项有四种选项: `yes`, `no`, `no_with_veto`, `abstain` |
 
-示例
+Example:
 
 ```json
 {
@@ -735,22 +735,22 @@ POST /gov/proposals/{proposalId}/votes
 
 
 
-## 捐赠
+## Donate to community pool
 
 ```http
 POST /distribution/{accAddress}/donates
 ```
 
-消息类型：distrx/MsgDonateToCommunityPool
+Message Type: distrx/MsgDonateToCommunityPool
 
-消息结构
+Message Composition
 
-| 字段名    | 类型   | 是否必须 | 描述       |
+| Field     | Type   | Required | Description       |
 | --------- | ------ | -------- | ---------- |
-| from_addr | string | required | 捐献人地址 |
-| amount    | coin[] | required | 捐赠金额   |
+| from_addr | string | Yes      | 捐献人地址 |
+| amount    | coin[] | Yes      | 捐赠金额   |
 
-示例
+Example:
 
 ```json
 {
@@ -769,23 +769,23 @@ POST /distribution/{accAddress}/donates
 
 
 
-# 惩罚
+# Slash
 
-## 赦免
+## Unjail
 
 ```http
 POST /slashing/validators/{validatorAddr}/unjail
 ```
 
-消息类型：asset/MsgUnjail
+Message Type: asset/MsgUnjail
 
-消息结构
+Message Composition
 
-| 字段名  | 类型   | 是否必须 | 描述       |
+| Field   | Type   | Required | Description       |
 | ------- | ------ | -------- | ---------- |
-| address | string | required | 验证人地址 |
+| address | string | Yes      | 验证人地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -800,31 +800,31 @@ POST /slashing/validators/{validatorAddr}/unjail
 
 # Token
 
-## 发行token
+## Issue tokens
 
 ```http
 POST /asset/tokens
 ```
 
-消息类型：asset/MsgIssueToken
+Message Type: asset/MsgIssueToken
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述                          |
+| Field Name        | Type   | Required | Description                          |
 | ----------------- | ------ | -------- | ----------------------------- |
-| symbol            | string | required | 符号                          |
-| name              | string | required | 名字                          |
-| owner             | string | required | owner                         |
-| total_supply      | string | required | 发行量                        |
-| mintable          | bool   | required | 是否可增发                    |
-| burnable          | bool   | required | 是否可燃烧                    |
-| token_forbiddable | bool   | required | 是否可全局冻结                |
-| addr_forbiddable  | bool   | required | 是否可根据地址冻结            |
+| symbol            | string | Yes      | 符号                          |
+| name              | string | Yes      | 名字                          |
+| owner             | string | Yes      | owner                         |
+| total_supply      | string | Yes      | 发行量                        |
+| mintable          | bool   | Yes      | 是否可增发                    |
+| burnable          | bool   | Yes      | 是否可燃烧                    |
+| token_forbiddable | bool   | Yes      | 是否可全局冻结                |
+| addr_forbiddable  | bool   | Yes      | 是否可根据地址冻结            |
 | description       | string |          | 描述                          |
 | url               | string |          | URL                           |
 | identity          | string |          | identity signature(keybase等) |
 
-示例
+Example:
 
 ```json
 {
@@ -847,23 +847,23 @@ POST /asset/tokens
 
 
 
-## 转移token的owner
+## Transfer the ownership of a token
 
 ```http
 POST /asset/tokens/{symbol}/ownerships
 ```
 
-消息类型：asset/MsgTransferOwnership
+Message Type: asset/MsgTransferOwnership
 
-消息结构
+Message Composition
 
-| 字段名         | 类型   | 是否必须 | 描述    |
+| Field Name     | Type   | Required | Description    |
 | -------------- | ------ | -------- | ------- |
-| symbol         | string | required | 符号    |
-| original_owner | string | required | 原owner |
-| new_owner      | string | required | 新owner |
+| symbol         | string | Yes      | 符号    |
+| original_owner | string | Yes      | 原owner |
+| new_owner      | string | Yes      | 新owner |
 
-示例
+Example:
 
 ```json
 {
@@ -878,23 +878,23 @@ POST /asset/tokens/{symbol}/ownerships
 
 
 
-## 增发token
+## Mint tokens
 
 ```http
 POST /asset/tokens/{symbol}/mints
 ```
 
-消息类型：asset/MsgMintToken
+Message Type: asset/MsgMintToken
 
-消息结构
+Message Composition
 
-| 字段名        | 类型   | 是否必须 | 描述      |
+| Field Name    | Type   | Required | Description      |
 | ------------- | ------ | -------- | --------- |
-| symbol        | string | required | 符号      |
-| owner_address | string | required | owner地址 |
-| amount        | string | required | 数量      |
+| symbol        | string | Yes      | 符号      |
+| owner_address | string | Yes      | owner地址 |
+| amount        | string | Yes      | 数量      |
 
-示例
+Example:
 
 ```json
 {
@@ -909,23 +909,23 @@ POST /asset/tokens/{symbol}/mints
 
 
 
-## 燃烧token
+## Burn tokens
 
 ```http
 POST /asset/tokens/{symbol}/burns
 ```
 
-消息类型：asset/MsgBurnToken
+Message Type: asset/MsgBurnToken
 
-消息结构
+Message Composition
 
-| 字段名        | 类型   | 是否必须 | 描述      |
+| Field Name    | Type   | Required | Description      |
 | ------------- | ------ | -------- | --------- |
-| symbol        | string | required | 符号      |
-| owner_address | string | required | owner地址 |
-| amount        | string | required | 数量      |
+| symbol        | string | Yes      | 符号      |
+| owner_address | string | Yes      | owner地址 |
+| amount        | string | Yes      | 数量      |
 
-示例
+Example:
 
 ```json
 {
@@ -940,22 +940,22 @@ POST /asset/tokens/{symbol}/burns
 
 
 
-## 冻结token
+## Forbid tokens
 
 ```http
 POST /asset/tokens/{symbol}/forbids
 ```
 
-消息类型：asset/MsgForbidToken
+Message Type: asset/MsgForbidToken
 
-消息结构
+Message Composition
 
-| 字段名        | 类型   | 是否必须 | 描述      |
+| Field Name    | Type   | Required | Description      |
 | ------------- | ------ | -------- | --------- |
-| symbol        | string | required | 符号      |
-| owner_address | string | required | owner地址 |
+| symbol        | string | Yes      | 符号      |
+| owner_address | string | Yes      | owner地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -969,22 +969,22 @@ POST /asset/tokens/{symbol}/forbids
 
 
 
-## 取消冻结token
+## Unforbid tokens
 
 ```http
 POST /asset/tokens/{symbol}/unforbids
 ```
 
-消息类型：asset/MsgUnForbidToken
+Message Type: asset/MsgUnForbidToken
 
-消息结构
+Message Composition
 
-| 字段名        | 类型   | 是否必须 | 描述      |
+| Field Name    | Type   | Required | Description      |
 | ------------- | ------ | -------- | --------- |
-| symbol        | string | required | 符号      |
-| owner_address | string | required | owner地址 |
+| symbol        | string | Yes      | 符号      |
+| owner_address | string | Yes      | owner地址 |
 
-示例
+Example:
 
 ```json
 {
@@ -998,23 +998,23 @@ POST /asset/tokens/{symbol}/unforbids
 
 
 
-## 加入token白名单
+## Add addresses to whilelist
 
 ```http
 POST /asset/tokens/{symbol}/forbidden/whitelist
 ```
 
-消息类型：asset/MsgAddTokenWhitelist
+Message Type: asset/MsgAddTokenWhitelist
 
-消息结构
+Message Composition
 
-| 字段名        | 类型     | 是否必须 | 描述                |
+| Field Name    | Type     | Required | Description                |
 | ------------- | -------- | -------- | ------------------- |
-| symbol        | string   | required | 符号                |
-| owner_address | string   | required | owner地址           |
-| whitelist     | string[] | required | token白名单地址列表 |
+| symbol        | string   | Yes      | 符号                |
+| owner_address | string   | Yes      | owner地址           |
+| whitelist     | string[] | Yes      | token白名单地址列表 |
 
-示例
+Example:
 
 ```json
 {
@@ -1031,23 +1031,23 @@ POST /asset/tokens/{symbol}/forbidden/whitelist
 
 
 
-## 从token白名单移除
+## Remove addresses from whitelist
 
 ```http
 POST /asset/tokens/{symbol}/unforbidden/whitelist
 ```
 
-消息类型：asset/MsgRemoveTokenWhitelist
+Message Type: asset/MsgRemoveTokenWhitelist
 
-消息结构
+Message Composition
 
-| 字段名        | 类型     | 是否必须 | 描述                        |
+| Field Name    | Type     | Required | Description                        |
 | ------------- | -------- | -------- | --------------------------- |
-| symbol        | string   | required | 符号                        |
-| owner_address | string   | required | owner地址                   |
-| whitelist     | string[] | required | 从token白名单移除的地址列表 |
+| symbol        | string   | Yes      | 符号                        |
+| owner_address | string   | Yes      | owner地址                   |
+| whitelist     | string[] | Yes      | 从token白名单移除的地址列表 |
 
-示例
+Example:
 
 ```json
 {
@@ -1064,23 +1064,23 @@ POST /asset/tokens/{symbol}/unforbidden/whitelist
 
 
 
-## 冻结地址token
+## Forbid tokens in an account
 
 ```http
 POST /asset/tokens/{symbol}/forbidden/addresses
 ```
 
-消息类型：asset/MsgForbidAddr
+Message Type: asset/MsgForbidAddr
 
-消息结构
+Message Composition
 
-| 字段名        | 类型     | 是否必须 | 描述         |
+| Field Name    | Type     | Required | Description         |
 | ------------- | -------- | -------- | ------------ |
-| symbol        | string   | required | 符号         |
-| owner_address | string   | required | owner地址    |
-| addresses     | string[] | required | 冻结地址列表 |
+| symbol        | string   | Yes      | 符号         |
+| owner_address | string   | Yes      | owner地址    |
+| addresses     | string[] | Yes      | 冻结地址列表 |
 
-示例
+Example:
 
 ```json
 {
@@ -1098,23 +1098,23 @@ POST /asset/tokens/{symbol}/forbidden/addresses
 
 
 
-## 取消冻结地址token
+## Unforbid tokens in an account
 
 ```http
 POST /asset/tokens/{symbol}/unforbidden/addresses
 ```
 
-消息类型：asset/MsgUnForbidAddr
+Message Type: asset/MsgUnForbidAddr
 
-消息结构
+Message Composition
 
-| 字段名        | 类型     | 是否必须 | 描述             |
+| Field Name    | Type     | Required | Description             |
 | ------------- | -------- | -------- | ---------------- |
-| symbol        | string   | required | 符号             |
-| owner_address | string   | required | owner地址        |
-| addresses     | string[] | required | 取消冻结地址列表 |
+| symbol        | string   | Yes      | 符号             |
+| owner_address | string   | Yes      | owner地址        |
+| addresses     | string[] | Yes      | 取消冻结地址列表 |
 
-示例
+Example:
 
 ```json
 {
@@ -1131,30 +1131,30 @@ POST /asset/tokens/{symbol}/unforbidden/addresses
 
 
 
-## 修改token信息
+## Modify some information of a token
 
 ```http
 POST /asset/tokens/{symbol}/infos
 ```
 
-消息类型：asset/MsgModifyTokenInfo
+Message Type: asset/MsgModifyTokenInfo
 
-消息结构
+Message Composition
 
-| 字段名            | 类型   | 是否必须 | 描述             | 备注     |
+| Field Name        | Type   | Required | Description      | Note     |
 | ----------------- | ------ | -------- | ---------------- | -------- |
-| symbol            | string | required | 符号             |          |
-| owner_address     | string | required | owner地址        |          |
+| symbol            | string | Yes      | 符号             |          |
+| owner_address     | string | Yes      | owner地址        |          |
 | description       | string | optional | 描述             |          |
 | url               | string | optional | URL              |          |
-| name              | string | optional | 名称             | DEX2新增 |
-| total_supply      | string | optional | 总发行量         | DEX2新增 |
-| mintable          | bool   | optional | 可否增发         | DEX2新增 |
-| burnable          | bool   | optional | 可否燃烧         | DEX2新增 |
-| addr_forbiddable  | bool   | optional | 可否根据地址冻结 | DEX2新增 |
-| token_forbiddable | bool   | optional | 可否全局冻结     | DEX2新增 |
+| name              | string | optional | 名称             | Added in DEX2 |
+| total_supply      | string | optional | 总发行量         | Added in DEX2 |
+| mintable          | bool   | optional | 可否增发         | Added in DEX2 |
+| burnable          | bool   | optional | 可否燃烧         | Added in DEX2 |
+| addr_forbiddable  | bool   | optional | 可否根据地址冻结 | Added in DEX2 |
+| token_forbiddable | bool   | optional | 可否全局冻结     | Added in DEX2 |
 
-示例
+Example:
 
 ```json
 {
@@ -1170,28 +1170,28 @@ POST /asset/tokens/{symbol}/infos
 
 
 
-## 对token发表评论
+## Comment on tokens
 
 ```http
 POST /comment/new-thread
 ```
 
 
-消息类型：comment/MsgCommentToken
+Message Type: comment/MsgCommentToken
 
-消息结构
+Message Composition
 
-| 字段名       | 类型     | 是否必须 | 描述                                                         |
+| Field Name   | Type     | Required | Description                                                         |
 | ------------ | -------- | -------- | ------------------------------------------------------------ |
-| token        | string   | required | 被评论的币种                                                 |
-| sender       | string   | required | 发送者                                                       |
-| title        | string   | required | 标题                                                         |
-| content_type | integer  | required | 表示评论的内容是什么类型的，包括：0-IPFS、1-Magnet、2-HTTP、3-UTF8Text、4-ShortHanzi、5-ShortHanziLZ4、6-RawBytes |
-| content      | string   | required | 评论的内容，字节数组，最长为16KByte                          |
+| token        | string   | Yes      | 被评论的币种                                                 |
+| sender       | string   | Yes      | 发送者                                                       |
+| title        | string   | Yes      | 标题                                                         |
+| content_type | integer  | Yes      | 表示评论的内容是什么类型的，包括：0-IPFS、1-Magnet、2-HTTP、3-UTF8Text、4-ShortHanzi、5-ShortHanziLZ4、6-RawBytes |
+| content      | string   | Yes      | 评论的内容，字节数组，最长为16KByte                          |
 | donation     | string   |          | 捐赠给Incentive Pool的金额，只能捐赠CET                      |
 | references   | object[] | optional | 对另外一些Comment的引用                                      |
 
-示例
+Example:
 
 ```json
 {
@@ -1210,27 +1210,27 @@ POST /comment/new-thread
 
 
 
-# 交易
+# Markets (Trading Pairs)
 
-## 创建交易对
+## Create trading pair
 
 ```http
 POST /market/trading-pairs
 ```
 
-消息类型：market/MsgCreateTradingPair
+Message Type: market/MsgCreateTradingPair
 
-消息结构
+Message Composition
 
-| 字段名          | 类型    | 是否必须 | 描述                                                    |
+| Field Name      | Type    | Required | Description                                                    |
 | --------------- | ------- | -------- | ------------------------------------------------------- |
-| creator         | string  | required | 创建者，是stock或money的发行者                          |
-| money           | string  | required | money，必须是链上已经被创建的token                      |
-| stock           | string  | required | stock，必须是链上已经被创建的token                      |
-| price_precision | integer | required | 价格精度，取值为0~18，价格在小数点后保留多少位整数      |
-| order_precision | integer | required | 下单精度，下单数量必须是10的order_precision次方的整数倍 |
+| creator         | string  | Yes      | 创建者，是stock或money的发行者                          |
+| money           | string  | Yes      | money，必须是链上已经被创建的token                      |
+| stock           | string  | Yes      | stock，必须是链上已经被创建的token                      |
+| price_precision | integer | Yes      | 价格精度，取值为0~18，价格在小数点后保留多少位整数      |
+| order_precision | integer | Yes      | 下单精度，下单数量必须是10的order_precision次方的整数倍 |
 
-示例
+Example:
 
 ```json
 {
@@ -1247,23 +1247,23 @@ POST /market/trading-pairs
 
 
 
-## 取消交易对
+## Cancel a trading pair
 
 ```http
 POST /market/cancel-trading-pair
 ```
 
-消息类型：market/MsgCancelTradingPair
+Message Type: market/MsgCancelTradingPair
 
-消息结构
+Message Composition
 
-| 字段名         | 类型   | 是否必须 | 描述                    |
+| Field Name     | Type   | Required | Description                    |
 | -------------- | ------ | -------- | ----------------------- |
-| sender         | string | required | 发送者                  |
-| trading_pair   | string | required | 交易对                  |
-| effective_time | string | required | 生效时间戳（单位:纳秒） |
+| sender         | string | Yes      | 发送者                  |
+| trading_pair   | string | Yes      | 交易对                  |
+| effective_time | string | Yes      | 生效时间戳（单位:纳秒） |
 
-示例
+Example:
 
 ```json
 {
@@ -1278,31 +1278,31 @@ POST /market/cancel-trading-pair
 
 
 
-## 创建订单
+## Create new orders
 
 ```http
 POST /market/gte-orders
 POST /market/ioc-orders
 ```
 
-消息类型：market/MsgCreateOrder
+Message Type: market/MsgCreateOrder
 
-消息结构
+Message Composition
 
-| 字段名          | 类型    | 是否必须 | 描述                                                         |
+| Field Name      | Type    | Required | Description                                                         |
 | --------------- | ------- | -------- | ------------------------------------------------------------ |
-| sender          | string  | required | 发送者                                                       |
-| identify        | integer | required | 消息在交易内序号                                             |
-| trading_pair    | string  | required | 交易对                                                       |
-| order_type      | integer | required | 订单类型。2-限价单                                           |
-| price_precision | integer | required | 价格精度，取值为0~18，价格在小数点后保留多少位整数。它的取值必须不大于交易对默认的价格精度。默认的价格精度由交易对的创建者所设定。 |
-| price           | string  | required | 价格                                                         |
-| quantity        | string  | required | 数量                                                         |
-| side            | integer | required | 买卖方向：1-买，2-卖                                         |
-| time_in_force   | string  | required | 有效时间类型：3-GTE，4-IOC                                   |
-| exist_blocks    | string  | required | 有效区块数                                                   |
+| sender          | string  | Yes      | 发送者                                                       |
+| identify        | integer | Yes      | 消息在交易内序号                                             |
+| trading_pair    | string  | Yes      | 交易对                                                       |
+| order_type      | integer | Yes      | 订单类型。2-限价单                                           |
+| price_precision | integer | Yes      | 价格精度，取值为0~18，价格在小数点后保留多少位整数。它的取值必须不大于交易对默认的价格精度。默认的价格精度由交易对的创建者所设定。 |
+| price           | string  | Yes      | 价格                                                         |
+| quantity        | string  | Yes      | 数量                                                         |
+| side            | integer | Yes      | 买卖方向：1-买，2-卖                                         |
+| time_in_force   | string  | Yes      | 有效时间类型：3-GTE，4-IOC                                   |
+| exist_blocks    | string  | Yes      | 有效区块数                                                   |
 
-示例
+Example:
 
 ```json
 {
@@ -1324,22 +1324,22 @@ POST /market/ioc-orders
 
 
 
-## 取消订单
+## Cancel orders
 
 ```http
 POST /market/cancel-order
 ```
 
-消息类型：market/MsgCancelOrder
+Message Type: market/MsgCancelOrder
 
-消息结构
+Message Composition
 
-| 字段名   | 类型   | 是否必须 | 描述   |
+| Field    | Type   | Required | Description   |
 | -------- | ------ | -------- | ------ |
-| order_id | string | required | 订单ID |
-| sender   | string | required | 发送者 |
+| order_id | string | Yes      | 订单ID |
+| sender   | string | Yes      | 发送者 |
 
-示例
+Example:
 
 ```json
 {
@@ -1353,23 +1353,23 @@ POST /market/cancel-order
 
 
 
-## 修改价格精度
+## Change price precision of a trading pair
 
 ```http
 POST /market/price-precision
 ```
 
-消息类型：market/MsgModifyPricePrecision
+Message Type: market/MsgModifyPricePrecision
 
-消息结构
+Message Composition
 
-| 字段名          | 类型    | 是否必须 | 描述                                               |
+| Field Name      | Type    | Required | Description                                               |
 | --------------- | ------- | -------- | -------------------------------------------------- |
-| trading_pair    | string  | required | 交易对                                             |
-| sender          | string  | required | 发送者                                             |
-| price_precision | integer | required | 价格精度，取值为0~18，价格在小数点后保留多少位整数 |
+| trading_pair    | string  | Yes      | 交易对                                             |
+| sender          | string  | Yes      | 发送者                                             |
+| price_precision | integer | Yes      | 价格精度，取值为0~18，价格在小数点后保留多少位整数 |
 
-示例
+Example:
 
 ```json
 {
@@ -1384,29 +1384,29 @@ POST /market/price-precision
 
 
 
-## 创建bancor
+## Create bancor market
 
 ```http
 POST /bancorlite/bancor-init
 ```
 
-消息类型：bancorlite/MsgBancorInit
+Message Type: bancorlite/MsgBancorInit
 
-消息结构
+Message Composition
 
-| 字段名               | 类型    | 是否必须 | 描述                                                    | 备注     |
+| Field Name           | Type    | Required | Description                                             | Note     |
 | -------------------- | ------- | -------- | ------------------------------------------------------- | -------- |
-| owner                | string  | required | owner地址                                               |          |
-| money                | string  | required | money                                                   |          |
-| stock                | string  | required | stock                                                   |          |
-| init_price           | string  | required | 初始价格                                                |          |
-| max_price            | string  | required | 最大价格                                                |          |
-| max_supply           | string  | required | 最大数量                                                |          |
-| earliest_cancel_time | string  | required | 最早可以被取消的时间(戳)                                |          |
-| stock_precision      | integer | required | 下单精度，下单数量必须是10的order_precision次方的整数倍 |          |
-| max_money            | string  | optional |                                                         | DEX2新增 |
+| owner                | string  | Yes      | owner地址                                               |          |
+| money                | string  | Yes      | money                                                   |          |
+| stock                | string  | Yes      | stock                                                   |          |
+| init_price           | string  | Yes      | 初始价格                                                |          |
+| max_price            | string  | Yes      | 最大价格                                                |          |
+| max_supply           | string  | Yes      | 最大数量                                                |          |
+| earliest_cancel_time | string  | Yes      | 最早可以被取消的时间(戳)                                |          |
+| stock_precision      | integer | Yes      | 下单精度，下单数量必须是10的order_precision次方的整数倍 |          |
+| max_money            | string  | optional |                                                         | Added in DEX2 |
 
-示例
+Example:
 
 ```json
 {
@@ -1426,23 +1426,23 @@ POST /bancorlite/bancor-init
 
 
 
-## 取消bancor
+## Cancel bancor market
 
 ```http
 POST /bancorlite/bancor-cancel
 ```
 
-消息类型：bancorlite/MsgBancorCancel
+Message Type: bancorlite/MsgBancorCancel
 
-消息结构
+Message Composition
 
-| 字段名 | 类型   | 是否必须 | 描述      |
+| Field  | Type   | Required | Description      |
 | ------ | ------ | -------- | --------- |
-| owner  | string | required | owner地址 |
-| money  | string | required | money     |
-| stock  | string | required | stock     |
+| owner  | string | Yes      | owner地址 |
+| money  | string | Yes      | money     |
+| stock  | string | Yes      | stock     |
 
-示例
+Example:
 
 ```json
 {
@@ -1457,26 +1457,26 @@ POST /bancorlite/bancor-cancel
 
 
 
-## 和bancor交易
+## Trade in bancor market
 
 ```http
 POST /bancorlite/bancor-trade
 ```
 
-消息类型：bancorlite/MsgBancorTrade
+Message Type: bancorlite/MsgBancorTrade
 
-消息结构
+Message Composition
 
-| 字段名      | 类型   | 是否必须 | 描述      |
+| Field Name  | Type   | Required | Description      |
 | ----------- | ------ | -------- | --------- |
-| sender      | string | required | 发送者    |
-| money       | string | required | money     |
-| stock       | string | required | stock     |
-| is_buy      | bool   | required | 买或卖    |
-| amount      | string | required | 数量      |
-| money_limit | string | required | money限制 |
+| sender      | string | Yes      | 发送者    |
+| money       | string | Yes      | money     |
+| stock       | string | Yes      | stock     |
+| is_buy      | bool   | Yes      | 买或卖    |
+| amount      | string | Yes      | 数量      |
+| money_limit | string | Yes      | money限制 |
 
-示例
+Example:
 
 ```json
 {

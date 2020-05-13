@@ -202,16 +202,20 @@ The meaning of the parameters are:
 
 The algorithm to distribute the block rewards and gas fees are as below:
 
-```
-	P = the voting power of the votes collected by the proposer
-	V = total voting power
-	M = all the block rewards and gas fees gathered at a given height
-	ct = M * community_tax
-	M = M - ct
-	send ct to community pool
-	proposer_reward = base_proposer_reward + bonus_proposer_reward * (P - V*2/3) / P
-	p = M * proposer_reward
-	M = M - p
-	send p to the proposer
-	distrubte M among all the validators who vote for this block, in direct proportion to their voting power
-```
+- proposerMultiplier = baseProposerReward+ sumPreviousPrecommitPower / totalPreviousPower * bonusProposerReward
+
+- proposerReward = feesCollected * proposerMultiplier
+
+- remaining = feesCollected - proposerReward
+
+- voteMultiplier = 1 - proposerMultiplier - communityTax
+
+- for each validator
+
+  - powerFraction = ValidatorPower / totalPreviousPower
+  - reward = feesCollected * voteMultiplier * powerFraction
+  - remaining = remaining - reward
+
+  
+
+  
