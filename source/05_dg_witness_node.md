@@ -1,115 +1,76 @@
-### How to run a witness node
+# Enable the trade-server function in cetd
 
-
-
-# trade-server部署说明
+### Install Rocksdb
 
 ```
-   +----------+ produce  +-----+ consume  +--------------+
-   | DEX Node | -------> | dir | -------> | trade-server | 
-   +----------+          +-----+          +--------------+
+git clone https://github.com/facebook/rocksdb.git && cd rocksdb
+git checkout v6.6.4
+mkdir build && cd build && cmake .. && make -j2
+sudo make install
 ```
 
-## 2. dex-node部署及配置
+### Initialize node configuration
 
-节点部署参考 https://github.com/coinexchain/testnets/blob/master/coinexdex-test/testnet-guide.md
+Download the binary executable program and initialize the data directory
 
-部署完成后，需要修改配置文件``app.toml`` (默认在~/.cetd/config/app.toml)，添加以下配置
-
-```toml
-feature-toggle = true
-subscribe-modules = "comment,authx,bankx,market,bancorlite,distribution"
-brokers = [
-    "dir:/home/data"                # 指定节点为trade-server数据存储的目录
-]
-```
-
-brokers配置按实际存储的数据目录填写，修改完后启动节点。
-
-## 3. trade-server部署
-
-### 编译
-
-需要安装Go (推荐12及以上版本) https://golang.org/doc/
-
-进入工程目录，执行以下命令进行编译
-
-```shell
-GO111MODULE=on go build github.com/coinexchain/trade-server
-```
-
-### 配置文件说明
-
-工程根目录提供了默认配置模板文件`config.toml.default`，可在此基础上拷贝修改
-
-```toml
-# 监听端口
-port = 8000
-
-# 是否代理DEX节点的REST API
-proxy = false 
-
-# DEX节点LCD地址
-lcd = "http://localhost:1317"
-lcdv0 = "http://<?>:1317"   # 老链的REST接口地址
-
-# LevelDB数据目录
-data-dir = "data"
-
-# Log文件目录
-log-dir = "log"
-
-# Log级别: debug | info | warn | error
-log-level = "info"
-
-# Log格式: plain(普通文本格式) | json (json格式)
-log-format = "plain"
-
-# dir-mode
-
-dir-mode = true             # 启用目录模式
-dir = "/home/data"          # 指定dex-node 中为trade-server数据存储的目录；
-
-# monitorinterval
-
-# 设置看门狗的监控的时间间隔，单位为秒。当它取非零值的时候，会有一个goroutine定期检查是否发生了新的写KV数据库的行为
-# 如果没有，意味着Trade-Server已经卡死，这时整个Trade-Server就会Panic掉，进程退出。
-# 建议外部用initd等工具守护进程来监控Trade-Server，如果它的进程退出来，就自动启动一个新的进程
-# 不设置此参数时，默认不启动看门狗监控
-
-monitorinterval = 10       
-
-# upgrade chain
-
-initChainHeight = 0         
-```
-
-
-**initChainHeight** : 配置链的初始高度
-
-*   设置该值的目的：
-    *   v0.2.0的`cetd`升级时，允许延续旧链的高度；当在测试网中升级时，为测试方便，抛弃旧链的历史数据；
-    *   trade-server添加了防止跳块的功能，当接收的块高度大于trade-server记录的高度时，不允许启动； 
-    *   当升级后，如果抛弃旧链数据，且`cetd`延续高度的情况下，会导致接收区块大于trade-server记录的块高度，无法启动.
-    *   此时，配置`initChainHeight`为新链的`genesis`高度.
-*   正式环境中，推荐保存旧链的历史记录，且`initChainHeight`一直配置为0
-    *   历史记录存在于两处：
-        *   cetd 推送的数据目录，即`dir-mode`下`dir`的配置.
-        *   trade-server自身的数据目录，即`data-dir`的配置.     
-
-
-### 启动
-
-启动时通过-c参数指定配置文件路径
 
 ```bash
-nohup trade-server -c config.toml &
+wget https://github.com/coinexchain/dex/releases/download/v0.2.17/linux_x86_64.tar.gz 
+tar -zxvf linux_x86_64.tar.gz 
+export RUN_DIR=~~/path/to/node~~ 
+mkdir ${RUN_DIR}  && mv linux_x86_64/* ${RUN_DIR}  && cd ${RUN_DIR}
+${RUN_DIR}/cetd init moniker --home=${RUN_DIR}/.cetd
+cp ${RUN_DIR}/genesis.json ${RUN_DIR}/.cetd/config
 ```
 
+### Customize node configuration
 
-## 注意
+In the configuration file of `cetd`, which is located in `${RUN_DIR}/.cetd/config/app.toml`, need to be appended the following content:
 
-1. dex-node 节点配置文件中 `brokers`下指定的`dir`的值 必须与 trade-server 配置文件中 `dir`的值一致。
-2. **初次**启用节点的`brokers`的`dir`模式时，节点必须从genesis高度开始，重新同步数据。
-3. 启用节点的`brokers`的`dir`模式后，当运行一段时间重启节点时，修改了节点配置文件中`dir`的值，节点必须从genesis高度开始，重新同步数据。
-3. 启用节点的`brokers`的`dir`模式后，当运行一段时间重启节点时，配置文件的`dir`值未修改，直接启动节点即可。
+```
+feature-toggle = true
+ subscribe-modules = "comment,authx,bankx,market,bancorlite"
+ brokers = [
+     "prune:/path/to/dex_data"                # Directory for storing specified node data
+ ]
+```
+
+In the configuration file of `cetd`, which is located in `${RUN_DIR}/.cetd/config/app.toml`, need to be replaced the content of `seed` field:
+
+```
+seeds = "903458cf236851ccf8604689c3f391c528191f47@47.75.37.80:26656,9be765dffed72adcd27ebb37c79bf8ac501f43e8@47.52.155.115:26656,cd79d6c2b3b6b561c91b61b8e3a706249b532ca4@47.56.215.151:26656,cf34ba278ce69be1240f1dabad9b57ffecae206a@47.75.60.29:26656,c70feea1a4f8ea2fd55c366fdcb7ca4d53f1c775@18.144.85.87:26656,94b718f31dedf4afee4c04d768343166625cf961@47.52.70.137:26656,2cbef50b8c996745b9c8a0059fe32a1fbfef8b46@47.52.129.186:26656,17ec2dcfd7c72fabcb7c7cfe2d71006fc39c85c9@18.180.56.174:26656"
+```
+
+### Modify the configuration of trade-server 
+
+##### Set the push data directory of cetd
+
+Copy the file [trade-server.toml.default](https://github.com/coinexchain/dex/blob/master/trade-server.toml.default) to `${RUN_DIR}/.cetd/config/trade-server.toml`; 
+
+Then modify the configuration of `dir`, which will be consistent with the path of` prune` mode configuration under `brokers` in` cetd` configuration file `app.toml`.
+
+##### Set the data directory of the trade-server function
+ 
+First download the history data of cetd:
+```
+wget https://github.com/coinexchain/artifacts/raw/master/coinexdex-v0.2/history_data.tar.gz`.
+```
+
+The history data stores the order information on the `coinexdex` chain, which is organized together with the current order information on the` coinexdex2` chain to form the data such as market depths and tickers.
+ 
+Then unzip the history data: `tar -zxvf history_data.tar.gz`
+
+Finally, in the configuration file `${RUN_DIR}/.cetd/config/trade-server.toml`, modify the `data-dir` field, which is consistent with the directory where history data is stored.
+
+`${RUN_DIR}/.cetd/config/trade-server.toml` [The meaning of fields in this file](https://github.com/coinexchain/trade-server/blob/master/docs/trade-server-deploy.md#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%AF%B4%E6%98%8E)
+
+### Start cetd node
+
+Next, you can choose to use tools such as `systemctl` or `supervisor` to configure the automatic operation of the new `cetd` (coinexdex2) according to your habits. The configuration methods are various, and this document will not introduce them one by one.
+
+Or, start the node in the following simple way to see if it can be connected to the main chain and whether the block can be generated.
+
+```
+${RUN_DIR}/cetd start --home=${RUN_DIR}/.cetd --minimum-gas-prices=20.0cet   <br/>
+```
+
