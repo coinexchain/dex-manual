@@ -1,6 +1,6 @@
-## Goland SDK
+## Golang SDK
 
-We provide goland version of the SDK library to make it easier for goland developers to use  functions of  dex chain, and the SDK provides support for all the basic and extended apis. Combined with [polarbear](https://github.com/coinexchain/polarbear/) library, developers can perform the functions that wallet and browser applications rely on, such as secret key management, transaction assembly, signature, and send transaction to chain.
+We provide golang version of the SDK library to make it easier for golang developers to use  functions of  dex chain, and the SDK provides support for all the basic and extended apis. Combined with [polarbear](https://github.com/coinexchain/polarbear/) library, developers can perform the functions that wallet and browser applications rely on, such as secret key management, transaction assembly, signature, and send transaction to chain.
 
 ### Usage
 
