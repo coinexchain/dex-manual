@@ -6,7 +6,7 @@ We provide python version of the SDK library to make it easier for python develo
 
 Initialize the `keybase` used for signature and get the transaction sender address `from`
 
-```
+```Python
 keybase = ctypes.CDLL('./wallet_mac.so')
 keybase.BearInit('tmp'.encode("utf-8"))
 get_address = keybase.GetAddress
@@ -16,7 +16,7 @@ from_addr_bytes = get_address(key_name)
 
 Initialize the SDK context
 
-```
+```Python
 base_req = {
         'account_number': "0",
         'chain_id': "coinexdex-test1",
@@ -35,7 +35,7 @@ Set the chain ID, sender address,  sender's key_name, password and so on in the 
 
 initalize node url
 
-```
+```Python
 config = Configuration()
 config.host = "127.0.0.1:1317"
 ```
@@ -44,7 +44,7 @@ Assembly transaction parameters
 
 Take a normal transfer as an example, provide the transfer target address, transfer quantity, transfer currency and unlock time
 
-```
+```Python
 coins = [
         {
             'denom': 'cet',
@@ -58,7 +58,7 @@ account = Account(base_req, coins, unlock_time)
 
 Sign and send transaction to chain
 
-```
+```Python
 client = ApiClient(configuration=config)
 (res, res_str) = BankApi(client).send_coins(to_addr, account)
 ctx.sign_and_broadcast(res_str.data)

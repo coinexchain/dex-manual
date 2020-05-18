@@ -6,7 +6,7 @@ We provide goland version of the SDK library to make it easier for goland develo
 
 Initialize the `keybase` used for signature and get the transaction sender address `from`
 
-```
+```Go
 import bear "github.com/coinexchain/polarbear"
 bear.BearInit("keybase_path")
 from := bear.GetAddress("key_name")
@@ -14,7 +14,7 @@ from := bear.GetAddress("key_name")
 
 Initialize the SDK context
 
-```
+```Go
 ctx := context.DefaultApiContext()
 ctx.SetChainID("coinexdex2")
 ctx.SetNodeUrl("127.0.0.1:1317")
@@ -27,7 +27,7 @@ Set the chain ID, node url, sender address,  sender's key_name, password and so 
 
 You can also set transaction fees and gas:
 
-```
+```Go
 func (a *ApiContext) SetFees(amount string)
 func (a *ApiContext) SetGas(amount string)
 ```
@@ -36,7 +36,7 @@ Assembly transaction parameters
 
 Take a normal transfer as an example, provide the transfer target address, transfer quantity, transfer currency and unlock time
 
-```
+```Go
 unlockTime := "0"
 toAddress := "coinex1h6favnlytw3lgpy8cm6lcv530z0ctj6rplwt06"
 transferredAmount := "400000000"
@@ -60,7 +60,7 @@ param.SetTimeout(context.DefaultTimeOut)
 
 Sign and send transaction to chain
 
-```
+```Go
 unsignedResp, err := ctx.Client.Bank.SendCoins(param)
 if err == nil {
    bz, _ := unsignedResp.GetPayload().MarshalBinary()
